@@ -3,1065 +3,503 @@
 
 <head>
 
-<meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
-<title>Control de Servicios - SEGRUP</title>
-
-
-<style>
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
-    background: #f4f6f9;
-
-    color: #1f2937;
-
-}
-
-
-/* =========================
-   LOGIN
-========================= */
-
-#loginScreen {
-
-    position: fixed;
-
-    inset: 0;
-
-    background: #f4f6f9;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    z-index: 9999;
-
-}
-
-
-.login-box {
-
-    width: 100%;
-
-    max-width: 420px;
-
-    background: white;
-
-    padding: 40px;
-
-    border-radius: 16px;
-
-    box-shadow:
-        0 10px 35px
-        rgba(0,0,0,.12);
-
-    text-align: center;
-
-}
-
-
-.login-logo {
-
-    width: 180px;
-
-    max-width: 80%;
-
-    margin-bottom: 25px;
-
-}
-
-
-.login-box h2 {
-
-    color: #064b91;
-
-    margin-bottom: 8px;
-
-}
-
-
-.login-box p {
-
-    color: #6b7280;
-
-    margin-bottom: 25px;
-
-}
-
-
-.login-box select,
-.login-box input {
-
-    width: 100%;
-
-    padding: 13px;
-
-    border: 1px solid #d1d5db;
-
-    border-radius: 8px;
-
-    margin-bottom: 15px;
-
-    font-size: 15px;
-
-}
-
-
-.login-button {
-
-    width: 100%;
-
-    border: none;
-
-    padding: 13px;
-
-    border-radius: 8px;
-
-    background: #064b91;
-
-    color: white;
-
-    font-weight: bold;
-
-    cursor: pointer;
-
-}
-
-
-.login-button:hover {
-
-    background: #04386d;
-
-}
-
-
-.login-error {
-
-    color: #dc2626;
-
-    margin-top: 12px;
-
-    font-size: 14px;
-
-}
-
-
-/* =========================
-   HEADER
-========================= */
-
-header {
-
-    height: 90px;
-
-    background: white;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    padding: 0 40px;
-
-    border-bottom:
-        4px solid #064b91;
-
-    box-shadow:
-        0 2px 8px
-        rgba(0,0,0,.08);
-
-}
-
-
-.logo {
-
-    height: 65px;
-
-    width: auto;
-
-}
-
-
-.header-info {
-
-    text-align: right;
-
-}
-
-
-.header-info h1 {
-
-    font-size: 20px;
-
-    color: #064b91;
-
-    margin-bottom: 5px;
-
-}
-
-
-.header-info p {
-
-    font-size: 14px;
-
-    color: #6b7280;
-
-}
-
-
-.operator-info {
-
-    margin-top: 5px;
-
-    color: #064b91;
-
-    font-weight: bold;
-
-}
-
-
-/* =========================
-   CONTAINER
-========================= */
-
-.container {
-
-    max-width: 1200px;
-
-    margin: 35px auto;
-
-    padding: 0 20px;
-
-}
-
-
-/* =========================
-   TITLE
-========================= */
-
-.title {
-
-    margin-bottom: 25px;
-
-}
-
-
-.title h2 {
-
-    font-size: 28px;
-
-    color: #064b91;
-
-}
-
-
-.title p {
-
-    margin-top: 5px;
-
-    color: #6b7280;
-
-}
-
-
-/* =========================
-   BUSCADOR
-========================= */
-
-.search-box {
-
-    background: white;
-
-    padding: 20px;
-
-    border-radius: 12px;
-
-    margin-bottom: 25px;
-
-    box-shadow:
-        0 3px 12px
-        rgba(0,0,0,.06);
-
-}
-
-
-.search-grid {
-
-    display: grid;
-
-    grid-template-columns:
-        1fr 1fr auto;
-
-    gap: 15px;
-
-    align-items: end;
-
-}
-
-
-.search-field label {
-
-    display: block;
-
-    font-size: 13px;
-
-    color: #6b7280;
-
-    margin-bottom: 6px;
-
-}
-
-
-.search-field select,
-.search-field input {
-
-    width: 100%;
-
-    padding: 11px;
-
-    border:
-        1px solid #d1d5db;
-
-    border-radius: 7px;
-
-    font-size: 14px;
-
-}
-
-
-.search-button {
-
-    border: none;
-
-    background: #064b91;
-
-    color: white;
-
-    padding: 11px 20px;
-
-    border-radius: 7px;
-
-    cursor: pointer;
-
-    font-weight: bold;
-
-}
-
-
-/* =========================
-   ESTADISTICAS
-========================= */
-
-.stats {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(4, 1fr);
-
-    gap: 20px;
-
-    margin-bottom: 35px;
-
-}
-
-
-.stat {
-
-    background: white;
-
-    border-radius: 12px;
-
-    padding: 22px;
-
-    box-shadow:
-        0 3px 12px
-        rgba(0,0,0,.06);
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 18px;
-
-}
-
-
-.stat-icon {
-
-    font-size: 30px;
-
-}
-
-
-.stat-number {
-
-    font-size: 28px;
-
-    font-weight: bold;
-
-}
-
-
-.stat-label {
-
-    color: #6b7280;
-
-    font-size: 14px;
-
-    margin-top: 3px;
-
-}
-
-
-.pending {
-
-    color: #dc2626;
-
-}
-
-
-.completed {
-
-    color: #16a34a;
-
-}
-
-
-.cancelled {
-
-    color: #6b7280;
-
-}
-
-
-.week {
-
-    color: #064b91;
-
-}
-
-
-/* =========================
-   SECCION
-========================= */
-
-.section-title {
-
-    display: flex;
-
-    justify-content:
-        space-between;
-
-    align-items: center;
-
-    margin-bottom: 15px;
-
-}
-
-
-.section-title h3 {
-
-    color: #1f2937;
-
-}
-
-
-.date {
-
-    color: #6b7280;
-
-    font-size: 14px;
-
-}
-
-
-/* =========================
-   TARJETAS
-========================= */
-
-.control-card {
-
-    background: white;
-
-    border-radius: 12px;
-
-    padding: 25px;
-
-    margin-bottom: 18px;
-
-    box-shadow:
-        0 3px 12px
-        rgba(0,0,0,.06);
-
-    border-left:
-        5px solid #064b91;
-
-}
-
-
-.control-card.realizado {
-
-    border-left-color: #16a34a;
-
-}
-
-
-.control-card.cancelado {
-
-    border-left-color: #6b7280;
-
-}
-
-
-.control-header {
-
-    display: flex;
-
-    justify-content:
-        space-between;
-
-    align-items: center;
-
-    margin-bottom: 18px;
-
-    gap: 15px;
-
-}
-
-
-.control-header h4 {
-
-    font-size: 20px;
-
-    color: #064b91;
-
-}
-
-
-.badge {
-
-    padding:
-        6px 12px;
-
-    border-radius:
-        20px;
-
-    font-size:
-        12px;
-
-    font-weight:
-        bold;
-
-    background:
-        #fff3cd;
-
-    color:
-        #856404;
-
-}
-
-
-.badge.realizado {
-
-    background:
-        #dcfce7;
-
-    color:
-        #166534;
-
-}
-
-
-.badge.cancelado {
-
-    background:
-        #e5e7eb;
-
-    color:
-        #374151;
-
-}
-
-
-.control-list {
-
-    list-style:
-        none;
-
-    margin-bottom:
-        20px;
-
-}
-
-
-.control-list li {
-
-    padding:
-        8px 0;
-
-    border-bottom:
-        1px solid #eeeeee;
-
-    font-size:
-        15px;
-
-}
-
-
-.control-list li:last-child {
-
-    border-bottom:
-        none;
-
-}
-
-
-.control-list li::before {
-
-    content:
-        "🔍";
-
-    margin-right:
-        10px;
-
-}
-
-
-.control-meta {
-
-    background:
-        #f8fafc;
-
-    border-radius:
-        8px;
-
-    padding:
-        12px;
-
-    margin-bottom:
-        15px;
-
-    font-size:
-        13px;
-
-    color:
-        #6b7280;
-
-}
-
-
-.actions {
-
-    display: flex;
-
-    gap: 10px;
-
-    flex-wrap: wrap;
-
-}
-
-
-.button {
-
-    border: none;
-
-    background:
-        #064b91;
-
-    color: white;
-
-    padding:
-        11px 20px;
-
-    border-radius:
-        7px;
-
-    cursor:
-        pointer;
-
-    font-weight:
-        bold;
-
-}
-
-
-.button:hover {
-
-    background:
-        #04386d;
-
-}
-
-
-.button.success {
-
-    background:
-        #16a34a;
-
-}
-
-
-.button.success:hover {
-
-    background:
-        #15803d;
-
-}
-
-
-.button.cancel {
-
-    background:
-        #6b7280;
-
-}
-
-
-.button.cancel:hover {
-
-    background:
-        #4b5563;
-
-}
-
-
-/* =========================
-   HISTORICO
-========================= */
-
-.history-section {
-
-    margin-top:
-        45px;
-
-}
-
-
-.history-card {
-
-    background:
-        white;
-
-    border-radius:
-        12px;
-
-    padding:
-        20px;
-
-    margin-bottom:
-        10px;
-
-    box-shadow:
-        0 2px 8px
-        rgba(0,0,0,.05);
-
-}
-
-
-.history-top {
-
-    display:
-        flex;
-
-    justify-content:
-        space-between;
-
-    gap:
-        15px;
-
-    margin-bottom:
-        8px;
-
-}
-
-
-.history-action {
-
-    font-weight:
-        bold;
-
-}
-
-
-.history-action.realizado {
-
-    color:
-        #16a34a;
-
-}
-
-
-.history-action.cancelado {
-
-    color:
-        #6b7280;
-
-}
-
-
-.history-details {
-
-    color:
-        #6b7280;
-
-    font-size:
-        13px;
-
-    line-height:
-        1.6;
-
-}
-
-
-/* =========================
-   MODAL
-========================= */
-
-.modal {
-
-    display:
-        none;
-
-    position:
-        fixed;
-
-    inset:
-        0;
-
-    background:
-        rgba(0,0,0,.5);
-
-    z-index:
-        5000;
-
-    justify-content:
-        center;
-
-    align-items:
-        center;
-
-    padding:
-        20px;
-
-}
-
-
-.modal-box {
-
-    background:
-        white;
-
-    width:
-        100%;
-
-    max-width:
-        500px;
-
-    padding:
-        25px;
-
-    border-radius:
-        12px;
-
-}
-
-
-.modal-box h3 {
-
-    color:
-        #064b91;
-
-    margin-bottom:
-        15px;
-
-}
-
-
-.modal-box textarea {
-
-    width:
-        100%;
-
-    min-height:
-        120px;
-
-    padding:
-        12px;
-
-    border:
-        1px solid #d1d5db;
-
-    border-radius:
-        8px;
-
-    resize:
-        vertical;
-
-    margin-bottom:
-        15px;
-
-}
-
-
-.modal-actions {
-
-    display:
-        flex;
-
-    justify-content:
-        flex-end;
-
-    gap:
-        10px;
-
-}
-
-
-/* =========================
-   LOADING
-========================= */
-
-.loading {
-
-    text-align:
-        center;
-
-    padding:
-        40px;
-
-    color:
-        #6b7280;
-
-}
-
-
-.empty {
-
-    background:
-        white;
-
-    padding:
-        35px;
-
-    text-align:
-        center;
-
-    border-radius:
-        12px;
-
-    color:
-        #6b7280;
-
-}
-
-
-/* =========================
-   FOOTER
-========================= */
-
-footer {
-
-    text-align:
-        center;
-
-    color:
-        #9ca3af;
-
-    font-size:
-        13px;
-
-    padding:
-        30px;
-
-}
-
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media (max-width: 900px) {
-
-    .stats {
-
-        grid-template-columns:
-            repeat(2, 1fr);
-
-    }
-
-    .search-grid {
-
-        grid-template-columns:
-            1fr;
-
-    }
-
-}
-
-
-@media (max-width: 700px) {
-
-    header {
-
-        padding:
-            0 15px;
-
-    }
-
-
-    .logo {
-
-        height:
-            50px;
-
-    }
-
-
-    .header-info h1 {
-
-        font-size:
-            15px;
-
-    }
-
-
-    .stats {
-
-        grid-template-columns:
-            1fr;
-
-    }
-
-
-    .container {
-
-        margin-top:
-            25px;
-
-    }
-
-}
-
-</style>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Control de Servicios - SEGRUP</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f9;
+            color: #1f2937;
+        }
+
+        /* =========================
+           LOGIN
+        ========================= */
+
+        #loginScreen {
+            position: fixed;
+            inset: 0;
+            background: #f4f6f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .login-box {
+            width: 90%;
+            max-width: 400px;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.12);
+            text-align: center;
+        }
+
+        .login-logo {
+            width: 230px;
+            max-width: 80%;
+            margin-bottom: 25px;
+        }
+
+        .login-box h2 {
+            color: #064b91;
+            margin-bottom: 8px;
+        }
+
+        .login-box p {
+            color: #6b7280;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 7px;
+            background: #064b91;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .login-button:hover {
+            background: #04386d;
+        }
+
+        .login-error {
+            color: #dc2626;
+            font-size: 13px;
+            margin-top: 12px;
+            display: none;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        header {
+            height: 90px;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            border-bottom: 4px solid #064b91;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .logo {
+            height: 65px;
+            width: auto;
+        }
+
+        .header-info {
+            text-align: right;
+        }
+
+        .header-info h1 {
+            font-size: 20px;
+            color: #064b91;
+            margin-bottom: 5px;
+        }
+
+        .header-info p {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        /* =========================
+           OPERADOR
+        ========================= */
+
+        .operator-box {
+            background: white;
+            margin-bottom: 20px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .operator-name {
+            color: #064b91;
+            font-weight: bold;
+        }
+
+        .logout-button {
+            border: none;
+            background: #e5e7eb;
+            color: #374151;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        /* =========================
+           CONTENEDOR
+        ========================= */
+
+        .container {
+            max-width: 1200px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        /* =========================
+           TITULO
+        ========================= */
+
+        .title {
+            margin-bottom: 25px;
+        }
+
+        .title h2 {
+            font-size: 28px;
+            color: #064b91;
+        }
+
+        .title p {
+            margin-top: 5px;
+            color: #6b7280;
+        }
+
+        /* =========================
+           BUSCADOR FECHA
+        ========================= */
+
+        .date-search {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        .date-search label {
+            display: block;
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 7px;
+        }
+
+        .date-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .date-input {
+            flex: 1;
+            padding: 11px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        .search-button {
+            border: none;
+            background: #064b91;
+            color: white;
+            padding: 11px 20px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* =========================
+           ESTADISTICAS
+        ========================= */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+
+        .stat {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .stat-icon {
+            font-size: 30px;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 14px;
+            margin-top: 3px;
+        }
+
+        .pending {
+            color: #dc2626;
+        }
+
+        .completed {
+            color: #16a34a;
+        }
+
+        .week {
+            color: #064b91;
+        }
+
+        /* =========================
+           SECCION
+        ========================= */
+
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .section-title h3 {
+            color: #1f2937;
+        }
+
+        .date {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        /* =========================
+           TARJETAS
+        ========================= */
+
+        .control-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 18px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+            border-left: 5px solid #064b91;
+        }
+
+        .control-card.realizado {
+            border-left-color: #16a34a;
+        }
+
+        .control-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            gap: 10px;
+        }
+
+        .control-header h4 {
+            font-size: 20px;
+            color: #064b91;
+        }
+
+        .badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .badge-pendiente {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .badge-realizado {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-cancelado {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .control-list {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .control-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eeeeee;
+            font-size: 15px;
+        }
+
+        .control-list li:last-child {
+            border-bottom: none;
+        }
+
+        .control-list li::before {
+            content: "🔍";
+            margin-right: 10px;
+        }
+
+        /* =========================
+           BOTONES
+        ========================= */
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .button {
+            border: none;
+            background: #064b91;
+            color: white;
+            padding: 11px 20px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .button:hover {
+            background: #04386d;
+        }
+
+        .button-success {
+            background: #16a34a;
+        }
+
+        .button-success:hover {
+            background: #15803d;
+        }
+
+        .button-danger {
+            background: #dc2626;
+        }
+
+        .button-danger:hover {
+            background: #b91c1c;
+        }
+
+        .button-secondary {
+            background: #6b7280;
+        }
+
+        /* =========================
+           INFO REALIZADO
+        ========================= */
+
+        .completed-info {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            padding: 12px;
+            border-radius: 7px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            color: #166534;
+        }
+
+        /* =========================
+           MENSAJES
+        ========================= */
+
+        .message {
+            padding: 20px;
+            text-align: center;
+            background: white;
+            border-radius: 10px;
+            color: #6b7280;
+            margin-bottom: 20px;
+        }
+
+        .loading {
+            display: none;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            text-align: center;
+            color: #9ca3af;
+            font-size: 13px;
+            padding: 30px;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 700px) {
+
+            header {
+                padding: 0 15px;
+            }
+
+            .logo {
+                height: 50px;
+            }
+
+            .header-info h1 {
+                font-size: 15px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                margin-top: 25px;
+            }
+
+            .date-row {
+                flex-direction: column;
+            }
+
+            .search-button {
+                width: 100%;
+            }
+
+            .operator-box {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+        }
+
+    </style>
 
 </head>
 
@@ -1069,67 +507,46 @@ footer {
 <body>
 
 
-<!-- =========================================================
+<!-- =====================================================
      LOGIN
-========================================================= -->
+===================================================== -->
 
 <div id="loginScreen">
 
     <div class="login-box">
 
-        <img
-            src="assets/logo-segrup.png"
-            class="login-logo"
-            alt="SEGRUP">
+        <img src="assets/logo-segrup.png"
+             class="login-logo"
+             alt="SEGRUP">
 
-        <h2>
-            Control de Servicios
-        </h2>
+        <h2>Control de Servicios</h2>
 
         <p>
-            Ingreso de operador
+            Sistema interno de seguimiento
         </p>
-
-
-        <select id="operadorLogin">
-
-            <option value="">
-                Seleccionar operador
-            </option>
-
-            <option value="Nelson">
-                Nelson
-            </option>
-
-            <option value="Supervisor">
-                Supervisor
-            </option>
-
-            <option value="Operador">
-                Operador
-            </option>
-
-        </select>
-
 
         <input
             type="password"
-            id="claveLogin"
-            placeholder="Contraseña">
-
+            id="passwordInput"
+            class="login-input"
+            placeholder="Ingrese la clave"
+            onkeydown="if(event.key === 'Enter') ingresar()"
+        >
 
         <button
             class="login-button"
-            onclick="iniciarSesion()">
+            onclick="ingresar()">
 
             INGRESAR
 
         </button>
 
-
         <div
-            class="login-error"
-            id="loginError">
+            id="loginError"
+            class="login-error">
+
+            Clave incorrecta.
+
         </div>
 
     </div>
@@ -1137,12 +554,12 @@ footer {
 </div>
 
 
-<!-- =========================================================
-     APP
-========================================================= -->
 
-<div id="app"
-     style="display:none;">
+<!-- =====================================================
+     SISTEMA
+===================================================== -->
+
+<div id="app" style="display:none;">
 
 
 <header>
@@ -1152,266 +569,218 @@ footer {
         alt="SEGRUP Seguridad"
         class="logo">
 
-
     <div class="header-info">
 
-        <h1>
-            CONTROL DE SERVICIOS
-        </h1>
+        <h1>CONTROL DE SERVICIOS</h1>
 
         <p id="fechaActual"></p>
-
-        <div
-            class="operator-info"
-            id="operadorActual">
-        </div>
 
     </div>
 
 </header>
 
 
+
 <main class="container">
 
 
-<div class="title">
+    <!-- OPERADOR -->
 
-    <h2>
-        Controles programados
-    </h2>
+    <div class="operator-box">
 
-    <p>
-        Seleccioná una fecha para consultar los controles.
-    </p>
+        <div>
 
-</div>
+            Operador:
 
-
-<!-- =========================================================
-     BUSCADOR
-========================================================= -->
-
-<section class="search-box">
-
-    <div class="search-grid">
-
-
-        <div class="search-field">
-
-            <label>
-                Mes
-            </label>
-
-            <select id="mesSelect">
-
-                <option value="">
-                    Cargando...
-                </option>
-
-            </select>
+            <span
+                class="operator-name"
+                id="operadorActual">
+            </span>
 
         </div>
-
-
-        <div class="search-field">
-
-            <label>
-                Fecha de control
-            </label>
-
-            <input
-                type="date"
-                id="fechaSelect">
-
-        </div>
-
 
         <button
-            class="search-button"
-            onclick="buscarControles()">
+            class="logout-button"
+            onclick="cerrarSesion()">
 
-            🔎 BUSCAR
+            CERRAR SESIÓN
 
         </button>
 
-
     </div>
 
-</section>
 
 
-<!-- =========================================================
-     ESTADISTICAS
-========================================================= -->
+    <!-- TITULO -->
 
-<section class="stats">
+    <div class="title">
 
+        <h2>
+            Controles programados
+        </h2>
 
-    <div class="stat">
-
-        <div class="stat-icon">
-            🔴
-        </div>
-
-        <div>
-
-            <div
-                class="stat-number pending"
-                id="pendientes">
-
-                0
-
-            </div>
-
-            <div class="stat-label">
-                Pendientes
-            </div>
-
-        </div>
+        <p>
+            Seleccione una fecha para consultar los controles.
+        </p>
 
     </div>
 
 
-    <div class="stat">
 
-        <div class="stat-icon">
-            🟢
-        </div>
+    <!-- BUSCADOR -->
 
-        <div>
+    <div class="date-search">
 
-            <div
-                class="stat-number completed"
-                id="realizados">
+        <label>
+            Fecha de control
+        </label>
 
-                0
+        <div class="date-row">
 
-            </div>
+            <input
+                type="date"
+                id="fechaBusqueda"
+                class="date-input">
 
-            <div class="stat-label">
-                Realizados
-            </div>
+            <button
+                class="search-button"
+                onclick="buscarFecha()">
+
+                🔎 BUSCAR
+
+            </button>
 
         </div>
 
     </div>
 
 
-    <div class="stat">
 
-        <div class="stat-icon">
-            ⚪
-        </div>
+    <!-- ESTADISTICAS -->
 
-        <div>
+    <section class="stats">
 
-            <div
-                class="stat-number cancelled"
-                id="cancelados">
+        <div class="stat">
 
-                0
-
+            <div class="stat-icon">
+                🔴
             </div>
 
-            <div class="stat-label">
-                Cancelados
-            </div>
+            <div>
 
-        </div>
+                <div
+                    class="stat-number pending"
+                    id="pendientes">
 
-    </div>
+                    0
 
+                </div>
 
-    <div class="stat">
+                <div class="stat-label">
+                    Pendientes
+                </div>
 
-        <div class="stat-icon">
-            📅
-        </div>
-
-        <div>
-
-            <div
-                class="stat-number week"
-                id="semana">
-
-                0
-
-            </div>
-
-            <div class="stat-label">
-                Controles encontrados
             </div>
 
         </div>
 
-    </div>
 
 
-</section>
+        <div class="stat">
+
+            <div class="stat-icon">
+                🟢
+            </div>
+
+            <div>
+
+                <div
+                    class="stat-number completed"
+                    id="realizados">
+
+                    0
+
+                </div>
+
+                <div class="stat-label">
+                    Realizados
+                </div>
+
+            </div>
+
+        </div>
 
 
-<!-- =========================================================
-     CONTROLES
-========================================================= -->
 
-<div class="section-title">
+        <div class="stat">
 
-    <h3>
-        Controles
-    </h3>
+            <div class="stat-icon">
+                📅
+            </div>
 
-    <span
-        class="date"
-        id="fechaControl">
-    </span>
+            <div>
 
-</div>
+                <div
+                    class="stat-number week"
+                    id="semana">
+
+                    0
+
+                </div>
+
+                <div class="stat-label">
+                    Controles esta semana
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
 
 
-<div
-    id="controlesContainer">
 
-    <div class="loading">
-        Cargando controles...
-    </div>
-
-</div>
-
-
-<!-- =========================================================
-     HISTORICO
-========================================================= -->
-
-<section class="history-section">
+    <!-- TITULO FECHA -->
 
     <div class="section-title">
 
         <h3>
-            📜 Histórico
+            Controles
         </h3>
 
+        <span
+            class="date"
+            id="fechaControl">
+        </span>
+
     </div>
 
+
+
+    <!-- LOADING -->
 
     <div
-        id="historicoContainer">
+        id="loading"
+        class="message loading">
 
-        <div class="loading">
-            Cargando histórico...
-        </div>
+        ⏳ Cargando controles...
 
     </div>
 
-</section>
+
+
+    <!-- CONTROLES -->
+
+    <div id="controles"></div>
 
 
 </main>
 
 
+
 <footer>
 
-    SEGRUP SEGURIDAD ·
-    Sistema interno de control
+    SEGRUP SEGURIDAD · Sistema interno de control
 
 </footer>
 
@@ -1419,391 +788,184 @@ footer {
 </div>
 
 
-<!-- =========================================================
-     MODAL CANCELAR
-========================================================= -->
-
-<div
-    class="modal"
-    id="modalCancelar">
-
-
-    <div class="modal-box">
-
-        <h3>
-            Cancelar control
-        </h3>
-
-
-        <p style="margin-bottom:15px;color:#6b7280;">
-
-            Indicá el motivo de la cancelación.
-
-        </p>
-
-
-        <textarea
-            id="motivoCancelacion"
-            placeholder="Ej.: Cliente no disponible...">
-        </textarea>
-
-
-        <div class="modal-actions">
-
-            <button
-                class="button cancel"
-                onclick="cerrarModal()">
-
-                VOLVER
-
-            </button>
-
-
-            <button
-                class="button"
-                onclick="confirmarCancelacion()">
-
-                CONFIRMAR
-
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
 
 <script>
 
-/* ============================================================
+
+/* =====================================================
    CONFIGURACIÓN
-============================================================ */
+===================================================== */
 
 
 /*
- * PEGÁ ACÁ LA URL DEL WEB APP DE APPS SCRIPT.
- *
- * Ejemplo:
- *
- * const API_URL =
- * "https://script.google.com/macros/s/XXXXXXXX/exec";
- */
+   URL DEL GOOGLE APPS SCRIPT
+*/
 
 const API_URL =
-    "PEGAR_AQUI_URL_DE_TU_WEB_APP";
+"https://script.google.com/macros/s/AKfycbxi9480n6Sa9ohHv4xruQhCL4Ut58gZ6TwNOVA2HUjL_SGpE5nQukAzKtvPlPBfR-Kt/exec";
 
 
-let operadorActual = "";
+/*
+   CLAVE DE ACCESO
 
-let controlCancelar = null;
+   ⚠️ Cambiala por la que quieras.
+*/
 
-
-/* ============================================================
-   INICIO
-============================================================ */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function() {
-
-        const ahora =
-            new Date();
+const CLAVE_SISTEMA = "SEGRUP2026";
 
 
-        const opciones = {
-
-            day: "2-digit",
-
-            month: "2-digit",
-
-            year: "numeric"
-
-        };
-
-
-        const fecha =
-            ahora.toLocaleDateString(
-                "es-AR",
-                opciones
-            );
-
-
-        document.getElementById(
-            "fechaActual"
-        ).textContent =
-            fecha;
-
-
-        const fechaInput =
-            ahora
-                .toISOString()
-                .split("T")[0];
-
-
-        document.getElementById(
-            "fechaSelect"
-        ).value =
-            fechaInput;
-
-
-        cargarMeses();
-
-    }
-);
-
-
-/* ============================================================
+/* =====================================================
    LOGIN
-============================================================ */
+===================================================== */
 
-function iniciarSesion() {
+function ingresar() {
 
-    const operador =
-        document.getElementById(
-            "operadorLogin"
-        ).value;
+    const password =
+        document.getElementById("passwordInput").value;
 
+    if (password === CLAVE_SISTEMA) {
 
-    const clave =
-        document.getElementById(
-            "claveLogin"
-        ).value;
+        const operador =
+            prompt("Ingrese su nombre o identificación de operador:");
 
+        if (!operador || operador.trim() === "") {
 
-    const error =
+            alert("Debe ingresar el operador.");
+
+            return;
+
+        }
+
+        localStorage.setItem(
+            "segrup_login",
+            "true"
+        );
+
+        localStorage.setItem(
+            "segrup_operador",
+            operador.trim()
+        );
+
+        mostrarSistema();
+
+    } else {
+
         document.getElementById(
             "loginError"
-        );
-
-
-    if (!operador || !clave) {
-
-        error.textContent =
-            "Completá operador y contraseña.";
-
-        return;
+        ).style.display = "block";
 
     }
 
-
-    error.textContent =
-        "Verificando...";
+}
 
 
-    llamarAPI(
-        "login",
-        {
-            operador: operador,
-            clave: clave
-        },
-        function(respuesta) {
+/* =====================================================
+   MOSTRAR SISTEMA
+===================================================== */
 
-            if (
-                respuesta.ok
-            ) {
+function mostrarSistema() {
 
-                operadorActual =
-                    respuesta.operador;
+    document.getElementById(
+        "loginScreen"
+    ).style.display = "none";
 
+    document.getElementById(
+        "app"
+    ).style.display = "block";
 
-                document.getElementById(
-                    "loginScreen"
-                ).style.display =
-                    "none";
+    document.getElementById(
+        "operadorActual"
+    ).textContent =
+        localStorage.getItem(
+            "segrup_operador"
+        ) || "";
 
+    establecerFechaActual();
 
-                document.getElementById(
-                    "app"
-                ).style.display =
-                    "block";
-
-
-                document.getElementById(
-                    "operadorActual"
-                ).textContent =
-                    "Operador: " +
-                    operadorActual;
-
-
-                cargarMeses();
-
-            } else {
-
-                error.textContent =
-                    respuesta.error ||
-                    "No se pudo iniciar sesión.";
-
-            }
-
-        }
-    );
+    buscarFecha();
 
 }
 
 
-/* ============================================================
-   API
-============================================================ */
+/* =====================================================
+   CERRAR SESIÓN
+===================================================== */
 
-function llamarAPI(
-    accion,
-    parametros,
-    callback
-) {
+function cerrarSesion() {
 
-    let url =
-        API_URL +
-        "?accion=" +
-        encodeURIComponent(
-            accion
+    localStorage.removeItem(
+        "segrup_login"
+    );
+
+    localStorage.removeItem(
+        "segrup_operador"
+    );
+
+    location.reload();
+
+}
+
+
+/* =====================================================
+   FECHA
+===================================================== */
+
+function establecerFechaActual() {
+
+    const ahora =
+        new Date();
+
+    const opciones = {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric"
+    };
+
+    const fecha =
+        ahora.toLocaleDateString(
+            "es-AR",
+            opciones
         );
 
-
-    Object.keys(
-        parametros || {}
-    ).forEach(
-        function(clave) {
-
-            url +=
-                "&" +
-                encodeURIComponent(
-                    clave
-                ) +
-                "=" +
-                encodeURIComponent(
-                    parametros[clave]
-                );
-
-        }
-    );
+    document.getElementById(
+        "fechaActual"
+    ).textContent = fecha;
 
 
-    fetch(url)
-
-        .then(
-            response =>
-                response.json()
-        )
-
-        .then(
-            data =>
-                callback(data)
-        )
-
-        .catch(
-            error => {
-
-                console.error(
-                    error
-                );
+    const fechaISO =
+        ahora.getFullYear() +
+        "-" +
+        String(
+            ahora.getMonth() + 1
+        ).padStart(2, "0") +
+        "-" +
+        String(
+            ahora.getDate()
+        ).padStart(2, "0");
 
 
-                callback({
-
-                    ok: false,
-
-                    error:
-                        "No se pudo conectar con Apps Script."
-
-                });
-
-            }
-        );
+    document.getElementById(
+        "fechaBusqueda"
+    ).value = fechaISO;
 
 }
 
 
-/* ============================================================
-   MESES
-============================================================ */
+/* =====================================================
+   BUSCAR FECHA
+===================================================== */
 
-function cargarMeses() {
-
-    llamarAPI(
-        "meses",
-        {},
-        function(respuesta) {
-
-            if (!respuesta.ok) {
-
-                alert(
-                    respuesta.error
-                );
-
-                return;
-
-            }
-
-
-            const select =
-                document.getElementById(
-                    "mesSelect"
-                );
-
-
-            select.innerHTML =
-                "";
-
-
-            respuesta.meses.forEach(
-                function(mes) {
-
-                    const option =
-                        document.createElement(
-                            "option"
-                        );
-
-                    option.value =
-                        mes;
-
-                    option.textContent =
-                        mes;
-
-                    select.appendChild(
-                        option
-                    );
-
-                }
-            );
-
-
-            if (
-                respuesta.meses.length
-            ) {
-
-                buscarControles();
-
-            }
-
-        }
-    );
-
-}
-
-
-/* ============================================================
-   BUSCAR CONTROLES
-============================================================ */
-
-function buscarControles() {
-
-    const mes =
-        document.getElementById(
-            "mesSelect"
-        ).value;
-
+async function buscarFecha() {
 
     const fecha =
         document.getElementById(
-            "fechaSelect"
+            "fechaBusqueda"
         ).value;
 
-
-    if (!mes || !fecha) {
+    if (!fecha) {
 
         alert(
-            "Seleccioná mes y fecha."
+            "Seleccione una fecha."
         );
 
         return;
@@ -1811,97 +973,322 @@ function buscarControles() {
     }
 
 
-    mostrarLoading();
+    document.getElementById(
+        "loading"
+    ).style.display = "block";
 
 
-    const fechaAR =
-        fecha
-            .split("-")
-            .reverse()
-            .join("/");
+    document.getElementById(
+        "controles"
+    ).innerHTML = "";
 
 
     document.getElementById(
         "fechaControl"
     ).textContent =
-        fechaAR;
+        formatearFecha(fecha);
 
 
-    llamarAPI(
-        "controles",
-        {
-            mes: mes,
-            fecha: fechaAR
-        },
-        function(respuesta) {
+    try {
 
-            if (!respuesta.ok) {
-
-                alert(
-                    respuesta.error
-                );
-
-                return;
-
-            }
+        const url =
+            API_URL +
+            "?action=obtenerControles" +
+            "&fecha=" +
+            encodeURIComponent(fecha);
 
 
-            mostrarControles(
-                respuesta.controles
-            );
+        const respuesta =
+            await fetch(url);
 
 
-            cargarHistorico();
+        const datos =
+            await respuesta.json();
 
-        }
-    );
+
+        mostrarControles(datos);
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        document.getElementById(
+            "controles"
+        ).innerHTML = `
+
+            <div class="message">
+
+                ❌ No se pudieron cargar los controles.
+
+                <br><br>
+
+                Verifique la conexión con Google Sheets.
+
+            </div>
+
+        `;
+
+    }
+
+
+    document.getElementById(
+        "loading"
+    ).style.display = "none";
 
 }
 
 
-/* ============================================================
+/* =====================================================
    MOSTRAR CONTROLES
-============================================================ */
+===================================================== */
 
-function mostrarControles(
-    controles
-) {
+function mostrarControles(datos) {
 
-    const container =
+    const contenedor =
         document.getElementById(
-            "controlesContainer"
+            "controles"
         );
 
 
-    container.innerHTML =
+    contenedor.innerHTML = "";
+
+
+    if (!datos || datos.length === 0) {
+
+        contenedor.innerHTML = `
+
+            <div class="message">
+
+                📅 No hay controles programados
+                para esta fecha.
+
+            </div>
+
+        `;
+
+        actualizarEstadisticas([]);
+
+        return;
+
+    }
+
+
+    datos.forEach(
+        function(item) {
+
+            const card =
+                crearTarjeta(item);
+
+            contenedor.appendChild(card);
+
+        }
+    );
+
+
+    actualizarEstadisticas(datos);
+
+}
+
+
+/* =====================================================
+   CREAR TARJETA
+===================================================== */
+
+function crearTarjeta(item) {
+
+    const card =
+        document.createElement(
+            "div"
+        );
+
+
+    const estado =
+        String(
+            item.estadoWeb || "PENDIENTE"
+        ).toUpperCase();
+
+
+    let claseEstado =
+        "badge-pendiente";
+
+
+    if (estado === "REALIZADO") {
+
+        claseEstado =
+            "badge-realizado";
+
+        card.classList.add(
+            "realizado"
+        );
+
+    }
+
+
+    if (estado === "CANCELADO") {
+
+        claseEstado =
+            "badge-cancelado";
+
+    }
+
+
+    card.className =
+        "control-card";
+
+
+    const controles =
+        item.controles || [];
+
+
+    let lista =
         "";
 
 
-    let pendientes = 0;
+    controles.forEach(
+        function(control) {
 
-    let realizados = 0;
+            lista += `
 
-    let cancelados = 0;
+                <li>
+                    ${escapeHTML(control)}
+                </li>
+
+            `;
+
+        }
+    );
+
+
+    let infoRealizado =
+        "";
 
 
     if (
-        !controles.length
+        estado === "REALIZADO"
+        &&
+        item.operador
     ) {
 
-        container.innerHTML =
+        infoRealizado = `
 
-            '<div class="empty">' +
+            <div class="completed-info">
 
-            'No hay controles programados para esta fecha.' +
+                🟢 Realizado por:
 
-            '</div>';
+                <strong>
+                    ${escapeHTML(item.operador)}
+                </strong>
+
+                ${
+                    item.fechaHora
+                    ? " · " + escapeHTML(item.fechaHora)
+                    : ""
+                }
+
+            </div>
+
+        `;
+
+    }
 
 
-        actualizarStats(
-            0,
-            0,
-            0,
-            0
+    let botones = "";
+
+
+    if (estado === "REALIZADO") {
+
+        botones = `
+
+            <button
+                class="button button-danger"
+                onclick="cancelarControl('${item.fila}')">
+
+                ↩️ CANCELAR REALIZACIÓN
+
+            </button>
+
+        `;
+
+    } else {
+
+        botones = `
+
+            <button
+                class="button button-success"
+                onclick="realizarControl('${item.fila}')">
+
+                ✓ MARCAR COMO REALIZADO
+
+            </button>
+
+        `;
+
+    }
+
+
+    card.innerHTML = `
+
+        <div class="control-header">
+
+            <h4>
+                ${escapeHTML(
+                    item.objetivo ||
+                    item.dispositivo ||
+                    "CONTROL"
+                )}
+            </h4>
+
+            <span
+                class="badge ${claseEstado}">
+
+                ${estado}
+
+            </span>
+
+        </div>
+
+
+        ${infoRealizado}
+
+
+        <ul class="control-list">
+
+            ${lista}
+
+        </ul>
+
+
+        <div class="buttons">
+
+            ${botones}
+
+        </div>
+
+    `;
+
+
+    return card;
+
+}
+
+
+/* =====================================================
+   MARCAR REALIZADO
+===================================================== */
+
+async function realizarControl(fila) {
+
+    const operador =
+        localStorage.getItem(
+            "segrup_operador"
+        );
+
+
+    if (!operador) {
+
+        alert(
+            "No se encontró el operador."
         );
 
         return;
@@ -1909,30 +1296,162 @@ function mostrarControles(
     }
 
 
-    controles.forEach(
-        function(control) {
+    const confirmar =
+        confirm(
+            "¿Confirmar que este control fue realizado?"
+        );
 
-            let estado =
+
+    if (!confirmar) return;
+
+
+    try {
+
+        const url =
+            API_URL +
+            "?action=realizarControl" +
+            "&fila=" +
+            encodeURIComponent(fila) +
+            "&operador=" +
+            encodeURIComponent(operador);
+
+
+        const respuesta =
+            await fetch(url);
+
+
+        const resultado =
+            await respuesta.json();
+
+
+        if (
+            resultado.success
+            ||
+            resultado.ok
+        ) {
+
+            alert(
+                "Control marcado como REALIZADO."
+            );
+
+            buscarFecha();
+
+        } else {
+
+            alert(
+                resultado.message ||
+                "No se pudo actualizar."
+            );
+
+        }
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Error al actualizar el control."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   CANCELAR
+===================================================== */
+
+async function cancelarControl(fila) {
+
+    const confirmar =
+        confirm(
+            "¿Cancelar la realización de este control?"
+        );
+
+
+    if (!confirmar) return;
+
+
+    try {
+
+        const url =
+            API_URL +
+            "?action=cancelarControl" +
+            "&fila=" +
+            encodeURIComponent(fila);
+
+
+        const respuesta =
+            await fetch(url);
+
+
+        const resultado =
+            await respuesta.json();
+
+
+        if (
+            resultado.success
+            ||
+            resultado.ok
+        ) {
+
+            alert(
+                "La realización fue cancelada."
+            );
+
+            buscarFecha();
+
+        } else {
+
+            alert(
+                resultado.message ||
+                "No se pudo cancelar."
+            );
+
+        }
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Error al cancelar el control."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   ESTADISTICAS
+===================================================== */
+
+function actualizarEstadisticas(datos) {
+
+    let pendientes = 0;
+
+    let realizados = 0;
+
+
+    datos.forEach(
+        function(item) {
+
+            const estado =
                 String(
-                    control.estadoWeb ||
-                    ""
-                )
-                .toUpperCase();
+                    item.estadoWeb ||
+                    "PENDIENTE"
+                ).toUpperCase();
 
 
             if (
-                estado ===
-                "REALIZADO"
+                estado === "REALIZADO"
             ) {
 
                 realizados++;
-
-            } else if (
-                estado ===
-                "CANCELADO"
-            ) {
-
-                cancelados++;
 
             } else {
 
@@ -1940,269 +1459,9 @@ function mostrarControles(
 
             }
 
-
-            const card =
-                document.createElement(
-                    "div"
-                );
-
-
-            card.className =
-                "control-card " +
-                (
-                    estado === "REALIZADO"
-                        ? "realizado"
-                        : estado === "CANCELADO"
-                            ? "cancelado"
-                            : ""
-                );
-
-
-            let badgeClass =
-                "";
-
-
-            if (
-                estado ===
-                "REALIZADO"
-            ) {
-
-                badgeClass =
-                    "realizado";
-
-            }
-
-
-            if (
-                estado ===
-                "CANCELADO"
-            ) {
-
-                badgeClass =
-                    "cancelado";
-
-            }
-
-
-            const estadoMostrar =
-                estado ||
-                "PENDIENTE";
-
-
-            let listaHTML =
-                "";
-
-
-            if (
-                control.detalle
-            ) {
-
-                const detalles =
-                    control.detalle
-                        .split(/\n|,/)
-                        .map(
-                            x => x.trim()
-                        )
-                        .filter(
-                            x => x
-                        );
-
-
-                if (
-                    detalles.length
-                ) {
-
-                    detalles.forEach(
-                        function(item) {
-
-                            listaHTML +=
-                                "<li>" +
-                                escaparHTML(
-                                    item
-                                ) +
-                                "</li>";
-
-                        }
-                    );
-
-                } else {
-
-                    listaHTML =
-                        "<li>" +
-                        escaparHTML(
-                            control.detalle
-                        ) +
-                        "</li>";
-
-                }
-
-            } else {
-
-                listaHTML =
-                    "<li>Control programado</li>";
-
-            }
-
-
-            let metaHTML =
-                "";
-
-
-            if (
-                control.operador
-            ) {
-
-                metaHTML +=
-                    "<strong>Operador:</strong> " +
-                    escaparHTML(
-                        control.operador
-                    ) +
-                    "<br>";
-
-            }
-
-
-            if (
-                control.fechaWeb
-            ) {
-
-                metaHTML +=
-                    "<strong>Fecha/hora:</strong> " +
-                    escaparHTML(
-                        control.fechaWeb
-                    );
-
-            }
-
-
-            if (
-                !metaHTML
-            ) {
-
-                metaHTML =
-                    "Aún no registrado.";
-
-            }
-
-
-            let botonesHTML =
-                "";
-
-
-            if (
-                estado !==
-                "REALIZADO" &&
-                estado !==
-                "CANCELADO"
-            ) {
-
-                botonesHTML =
-
-                    '<button class="button success" ' +
-
-                    'onclick="marcarRealizado(' +
-
-                    control.fila +
-
-                    ')">' +
-
-                    '🟢 REALIZADO' +
-
-                    '</button>' +
-
-
-                    '<button class="button cancel" ' +
-
-                    'onclick="abrirCancelacion(' +
-
-                    control.fila +
-
-                    ')">' +
-
-                    '⚪ CANCELAR' +
-
-                    '</button>';
-
-            }
-
-
-            card.innerHTML =
-
-                '<div class="control-header">' +
-
-                    '<h4>' +
-
-                        escaparHTML(
-                            control.dispositivo
-                        ) +
-
-                    '</h4>' +
-
-                    '<span class="badge ' +
-                    badgeClass +
-                    '">' +
-
-                        estadoMostrar +
-
-                    '</span>' +
-
-                '</div>' +
-
-
-                '<ul class="control-list">' +
-
-                    listaHTML +
-
-                '</ul>' +
-
-
-                '<div class="control-meta">' +
-
-                    metaHTML +
-
-                '</div>' +
-
-
-                '<div class="actions">' +
-
-                    botonesHTML +
-
-                '</div>';
-
-
-            container.appendChild(
-                card
-            );
-
         }
     );
 
-
-    actualizarStats(
-
-        pendientes,
-
-        realizados,
-
-        cancelados,
-
-        controles.length
-
-    );
-
-}
-
-
-/* ============================================================
-   ESTADISTICAS
-============================================================ */
-
-function actualizarStats(
-    pendientes,
-    realizados,
-    cancelados,
-    total
-) {
 
     document.getElementById(
         "pendientes"
@@ -2217,409 +1476,110 @@ function actualizarStats(
 
 
     document.getElementById(
-        "cancelados"
-    ).textContent =
-        cancelados;
-
-
-    document.getElementById(
         "semana"
     ).textContent =
-        total;
+        datos.length;
 
 }
 
 
-/* ============================================================
-   REALIZADO
-============================================================ */
+/* =====================================================
+   FORMATO FECHA
+===================================================== */
 
-function marcarRealizado(
-    fila
-) {
+function formatearFecha(fecha) {
+
+    const partes =
+        fecha.split("-");
+
+
+    if (partes.length !== 3)
+        return fecha;
+
+
+    return (
+        partes[2] +
+        "/" +
+        partes[1] +
+        "/" +
+        partes[0]
+    );
+
+}
+
+
+/* =====================================================
+   SEGURIDAD HTML
+===================================================== */
+
+function escapeHTML(texto) {
 
     if (
-        !confirm(
-            "¿Confirmás que este control fue realizado?"
-        )
+        texto === null ||
+        texto === undefined
     ) {
 
-        return;
+        return "";
 
     }
 
 
-    const mes =
-        document.getElementById(
-            "mesSelect"
-        ).value;
+    return String(texto)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
 
 
-    llamarAPI(
-        "realizado",
-        {
-            mes: mes,
+/* =====================================================
+   INICIO
+===================================================== */
 
-            fila: fila,
+window.addEventListener(
+    "DOMContentLoaded",
+    function() {
 
-            operador:
-                operadorActual
-        },
-        function(respuesta) {
-
-            if (
-                !respuesta.ok
-            ) {
-
-                alert(
-                    respuesta.error
-                );
-
-                return;
-
-            }
-
-
-            alert(
-                "Control marcado como REALIZADO."
+        const login =
+            localStorage.getItem(
+                "segrup_login"
             );
 
 
-            buscarControles();
+        if (login === "true") {
+
+            mostrarSistema();
 
         }
-    );
-
-}
-
-
-/* ============================================================
-   CANCELAR
-============================================================ */
-
-function abrirCancelacion(
-    fila
-) {
-
-    controlCancelar =
-        fila;
-
-
-    document.getElementById(
-        "motivoCancelacion"
-    ).value =
-        "";
-
-
-    document.getElementById(
-        "modalCancelar"
-    ).style.display =
-        "flex";
-
-}
-
-
-function cerrarModal() {
-
-    document.getElementById(
-        "modalCancelar"
-    ).style.display =
-        "none";
-
-
-    controlCancelar =
-        null;
-
-}
-
-
-function confirmarCancelacion() {
-
-    const motivo =
-        document.getElementById(
-            "motivoCancelacion"
-        ).value.trim();
-
-
-    if (!motivo) {
-
-        alert(
-            "Ingresá el motivo de la cancelación."
-        );
-
-        return;
 
     }
-
-
-    const mes =
-        document.getElementById(
-            "mesSelect"
-        ).value;
-
-
-    llamarAPI(
-        "cancelado",
-        {
-            mes: mes,
-
-            fila:
-                controlCancelar,
-
-            operador:
-                operadorActual,
-
-            motivo:
-                motivo
-
-        },
-        function(respuesta) {
-
-            if (
-                !respuesta.ok
-            ) {
-
-                alert(
-                    respuesta.error
-                );
-
-                return;
-
-            }
-
-
-            cerrarModal();
-
-
-            alert(
-                "Control cancelado correctamente."
-            );
-
-
-            buscarControles();
-
-        }
-    );
-
-}
-
-
-/* ============================================================
-   HISTORICO
-============================================================ */
-
-function cargarHistorico() {
-
-    const mes =
-        document.getElementById(
-            "mesSelect"
-        ).value;
-
-
-    const container =
-        document.getElementById(
-            "historicoContainer"
-        );
-
-
-    container.innerHTML =
-        '<div class="loading">Cargando histórico...</div>';
-
-
-    llamarAPI(
-        "historico",
-        {
-            mes: mes
-        },
-        function(respuesta) {
-
-            if (
-                !respuesta.ok
-            ) {
-
-                container.innerHTML =
-                    '<div class="empty">' +
-                    escaparHTML(
-                        respuesta.error
-                    ) +
-                    '</div>';
-
-                return;
-
-            }
-
-
-            if (
-                !respuesta.historico.length
-            ) {
-
-                container.innerHTML =
-                    '<div class="empty">' +
-                    'Todavía no hay movimientos registrados.' +
-                    '</div>';
-
-                return;
-
-            }
-
-
-            container.innerHTML =
-                "";
-
-
-            respuesta.historico
-                .slice(0, 30)
-                .forEach(
-                    function(item) {
-
-                        const card =
-                            document.createElement(
-                                "div"
-                            );
-
-
-                        card.className =
-                            "history-card";
-
-
-                        const clase =
-                            item.accion ===
-                            "REALIZADO"
-                                ? "realizado"
-                                : "cancelado";
-
-
-                        card.innerHTML =
-
-                            '<div class="history-top">' +
-
-                                '<span class="history-action ' +
-                                clase +
-                                '">' +
-
-                                    escaparHTML(
-                                        item.accion
-                                    ) +
-
-                                '</span>' +
-
-                                '<span>' +
-
-                                    escaparHTML(
-                                        item.fechaHora
-                                    ) +
-
-                                '</span>' +
-
-                            '</div>' +
-
-
-                            '<div class="history-details">' +
-
-                                '<strong>Operador:</strong> ' +
-                                escaparHTML(
-                                    item.operador
-                                ) +
-
-                                '<br>' +
-
-                                '<strong>Objetivo:</strong> ' +
-                                escaparHTML(
-                                    item.dispositivo
-                                ) +
-
-                                '<br>' +
-
-                                '<strong>Fecha control:</strong> ' +
-                                escaparHTML(
-                                    item.fechaControl
-                                ) +
-
-
-                                (
-                                    item.motivo
-                                        ? '<br><strong>Motivo:</strong> ' +
-                                          escaparHTML(
-                                              item.motivo
-                                          )
-                                        : ""
-                                ) +
-
-                            '</div>';
-
-
-                        container.appendChild(
-                            card
-                        );
-
-                    }
-                );
-
-        }
-    );
-
-}
-
-
-/* ============================================================
-   LOADING
-============================================================ */
-
-function mostrarLoading() {
-
-    document.getElementById(
-        "controlesContainer"
-    ).innerHTML =
-
-        '<div class="loading">' +
-
-        '🔄 Consultando controles...' +
-
-        '</div>';
-
-}
-
-
-/* ============================================================
-   ESCAPAR HTML
-============================================================ */
-
-function escaparHTML(
-    texto
-) {
-
-    return String(
-        texto || ""
-    )
-
-    .replace(
-        /&/g,
-        "&amp;"
-    )
-
-    .replace(
-        /</g,
-        "&lt;"
-    )
-
-    .replace(
-        />/g,
-        "&gt;"
-    )
-
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-
-    .replace(
-        /'/g,
-        "&#039;"
-    );
-
-}
+);
 
 </script>
 
+
 </body>
+
 </html>
