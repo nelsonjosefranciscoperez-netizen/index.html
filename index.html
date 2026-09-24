@@ -1980,95 +1980,74 @@ async function iniciarSesion() {
             .value
             .trim();
 
-
     if (!password) {
-
-        mostrarLoginError(
-            "Ingrese la clave."
-        );
-
+        mostrarLoginError("Ingrese la clave.");
         return;
-
     }
 
-
     try {
+        /*
+         * El Apps Script actual valida la contraseña en las
+         * acciones de la API. No usamos una acción "login"
+         * separada: hacemos una consulta real para comprobarla.
+         */
+        const hoy = new Date();
+        const yyyy = hoy.getFullYear();
+        const mm = String(hoy.getMonth() + 1).padStart(2, "0");
+        const dd = String(hoy.getDate()).padStart(2, "0");
+        const fechaHoy = yyyy + "-" + mm + "-" + dd;
 
         const url =
             API_URL +
-            "?action=login" +
-            "&password=" +
-            encodeURIComponent(
-                password
-            );
+            "?action=obtenerControles" +
+            "&fecha=" + encodeURIComponent(fechaHoy) +
+            "&password=" + encodeURIComponent(password);
 
+        const respuesta = await fetch(url, {
+            method: "GET",
+            cache: "no-store"
+        });
 
-        const respuesta =
-            await fetch(
-                url
-            );
+        const datos = await respuesta.json();
 
+        /* Una respuesta tipo array significa que la API aceptó la clave. */
+        if (Array.isArray(datos)) {
 
-        const datos =
-            await respuesta.json();
-
-
-        if (
-            datos.success &&
-            datos.authenticated
-        ) {
-
-            PASSWORD =
-                password;
-
+            PASSWORD = password;
 
             sessionStorage.setItem(
                 "segrup_password",
                 password
             );
 
+            document
+                .getElementById("loginScreen")
+                .style.display = "none";
 
             document
-                .getElementById(
-                    "loginScreen"
-                )
-                .style.display =
-                "none";
-
+                .getElementById("app")
+                .style.display = "block";
 
             document
-                .getElementById(
-                    "app"
-                )
-                .style.display =
-                "block";
-
-
-            document
-                .getElementById(
-                    "passwordInput"
-                )
+                .getElementById("passwordInput")
                 .value = "";
-
 
             cargarControles();
 
         } else {
 
             mostrarLoginError(
-                "Clave incorrecta."
+                datos.message || "Clave incorrecta."
             );
 
         }
 
     } catch (error) {
 
-        mostrarLoginError(
-            "No se pudo conectar con el sistema."
-        );
+        console.error(error);
 
-        console.error(
-            error
+        mostrarLoginError(
+            "No se pudo conectar con el sistema. Verifique la implementación de Apps Script."
         );
 
     }
@@ -2084,45 +2063,34 @@ async function comprobarSesion() {
 
     try {
 
+        const hoy = new Date();
+        const yyyy = hoy.getFullYear();
+        const mm = String(hoy.getMonth() + 1).padStart(2, "0");
+        const dd = String(hoy.getDate()).padStart(2, "0");
+        const fechaHoy = yyyy + "-" + mm + "-" + dd;
+
         const url =
             API_URL +
-            "?action=login" +
-            "&password=" +
-            encodeURIComponent(
-                PASSWORD
-            );
+            "?action=obtenerControles" +
+            "&fecha=" + encodeURIComponent(fechaHoy) +
+            "&password=" + encodeURIComponent(PASSWORD);
 
+        const respuesta = await fetch(url, {
+            method: "GET",
+            cache: "no-store"
+        });
 
-        const respuesta =
-            await fetch(
-                url
-            );
+        const datos = await respuesta.json();
 
-
-        const datos =
-            await respuesta.json();
-
-
-        if (
-            datos.success &&
-            datos.authenticated
-        ) {
+        if (Array.isArray(datos)) {
 
             document
-                .getElementById(
-                    "loginScreen"
-                )
-                .style.display =
-                "none";
-
+                .getElementById("loginScreen")
+                .style.display = "none";
 
             document
-                .getElementById(
-                    "app"
-                )
-                .style.display =
-                "block";
-
+                .getElementById("app")
+                .style.display = "block";
 
             cargarControles();
 
@@ -2134,6 +2102,7 @@ async function comprobarSesion() {
 
     } catch (error) {
 
+        console.error(error);
         cerrarSesion();
 
     }
