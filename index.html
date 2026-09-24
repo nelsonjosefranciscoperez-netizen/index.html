@@ -5,10 +5,15 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <title>Control de Servicios - SEGRUP</title>
+    <title>
+        Control de Servicios - SEGRUP
+    </title>
+
 
     <style>
 
@@ -18,483 +23,1480 @@
             padding: 0;
         }
 
+
         body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f4f6f9;
-            color: #1f2937;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                #f4f6f9;
+
+            color:
+                #1f2937;
+
+            min-height:
+                100vh;
+
         }
 
-        /* =========================
+
+        /* =====================================================
            LOGIN
-        ========================= */
+        ===================================================== */
 
         #loginScreen {
-            position: fixed;
-            inset: 0;
-            background: #f4f6f9;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
+
+            position:
+                fixed;
+
+            inset:
+                0;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #003b73,
+                    #064b91
+                );
+
+            display:
+                flex;
+
+            justify-content:
+                center;
+
+            align-items:
+                center;
+
+            z-index:
+                9999;
+
+            padding:
+                20px;
+
         }
+
 
         .login-box {
-            width: 90%;
-            max-width: 400px;
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.12);
-            text-align: center;
+
+            background:
+                white;
+
+            width:
+                100%;
+
+            max-width:
+                420px;
+
+            border-radius:
+                18px;
+
+            padding:
+                35px;
+
+            box-shadow:
+                0 20px 60px
+                rgba(0,0,0,0.25);
+
+            text-align:
+                center;
+
         }
+
 
         .login-logo {
-            width: 230px;
-            max-width: 80%;
-            margin-bottom: 25px;
+
+            max-width:
+                270px;
+
+            max-height:
+                110px;
+
+            object-fit:
+                contain;
+
+            margin-bottom:
+                25px;
+
         }
+
 
         .login-box h2 {
-            color: #064b91;
-            margin-bottom: 8px;
+
+            color:
+                #064b91;
+
+            margin-bottom:
+                8px;
+
         }
+
 
         .login-box p {
-            color: #6b7280;
-            margin-bottom: 25px;
-            font-size: 14px;
+
+            color:
+                #6b7280;
+
+            margin-bottom:
+                25px;
+
+            font-size:
+                14px;
+
         }
+
 
         .login-input {
-            width: 100%;
-            padding: 13px;
-            border: 1px solid #d1d5db;
-            border-radius: 7px;
-            font-size: 15px;
-            margin-bottom: 12px;
+
+            width:
+                100%;
+
+            padding:
+                13px 15px;
+
+            border:
+                1px solid #d1d5db;
+
+            border-radius:
+                8px;
+
+            font-size:
+                15px;
+
+            outline:
+                none;
+
+            margin-bottom:
+                12px;
+
         }
+
+
+        .login-input:focus {
+
+            border-color:
+                #064b91;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(6,75,145,0.12);
+
+        }
+
 
         .login-button {
-            width: 100%;
-            padding: 13px;
-            border: none;
-            border-radius: 7px;
-            background: #064b91;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 15px;
+
+            width:
+                100%;
+
+            border:
+                none;
+
+            background:
+                #064b91;
+
+            color:
+                white;
+
+            padding:
+                13px;
+
+            border-radius:
+                8px;
+
+            cursor:
+                pointer;
+
+            font-size:
+                15px;
+
+            font-weight:
+                bold;
+
         }
+
 
         .login-button:hover {
-            background: #04386d;
+
+            background:
+                #04386d;
+
         }
+
 
         .login-error {
-            color: #dc2626;
-            font-size: 13px;
-            margin-top: 12px;
-            display: none;
+
+            color:
+                #dc2626;
+
+            font-size:
+                13px;
+
+            margin-top:
+                12px;
+
+            display:
+                none;
+
         }
 
-        /* =========================
+
+        /* =====================================================
+           APP
+        ===================================================== */
+
+        #app {
+
+            display:
+                none;
+
+        }
+
+
+        /* =====================================================
            HEADER
-        ========================= */
+        ===================================================== */
 
         header {
-            height: 90px;
-            background: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 40px;
-            border-bottom: 4px solid #064b91;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+
+            height:
+                90px;
+
+            background:
+                #ffffff;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            padding:
+                0 40px;
+
+            border-bottom:
+                4px solid #064b91;
+
+            box-shadow:
+                0 2px 8px
+                rgba(0,0,0,0.08);
+
         }
+
 
         .logo {
-            height: 65px;
-            width: auto;
+
+            height:
+                65px;
+
+            width:
+                auto;
+
+            object-fit:
+                contain;
+
         }
+
+
+        .header-right {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                18px;
+
+        }
+
 
         .header-info {
-            text-align: right;
+
+            text-align:
+                right;
+
         }
+
 
         .header-info h1 {
-            font-size: 20px;
-            color: #064b91;
-            margin-bottom: 5px;
+
+            font-size:
+                20px;
+
+            color:
+                #064b91;
+
+            margin-bottom:
+                5px;
+
         }
+
 
         .header-info p {
-            font-size: 14px;
-            color: #6b7280;
+
+            font-size:
+                14px;
+
+            color:
+                #6b7280;
+
         }
 
-        /* =========================
-           OPERADOR
-        ========================= */
-
-        .operator-box {
-            background: white;
-            margin-bottom: 20px;
-            padding: 15px 20px;
-            border-radius: 10px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .operator-name {
-            color: #064b91;
-            font-weight: bold;
-        }
 
         .logout-button {
-            border: none;
-            background: #e5e7eb;
-            color: #374151;
-            padding: 8px 14px;
-            border-radius: 6px;
-            cursor: pointer;
+
+            border:
+                1px solid #d1d5db;
+
+            background:
+                white;
+
+            color:
+                #374151;
+
+            padding:
+                9px 13px;
+
+            border-radius:
+                7px;
+
+            cursor:
+                pointer;
+
+            font-size:
+                12px;
+
         }
 
-        /* =========================
+
+        .logout-button:hover {
+
+            background:
+                #f3f4f6;
+
+        }
+
+
+        /* =====================================================
            CONTENEDOR
-        ========================= */
+        ===================================================== */
 
         .container {
-            max-width: 1200px;
-            margin: 35px auto;
-            padding: 0 20px;
+
+            max-width:
+                1200px;
+
+            margin:
+                35px auto;
+
+            padding:
+                0 20px;
+
         }
 
-        /* =========================
+
+        /* =====================================================
            TITULO
-        ========================= */
+        ===================================================== */
 
         .title {
-            margin-bottom: 25px;
+
+            margin-bottom:
+                25px;
+
         }
+
 
         .title h2 {
-            font-size: 28px;
-            color: #064b91;
+
+            font-size:
+                28px;
+
+            color:
+                #064b91;
+
         }
+
 
         .title p {
-            margin-top: 5px;
-            color: #6b7280;
+
+            margin-top:
+                5px;
+
+            color:
+                #6b7280;
+
         }
 
-        /* =========================
-           BUSCADOR FECHA
-        ========================= */
 
-        .date-search {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        /* =====================================================
+           BARRA DE FECHA
+        ===================================================== */
+
+        .date-panel {
+
+            background:
+                white;
+
+            border-radius:
+                12px;
+
+            padding:
+                20px;
+
+            margin-bottom:
+                25px;
+
+            box-shadow:
+                0 3px 12px
+                rgba(0,0,0,0.06);
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                end;
+
+            gap:
+                20px;
+
+            flex-wrap:
+                wrap;
+
         }
 
-        .date-search label {
-            display: block;
-            font-size: 13px;
-            color: #6b7280;
-            margin-bottom: 7px;
+
+        .date-field {
+
+            flex:
+                1;
+
+            min-width:
+                230px;
+
         }
 
-        .date-row {
-            display: flex;
-            gap: 10px;
+
+        .date-field label {
+
+            display:
+                block;
+
+            font-size:
+                13px;
+
+            font-weight:
+                bold;
+
+            color:
+                #374151;
+
+            margin-bottom:
+                7px;
+
         }
+
 
         .date-input {
-            flex: 1;
-            padding: 11px;
-            border: 1px solid #d1d5db;
-            border-radius: 7px;
-            font-size: 15px;
+
+            width:
+                100%;
+
+            padding:
+                11px 12px;
+
+            border:
+                1px solid #d1d5db;
+
+            border-radius:
+                7px;
+
+            font-size:
+                15px;
+
         }
+
+
+        .operator-field {
+
+            flex:
+                1;
+
+            min-width:
+                230px;
+
+        }
+
+
+        .operator-field label {
+
+            display:
+                block;
+
+            font-size:
+                13px;
+
+            font-weight:
+                bold;
+
+            color:
+                #374151;
+
+            margin-bottom:
+                7px;
+
+        }
+
+
+        .operator-input {
+
+            width:
+                100%;
+
+            padding:
+                11px 12px;
+
+            border:
+                1px solid #d1d5db;
+
+            border-radius:
+                7px;
+
+            font-size:
+                15px;
+
+        }
+
 
         .search-button {
-            border: none;
-            background: #064b91;
-            color: white;
-            padding: 11px 20px;
-            border-radius: 7px;
-            cursor: pointer;
-            font-weight: bold;
+
+            border:
+                none;
+
+            background:
+                #064b91;
+
+            color:
+                white;
+
+            padding:
+                12px 22px;
+
+            border-radius:
+                7px;
+
+            cursor:
+                pointer;
+
+            font-weight:
+                bold;
+
+            white-space:
+                nowrap;
+
         }
 
-        /* =========================
+
+        .search-button:hover {
+
+            background:
+                #04386d;
+
+        }
+
+
+        /* =====================================================
            ESTADISTICAS
-        ========================= */
+        ===================================================== */
 
         .stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-bottom: 35px;
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap:
+                20px;
+
+            margin-bottom:
+                35px;
+
         }
+
 
         .stat {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
-            display: flex;
-            align-items: center;
-            gap: 18px;
+
+            background:
+                white;
+
+            border-radius:
+                12px;
+
+            padding:
+                22px;
+
+            box-shadow:
+                0 3px 12px
+                rgba(0,0,0,0.06);
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                18px;
+
         }
+
 
         .stat-icon {
-            font-size: 30px;
+
+            font-size:
+                30px;
+
         }
+
 
         .stat-number {
-            font-size: 28px;
-            font-weight: bold;
+
+            font-size:
+                28px;
+
+            font-weight:
+                bold;
+
         }
+
 
         .stat-label {
-            color: #6b7280;
-            font-size: 14px;
-            margin-top: 3px;
+
+            color:
+                #6b7280;
+
+            font-size:
+                14px;
+
+            margin-top:
+                3px;
+
         }
+
 
         .pending {
-            color: #dc2626;
+
+            color:
+                #dc2626;
+
         }
+
 
         .completed {
-            color: #16a34a;
+
+            color:
+                #16a34a;
+
         }
+
 
         .week {
-            color: #064b91;
+
+            color:
+                #064b91;
+
         }
 
-        /* =========================
-           SECCION
-        ========================= */
+
+        /* =====================================================
+           TITULO SECCION
+        ===================================================== */
 
         .section-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+
+            margin-bottom:
+                15px;
+
         }
+
 
         .section-title h3 {
-            color: #1f2937;
+
+            color:
+                #1f2937;
+
         }
+
 
         .date {
-            color: #6b7280;
-            font-size: 14px;
+
+            color:
+                #6b7280;
+
+            font-size:
+                14px;
+
         }
 
-        /* =========================
-           TARJETAS
-        ========================= */
 
-        .control-card {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 18px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
-            border-left: 5px solid #064b91;
-        }
-
-        .control-card.realizado {
-            border-left-color: #16a34a;
-        }
-
-        .control-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 18px;
-            gap: 10px;
-        }
-
-        .control-header h4 {
-            font-size: 20px;
-            color: #064b91;
-        }
-
-        .badge {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .badge-pendiente {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .badge-realizado {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .badge-cancelado {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        .control-list {
-            list-style: none;
-            margin-bottom: 20px;
-        }
-
-        .control-list li {
-            padding: 8px 0;
-            border-bottom: 1px solid #eeeeee;
-            font-size: 15px;
-        }
-
-        .control-list li:last-child {
-            border-bottom: none;
-        }
-
-        .control-list li::before {
-            content: "🔍";
-            margin-right: 10px;
-        }
-
-        /* =========================
-           BOTONES
-        ========================= */
-
-        .buttons {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .button {
-            border: none;
-            background: #064b91;
-            color: white;
-            padding: 11px 20px;
-            border-radius: 7px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .button:hover {
-            background: #04386d;
-        }
-
-        .button-success {
-            background: #16a34a;
-        }
-
-        .button-success:hover {
-            background: #15803d;
-        }
-
-        .button-danger {
-            background: #dc2626;
-        }
-
-        .button-danger:hover {
-            background: #b91c1c;
-        }
-
-        .button-secondary {
-            background: #6b7280;
-        }
-
-        /* =========================
-           INFO REALIZADO
-        ========================= */
-
-        .completed-info {
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            padding: 12px;
-            border-radius: 7px;
-            margin-bottom: 15px;
-            font-size: 13px;
-            color: #166534;
-        }
-
-        /* =========================
+        /* =====================================================
            MENSAJES
-        ========================= */
+        ===================================================== */
 
         .message {
-            padding: 20px;
-            text-align: center;
-            background: white;
-            border-radius: 10px;
-            color: #6b7280;
-            margin-bottom: 20px;
+
+            background:
+                white;
+
+            border-radius:
+                12px;
+
+            padding:
+                35px;
+
+            text-align:
+                center;
+
+            color:
+                #6b7280;
+
+            box-shadow:
+                0 3px 12px
+                rgba(0,0,0,0.06);
+
+            margin-bottom:
+                18px;
+
         }
+
+
+        .message.error {
+
+            color:
+                #dc2626;
+
+        }
+
+
+        /* =====================================================
+           TARJETAS
+        ===================================================== */
+
+        .control-card {
+
+            background:
+                white;
+
+            border-radius:
+                12px;
+
+            padding:
+                25px;
+
+            margin-bottom:
+                18px;
+
+            box-shadow:
+                0 3px 12px
+                rgba(0,0,0,0.06);
+
+            border-left:
+                5px solid #064b91;
+
+        }
+
+
+        .control-card.realizado {
+
+            border-left-color:
+                #16a34a;
+
+        }
+
+
+        .control-card.cancelado {
+
+            border-left-color:
+                #dc2626;
+
+        }
+
+
+        .control-header {
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+
+            margin-bottom:
+                18px;
+
+            gap:
+                15px;
+
+        }
+
+
+        .control-header h4 {
+
+            font-size:
+                19px;
+
+            color:
+                #064b91;
+
+        }
+
+
+        .badge {
+
+            padding:
+                6px 12px;
+
+            border-radius:
+                20px;
+
+            font-size:
+                11px;
+
+            font-weight:
+                bold;
+
+            white-space:
+                nowrap;
+
+        }
+
+
+        .badge-pendiente {
+
+            background:
+                #fff3cd;
+
+            color:
+                #856404;
+
+        }
+
+
+        .badge-realizado {
+
+            background:
+                #dcfce7;
+
+            color:
+                #166534;
+
+        }
+
+
+        .badge-cancelado {
+
+            background:
+                #fee2e2;
+
+            color:
+                #991b1b;
+
+        }
+
+
+        .control-list {
+
+            list-style:
+                none;
+
+            margin-bottom:
+                20px;
+
+        }
+
+
+        .control-list li {
+
+            padding:
+                9px 0;
+
+            border-bottom:
+                1px solid #eeeeee;
+
+            font-size:
+                15px;
+
+        }
+
+
+        .control-list li:last-child {
+
+            border-bottom:
+                none;
+
+        }
+
+
+        .control-list li::before {
+
+            content:
+                "🔍";
+
+            margin-right:
+                10px;
+
+        }
+
+
+        .control-info {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap:
+                10px;
+
+            margin-bottom:
+                20px;
+
+        }
+
+
+        .info-box {
+
+            background:
+                #f8fafc;
+
+            border-radius:
+                7px;
+
+            padding:
+                10px;
+
+        }
+
+
+        .info-box strong {
+
+            display:
+                block;
+
+            font-size:
+                11px;
+
+            color:
+                #6b7280;
+
+            text-transform:
+                uppercase;
+
+            margin-bottom:
+                4px;
+
+        }
+
+
+        .info-box span {
+
+            font-size:
+                13px;
+
+            color:
+                #1f2937;
+
+        }
+
+
+        .control-actions {
+
+            display:
+                flex;
+
+            gap:
+                10px;
+
+            flex-wrap:
+                wrap;
+
+        }
+
+
+        .button {
+
+            border:
+                none;
+
+            color:
+                white;
+
+            padding:
+                11px 20px;
+
+            border-radius:
+                7px;
+
+            cursor:
+                pointer;
+
+            font-weight:
+                bold;
+
+        }
+
+
+        .button-realizar {
+
+            background:
+                #16a34a;
+
+        }
+
+
+        .button-realizar:hover {
+
+            background:
+                #15803d;
+
+        }
+
+
+        .button-cancelar {
+
+            background:
+                #dc2626;
+
+        }
+
+
+        .button-cancelar:hover {
+
+            background:
+                #b91c1c;
+
+        }
+
+
+        .button:disabled {
+
+            opacity:
+                0.6;
+
+            cursor:
+                not-allowed;
+
+        }
+
+
+        /* =====================================================
+           HISTORICO
+        ===================================================== */
+
+        .history-section {
+
+            margin-top:
+                45px;
+
+        }
+
+
+        .history-button {
+
+            border:
+                none;
+
+            background:
+                #374151;
+
+            color:
+                white;
+
+            padding:
+                10px 16px;
+
+            border-radius:
+                7px;
+
+            cursor:
+                pointer;
+
+            font-weight:
+                bold;
+
+        }
+
+
+        .history-list {
+
+            display:
+                none;
+
+            background:
+                white;
+
+            border-radius:
+                12px;
+
+            box-shadow:
+                0 3px 12px
+                rgba(0,0,0,0.06);
+
+            overflow:
+                hidden;
+
+        }
+
+
+        .history-item {
+
+            padding:
+                15px 18px;
+
+            border-bottom:
+                1px solid #eeeeee;
+
+            display:
+                grid;
+
+            grid-template-columns:
+                160px 100px 1fr 150px;
+
+            gap:
+                15px;
+
+            align-items:
+                center;
+
+            font-size:
+                13px;
+
+        }
+
+
+        .history-item:last-child {
+
+            border-bottom:
+                none;
+
+        }
+
+
+        .history-action {
+
+            font-weight:
+                bold;
+
+        }
+
+
+        .history-realizado {
+
+            color:
+                #16a34a;
+
+        }
+
+
+        .history-cancelado {
+
+            color:
+                #dc2626;
+
+        }
+
+
+        /* =====================================================
+           LOADING
+        ===================================================== */
 
         .loading {
-            display: none;
+
+            display:
+                none;
+
+            text-align:
+                center;
+
+            padding:
+                30px;
+
+            color:
+                #6b7280;
+
         }
 
-        /* =========================
+
+        .spinner {
+
+            width:
+                30px;
+
+            height:
+                30px;
+
+            border:
+                4px solid #e5e7eb;
+
+            border-top:
+                4px solid #064b91;
+
+            border-radius:
+                50%;
+
+            animation:
+                spin 0.8s linear infinite;
+
+            margin:
+                0 auto 10px;
+
+        }
+
+
+        @keyframes spin {
+
+            to {
+                transform:
+                    rotate(360deg);
+            }
+
+        }
+
+
+        /* =====================================================
            FOOTER
-        ========================= */
+        ===================================================== */
 
         footer {
-            text-align: center;
-            color: #9ca3af;
-            font-size: 13px;
-            padding: 30px;
+
+            text-align:
+                center;
+
+            color:
+                #9ca3af;
+
+            font-size:
+                13px;
+
+            padding:
+                30px;
+
         }
 
-        /* =========================
-           RESPONSIVE
-        ========================= */
 
-        @media (max-width: 700px) {
+        /* =====================================================
+           TOAST
+        ===================================================== */
+
+        #toast {
+
+            position:
+                fixed;
+
+            right:
+                25px;
+
+            bottom:
+                25px;
+
+            background:
+                #1f2937;
+
+            color:
+                white;
+
+            padding:
+                14px 18px;
+
+            border-radius:
+                8px;
+
+            box-shadow:
+                0 8px 25px
+                rgba(0,0,0,0.2);
+
+            display:
+                none;
+
+            z-index:
+                10000;
+
+            max-width:
+                350px;
+
+            font-size:
+                14px;
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 800px) {
 
             header {
-                padding: 0 15px;
+
+                height:
+                    auto;
+
+                min-height:
+                    90px;
+
+                padding:
+                    15px;
+
             }
+
+
+            .header-right {
+
+                gap:
+                    8px;
+
+            }
+
 
             .logo {
-                height: 50px;
+
+                height:
+                    50px;
+
             }
+
 
             .header-info h1 {
-                font-size: 15px;
+
+                font-size:
+                    15px;
+
             }
+
+
+            .header-info p {
+
+                font-size:
+                    12px;
+
+            }
+
 
             .stats {
-                grid-template-columns: 1fr;
+
+                grid-template-columns:
+                    1fr;
+
             }
 
-            .container {
-                margin-top: 25px;
+
+            .control-info {
+
+                grid-template-columns:
+                    1fr;
+
             }
 
-            .date-row {
-                flex-direction: column;
+
+            .history-item {
+
+                grid-template-columns:
+                    1fr;
+
+                gap:
+                    5px;
+
             }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .header-info {
+
+                display:
+                    none;
+
+            }
+
+
+            .header-right {
+
+                margin-left:
+                    auto;
+
+            }
+
+
+            .date-panel {
+
+                flex-direction:
+                    column;
+
+                align-items:
+                    stretch;
+
+            }
+
 
             .search-button {
-                width: 100%;
+
+                width:
+                    100%;
+
             }
 
-            .operator-box {
-                flex-direction: column;
-                align-items: flex-start;
+
+            .control-header {
+
+                align-items:
+                    flex-start;
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .control-actions {
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .button {
+
+                width:
+                    100%;
+
             }
 
         }
@@ -507,46 +1509,52 @@
 <body>
 
 
-<!-- =====================================================
+<!-- =========================================================
      LOGIN
-===================================================== -->
+========================================================= -->
 
 <div id="loginScreen">
 
     <div class="login-box">
 
-        <img src="assets/logo-segrup.png"
-             class="login-logo"
-             alt="SEGRUP">
+        <img
+            src="logo-segrup.png"
+            alt="SEGRUP Seguridad"
+            class="login-logo"
+        >
 
-        <h2>Control de Servicios</h2>
+        <h2>
+            Control de Servicios
+        </h2>
 
         <p>
-            Sistema interno de seguimiento
+            Sistema interno de control operativo
         </p>
+
 
         <input
             type="password"
             id="passwordInput"
             class="login-input"
             placeholder="Ingrese la clave"
-            onkeydown="if(event.key === 'Enter') ingresar()"
+            autocomplete="current-password"
+            onkeydown="if(event.key === 'Enter') iniciarSesion()"
         >
+
 
         <button
             class="login-button"
-            onclick="ingresar()">
-
+            onclick="iniciarSesion()"
+        >
             INGRESAR
-
         </button>
+
 
         <div
             id="loginError"
-            class="login-error">
-
+            class="login-error"
+        >
             Clave incorrecta.
-
         </div>
 
     </div>
@@ -554,26 +1562,41 @@
 </div>
 
 
+<!-- =========================================================
+     APLICACIÓN
+========================================================= -->
 
-<!-- =====================================================
-     SISTEMA
-===================================================== -->
-
-<div id="app" style="display:none;">
+<div id="app">
 
 
 <header>
 
     <img
-        src="assets/logo-segrup.png"
+        src="logo-segrup.png"
         alt="SEGRUP Seguridad"
-        class="logo">
+        class="logo"
+    >
 
-    <div class="header-info">
 
-        <h1>CONTROL DE SERVICIOS</h1>
+    <div class="header-right">
 
-        <p id="fechaActual"></p>
+        <div class="header-info">
+
+            <h1>
+                CONTROL DE SERVICIOS
+            </h1>
+
+            <p id="fechaActual"></p>
+
+        </div>
+
+
+        <button
+            class="logout-button"
+            onclick="cerrarSesion()"
+        >
+            SALIR
+        </button>
 
     </div>
 
@@ -584,34 +1607,9 @@
 <main class="container">
 
 
-    <!-- OPERADOR -->
-
-    <div class="operator-box">
-
-        <div>
-
-            Operador:
-
-            <span
-                class="operator-name"
-                id="operadorActual">
-            </span>
-
-        </div>
-
-        <button
-            class="logout-button"
-            onclick="cerrarSesion()">
-
-            CERRAR SESIÓN
-
-        </button>
-
-    </div>
-
-
-
-    <!-- TITULO -->
+    <!-- =====================================================
+         TITULO
+    ====================================================== -->
 
     <div class="title">
 
@@ -627,38 +1625,69 @@
 
 
 
-    <!-- BUSCADOR -->
+    <!-- =====================================================
+         SELECTOR
+    ====================================================== -->
 
-    <div class="date-search">
+    <section class="date-panel">
 
-        <label>
-            Fecha de control
-        </label>
 
-        <div class="date-row">
+        <div class="date-field">
+
+            <label for="fechaSeleccionada">
+                FECHA DE CONSULTA
+            </label>
 
             <input
                 type="date"
-                id="fechaBusqueda"
-                class="date-input">
-
-            <button
-                class="search-button"
-                onclick="buscarFecha()">
-
-                🔎 BUSCAR
-
-            </button>
+                id="fechaSeleccionada"
+                class="date-input"
+            >
 
         </div>
 
-    </div>
+
+
+        <div class="operator-field">
+
+            <label for="operador">
+
+                OPERADOR
+
+            </label>
+
+            <input
+                type="text"
+                id="operador"
+                class="operator-input"
+                placeholder="Ej: PEREZ"
+                autocomplete="off"
+            >
+
+        </div>
 
 
 
-    <!-- ESTADISTICAS -->
+        <button
+            class="search-button"
+            onclick="cargarControles()"
+        >
+
+            🔎 BUSCAR CONTROLES
+
+        </button>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         ESTADISTICAS
+    ====================================================== -->
 
     <section class="stats">
+
 
         <div class="stat">
 
@@ -670,10 +1699,9 @@
 
                 <div
                     class="stat-number pending"
-                    id="pendientes">
-
+                    id="pendientes"
+                >
                     0
-
                 </div>
 
                 <div class="stat-label">
@@ -696,10 +1724,9 @@
 
                 <div
                     class="stat-number completed"
-                    id="realizados">
-
+                    id="realizados"
+                >
                     0
-
                 </div>
 
                 <div class="stat-label">
@@ -722,10 +1749,9 @@
 
                 <div
                     class="stat-number week"
-                    id="semana">
-
+                    id="semana"
+                >
                     0
-
                 </div>
 
                 <div class="stat-label">
@@ -736,11 +1762,14 @@
 
         </div>
 
+
     </section>
 
 
 
-    <!-- TITULO FECHA -->
+    <!-- =====================================================
+         CONTROLES
+    ====================================================== -->
 
     <div class="section-title">
 
@@ -750,28 +1779,65 @@
 
         <span
             class="date"
-            id="fechaControl">
-        </span>
+            id="fechaControl"
+        ></span>
 
     </div>
 
 
-
-    <!-- LOADING -->
 
     <div
         id="loading"
-        class="message loading">
+        class="loading"
+    >
 
-        ⏳ Cargando controles...
+        <div class="spinner"></div>
+
+        <div>
+            Cargando controles...
+        </div>
 
     </div>
 
 
 
-    <!-- CONTROLES -->
+    <div id="controlesContainer"></div>
 
-    <div id="controles"></div>
+
+
+    <!-- =====================================================
+         HISTORICO
+    ====================================================== -->
+
+    <section class="history-section">
+
+
+        <div class="section-title">
+
+            <h3>
+                Histórico de acciones
+            </h3>
+
+
+            <button
+                class="history-button"
+                onclick="mostrarHistorico()"
+            >
+
+                📜 VER HISTÓRICO
+
+            </button>
+
+        </div>
+
+
+        <div
+            id="historyList"
+            class="history-list"
+        ></div>
+
+
+    </section>
 
 
 </main>
@@ -789,182 +1855,414 @@
 
 
 
+<div id="toast"></div>
+
+
+
 <script>
 
 
-/* =====================================================
+/* ============================================================
    CONFIGURACIÓN
-===================================================== */
-
-
-/*
-   URL DEL GOOGLE APPS SCRIPT
-*/
+============================================================ */
 
 const API_URL =
-"https://script.google.com/macros/s/AKfycbxi9480n6Sa9ohHv4xruQhCL4Ut58gZ6TwNOVA2HUjL_SGpE5nQukAzKtvPlPBfR-Kt/exec";
+    "https://script.google.com/macros/s/AKfycbyxqNDqMsutAcarJ7dz0YyUshN3buepHxRryQt9AqtR1sxo_D65ItVq6SBVyL9AV4In/exec";
 
 
-/*
-   CLAVE DE ACCESO
-
-   ⚠️ Cambiala por la que quieras.
-*/
-
-const CLAVE_SISTEMA = "SEGRUP2026";
+let PASSWORD =
+    sessionStorage.getItem(
+        "segrup_password"
+    ) || "";
 
 
-/* =====================================================
-   LOGIN
-===================================================== */
+let controlesActuales = [];
 
-function ingresar() {
 
-    const password =
-        document.getElementById("passwordInput").value;
+/* ============================================================
+   INICIO
+============================================================ */
 
-    if (password === CLAVE_SISTEMA) {
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
 
-        const operador =
-            prompt("Ingrese su nombre o identificación de operador:");
+        establecerFechaHoy();
 
-        if (!operador || operador.trim() === "") {
+        cargarOperadorGuardado();
 
-            alert("Debe ingresar el operador.");
 
-            return;
+        if (PASSWORD) {
+
+            comprobarSesion();
 
         }
 
-        localStorage.setItem(
-            "segrup_login",
-            "true"
+    }
+);
+
+
+/* ============================================================
+   FECHA HOY
+============================================================ */
+
+function establecerFechaHoy() {
+
+    const ahora =
+        new Date();
+
+
+    const yyyy =
+        ahora.getFullYear();
+
+
+    const mm =
+        String(
+            ahora.getMonth() + 1
+        ).padStart(
+            2,
+            "0"
         );
 
-        localStorage.setItem(
-            "segrup_operador",
-            operador.trim()
+
+    const dd =
+        String(
+            ahora.getDate()
+        ).padStart(
+            2,
+            "0"
         );
 
-        mostrarSistema();
 
-    } else {
+    const fecha =
+        yyyy +
+        "-" +
+        mm +
+        "-" +
+        dd;
 
-        document.getElementById(
-            "loginError"
-        ).style.display = "block";
+
+    document
+        .getElementById(
+            "fechaSeleccionada"
+        )
+        .value = fecha;
+
+
+    actualizarFechaVisible(
+        fecha
+    );
+
+
+    document
+        .getElementById(
+            "fechaActual"
+        )
+        .textContent =
+        formatearFechaVisible(
+            fecha
+        );
+
+}
+
+
+/* ============================================================
+   LOGIN
+============================================================ */
+
+async function iniciarSesion() {
+
+    const password =
+        document
+            .getElementById(
+                "passwordInput"
+            )
+            .value
+            .trim();
+
+
+    if (!password) {
+
+        mostrarLoginError(
+            "Ingrese la clave."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        const url =
+            API_URL +
+            "?action=login" +
+            "&password=" +
+            encodeURIComponent(
+                password
+            );
+
+
+        const respuesta =
+            await fetch(
+                url
+            );
+
+
+        const datos =
+            await respuesta.json();
+
+
+        if (
+            datos.success &&
+            datos.authenticated
+        ) {
+
+            PASSWORD =
+                password;
+
+
+            sessionStorage.setItem(
+                "segrup_password",
+                password
+            );
+
+
+            document
+                .getElementById(
+                    "loginScreen"
+                )
+                .style.display =
+                "none";
+
+
+            document
+                .getElementById(
+                    "app"
+                )
+                .style.display =
+                "block";
+
+
+            document
+                .getElementById(
+                    "passwordInput"
+                )
+                .value = "";
+
+
+            cargarControles();
+
+        } else {
+
+            mostrarLoginError(
+                "Clave incorrecta."
+            );
+
+        }
+
+    } catch (error) {
+
+        mostrarLoginError(
+            "No se pudo conectar con el sistema."
+        );
+
+        console.error(
+            error
+        );
 
     }
 
 }
 
 
-/* =====================================================
-   MOSTRAR SISTEMA
-===================================================== */
+/* ============================================================
+   COMPROBAR SESION
+============================================================ */
 
-function mostrarSistema() {
+async function comprobarSesion() {
 
-    document.getElementById(
-        "loginScreen"
-    ).style.display = "none";
+    try {
 
-    document.getElementById(
-        "app"
-    ).style.display = "block";
+        const url =
+            API_URL +
+            "?action=login" +
+            "&password=" +
+            encodeURIComponent(
+                PASSWORD
+            );
 
-    document.getElementById(
-        "operadorActual"
-    ).textContent =
-        localStorage.getItem(
-            "segrup_operador"
-        ) || "";
 
-    establecerFechaActual();
+        const respuesta =
+            await fetch(
+                url
+            );
 
-    buscarFecha();
+
+        const datos =
+            await respuesta.json();
+
+
+        if (
+            datos.success &&
+            datos.authenticated
+        ) {
+
+            document
+                .getElementById(
+                    "loginScreen"
+                )
+                .style.display =
+                "none";
+
+
+            document
+                .getElementById(
+                    "app"
+                )
+                .style.display =
+                "block";
+
+
+            cargarControles();
+
+        } else {
+
+            cerrarSesion();
+
+        }
+
+    } catch (error) {
+
+        cerrarSesion();
+
+    }
 
 }
 
 
-/* =====================================================
-   CERRAR SESIÓN
-===================================================== */
+/* ============================================================
+   ERROR LOGIN
+============================================================ */
+
+function mostrarLoginError(
+    mensaje
+) {
+
+    const error =
+        document
+            .getElementById(
+                "loginError"
+            );
+
+
+    error.textContent =
+        mensaje;
+
+
+    error.style.display =
+        "block";
+
+}
+
+
+/* ============================================================
+   CERRAR SESION
+============================================================ */
 
 function cerrarSesion() {
 
-    localStorage.removeItem(
-        "segrup_login"
+    PASSWORD = "";
+
+    sessionStorage.removeItem(
+        "segrup_password"
     );
 
-    localStorage.removeItem(
-        "segrup_operador"
-    );
 
-    location.reload();
+    document
+        .getElementById(
+            "app"
+        )
+        .style.display =
+        "none";
+
+
+    document
+        .getElementById(
+            "loginScreen"
+        )
+        .style.display =
+        "flex";
+
+
+    document
+        .getElementById(
+            "passwordInput"
+        )
+        .value = "";
 
 }
 
 
-/* =====================================================
-   FECHA
-===================================================== */
+/* ============================================================
+   OPERADOR
+============================================================ */
 
-function establecerFechaActual() {
+function cargarOperadorGuardado() {
 
-    const ahora =
-        new Date();
-
-    const opciones = {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric"
-    };
-
-    const fecha =
-        ahora.toLocaleDateString(
-            "es-AR",
-            opciones
+    const operador =
+        localStorage.getItem(
+            "segrup_operador"
         );
 
-    document.getElementById(
-        "fechaActual"
-    ).textContent = fecha;
 
+    if (operador) {
 
-    const fechaISO =
-        ahora.getFullYear() +
-        "-" +
-        String(
-            ahora.getMonth() + 1
-        ).padStart(2, "0") +
-        "-" +
-        String(
-            ahora.getDate()
-        ).padStart(2, "0");
+        document
+            .getElementById(
+                "operador"
+            )
+            .value =
+            operador;
 
-
-    document.getElementById(
-        "fechaBusqueda"
-    ).value = fechaISO;
+    }
 
 }
 
 
-/* =====================================================
-   BUSCAR FECHA
-===================================================== */
+/* ============================================================
+   CARGAR CONTROLES
+============================================================ */
 
-async function buscarFecha() {
+async function cargarControles() {
+
+    if (!PASSWORD) {
+
+        return;
+
+    }
+
 
     const fecha =
-        document.getElementById(
-            "fechaBusqueda"
-        ).value;
+        document
+            .getElementById(
+                "fechaSeleccionada"
+            )
+            .value;
+
+
+    const operador =
+        document
+            .getElementById(
+                "operador"
+            )
+            .value
+            .trim();
+
 
     if (!fecha) {
 
-        alert(
+        mostrarToast(
             "Seleccione una fecha."
         );
 
@@ -973,20 +2271,31 @@ async function buscarFecha() {
     }
 
 
-    document.getElementById(
-        "loading"
-    ).style.display = "block";
+    if (operador) {
+
+        localStorage.setItem(
+            "segrup_operador",
+            operador
+        );
+
+    }
 
 
-    document.getElementById(
-        "controles"
-    ).innerHTML = "";
+    actualizarFechaVisible(
+        fecha
+    );
 
 
-    document.getElementById(
-        "fechaControl"
-    ).textContent =
-        formatearFecha(fecha);
+    mostrarLoading(
+        true
+    );
+
+
+    document
+        .getElementById(
+            "controlesContainer"
+        )
+        .innerHTML = "";
 
 
     try {
@@ -995,164 +2304,372 @@ async function buscarFecha() {
             API_URL +
             "?action=obtenerControles" +
             "&fecha=" +
-            encodeURIComponent(fecha);
+            encodeURIComponent(
+                fecha
+            ) +
+            "&password=" +
+            encodeURIComponent(
+                PASSWORD
+            );
 
 
         const respuesta =
-            await fetch(url);
+            await fetch(
+                url
+            );
 
 
         const datos =
             await respuesta.json();
 
 
-        mostrarControles(datos);
+        if (
+            datos.authenticated === false
+        ) {
+
+            cerrarSesion();
+
+            return;
+
+        }
+
+
+        if (
+            !datos.success &&
+            !Array.isArray(
+                datos
+            )
+        ) {
+
+            throw new Error(
+                datos.message ||
+                "No se pudieron cargar los controles."
+            );
+
+        }
+
+
+        controlesActuales =
+            Array.isArray(
+                datos
+            )
+                ? datos
+                : [];
+
+
+        renderizarControles(
+            controlesActuales
+        );
+
+
+        actualizarEstadisticas(
+            controlesActuales
+        );
+
+
+        cargarEstadisticaSemana(
+            fecha
+        );
 
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            error
+        );
 
-        document.getElementById(
-            "controles"
-        ).innerHTML = `
 
-            <div class="message">
+        document
+            .getElementById(
+                "controlesContainer"
+            )
+            .innerHTML = `
 
-                ❌ No se pudieron cargar los controles.
+                <div class="message error">
 
-                <br><br>
+                    ❌ No se pudieron cargar los controles.
 
-                Verifique la conexión con Google Sheets.
+                    <br><br>
 
-            </div>
+                    <small>
+                        ${escapeHtml(
+                            error.message ||
+                            "Verifique la conexión con Google Sheets."
+                        )}
+                    </small>
 
-        `;
+                </div>
+
+            `;
+
+    } finally {
+
+        mostrarLoading(
+            false
+        );
 
     }
-
-
-    document.getElementById(
-        "loading"
-    ).style.display = "none";
 
 }
 
 
-/* =====================================================
-   MOSTRAR CONTROLES
-===================================================== */
+/* ============================================================
+   RENDERIZAR CONTROLES
+============================================================ */
 
-function mostrarControles(datos) {
+function renderizarControles(
+    controles
+) {
 
-    const contenedor =
-        document.getElementById(
-            "controles"
-        );
+    const container =
+        document
+            .getElementById(
+                "controlesContainer"
+            );
 
 
-    contenedor.innerHTML = "";
+    if (!controles.length) {
 
-
-    if (!datos || datos.length === 0) {
-
-        contenedor.innerHTML = `
+        container.innerHTML = `
 
             <div class="message">
 
-                📅 No hay controles programados
+                📅
+
+                <br><br>
+
+                <strong>
+                    No hay controles programados
+                </strong>
+
+                <br>
+
+                No se encontraron controles
                 para esta fecha.
 
             </div>
 
         `;
 
-        actualizarEstadisticas([]);
-
         return;
 
     }
 
 
-    datos.forEach(
-        function(item) {
-
-            const card =
-                crearTarjeta(item);
-
-            contenedor.appendChild(card);
-
-        }
-    );
-
-
-    actualizarEstadisticas(datos);
-
-}
-
-
-/* =====================================================
-   CREAR TARJETA
-===================================================== */
-
-function crearTarjeta(item) {
-
-    const card =
-        document.createElement(
-            "div"
-        );
-
-
-    const estado =
-        String(
-            item.estadoWeb || "PENDIENTE"
-        ).toUpperCase();
-
-
-    let claseEstado =
-        "badge-pendiente";
-
-
-    if (estado === "REALIZADO") {
-
-        claseEstado =
-            "badge-realizado";
-
-        card.classList.add(
-            "realizado"
-        );
-
-    }
-
-
-    if (estado === "CANCELADO") {
-
-        claseEstado =
-            "badge-cancelado";
-
-    }
-
-
-    card.className =
-        "control-card";
-
-
-    const controles =
-        item.controles || [];
-
-
-    let lista =
-        "";
+    let html = "";
 
 
     controles.forEach(
         function(control) {
 
-            lista += `
+            const estado =
+                (
+                    control.estadoWeb ||
+                    "PENDIENTE"
+                )
+                .toUpperCase();
 
-                <li>
-                    ${escapeHTML(control)}
-                </li>
+
+            let claseCard =
+                "";
+
+
+            let badgeClase =
+                "badge-pendiente";
+
+
+            let badgeTexto =
+                "PENDIENTE";
+
+
+            if (
+                estado ===
+                "REALIZADO"
+            ) {
+
+                claseCard =
+                    "realizado";
+
+                badgeClase =
+                    "badge-realizado";
+
+                badgeTexto =
+                    "REALIZADO";
+
+            }
+
+
+            if (
+                estado ===
+                "CANCELADO"
+            ) {
+
+                claseCard =
+                    "cancelado";
+
+                badgeClase =
+                    "badge-cancelado";
+
+                badgeTexto =
+                    "CANCELADO";
+
+            }
+
+
+            const controlesTexto =
+                control.detalle
+                    ? [
+                        control.detalle
+                    ]
+                    : [
+                        "Control programado"
+                    ];
+
+
+            html += `
+
+                <div
+                    class="control-card ${claseCard}"
+                    id="control-${control.fila}"
+                >
+
+                    <div class="control-header">
+
+                        <h4>
+                            ${escapeHtml(
+                                control.objetivo ||
+                                control.dispositivo ||
+                                "OBJETIVO SIN NOMBRE"
+                            )}
+                        </h4>
+
+
+                        <span
+                            class="badge ${badgeClase}"
+                        >
+                            ${badgeTexto}
+                        </span>
+
+                    </div>
+
+
+                    <ul class="control-list">
+
+                        ${controlesTexto
+                            .map(
+                                function(item) {
+
+                                    return `
+                                        <li>
+                                            ${escapeHtml(
+                                                item
+                                            )}
+                                        </li>
+                                    `;
+
+                                }
+                            )
+                            .join("")
+                        }
+
+                    </ul>
+
+
+                    <div class="control-info">
+
+
+                        <div class="info-box">
+
+                            <strong>
+                                Fecha programada
+                            </strong>
+
+                            <span>
+                                ${escapeHtml(
+                                    control.fechaControl ||
+                                    "-"
+                                )}
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-box">
+
+                            <strong>
+                                Operador
+                            </strong>
+
+                            <span>
+                                ${escapeHtml(
+                                    control.operador ||
+                                    "-"
+                                )}
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-box">
+
+                            <strong>
+                                Fecha de cierre
+                            </strong>
+
+                            <span>
+                                ${escapeHtml(
+                                    control.fechaCierre ||
+                                    "-"
+                                )}
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="control-actions">
+
+                        ${
+                            estado !== "REALIZADO"
+
+                            ?
+
+                            `
+                                <button
+                                    class="button button-realizar"
+                                    onclick="realizarControl(
+                                        '${escapeJs(
+                                            control.hoja
+                                        )}',
+                                        ${control.fila}
+                                    )"
+                                >
+                                    ✅ REALIZAR CONTROL
+                                </button>
+                            `
+
+                            :
+
+                            `
+                                <button
+                                    class="button button-cancelar"
+                                    onclick="cancelarControl(
+                                        '${escapeJs(
+                                            control.hoja
+                                        )}',
+                                        ${control.fila}
+                                    )"
+                                >
+                                    ↩ CANCELAR REALIZACIÓN
+                                </button>
+                            `
+                        }
+
+                    </div>
+
+                </div>
 
             `;
 
@@ -1160,31 +2677,709 @@ function crearTarjeta(item) {
     );
 
 
-    let infoRealizado =
-        "";
+    container.innerHTML =
+        html;
+
+}
+
+
+/* ============================================================
+   REALIZAR
+============================================================ */
+
+async function realizarControl(
+    hoja,
+    fila
+) {
+
+    const operador =
+        document
+            .getElementById(
+                "operador"
+            )
+            .value
+            .trim();
+
+
+    if (!operador) {
+
+        mostrarToast(
+            "Primero ingrese el nombre del operador."
+        );
+
+        document
+            .getElementById(
+                "operador"
+            )
+            .focus();
+
+        return;
+
+    }
+
+
+    const confirmado =
+        confirm(
+            "¿Confirmar que este control fue realizado?"
+        );
+
+
+    if (!confirmado) {
+
+        return;
+
+    }
+
+
+    try {
+
+        mostrarLoading(
+            true
+        );
+
+
+        const url =
+            API_URL +
+            "?action=realizarControl" +
+            "&hoja=" +
+            encodeURIComponent(
+                hoja
+            ) +
+            "&fila=" +
+            encodeURIComponent(
+                fila
+            ) +
+            "&operador=" +
+            encodeURIComponent(
+                operador
+            ) +
+            "&password=" +
+            encodeURIComponent(
+                PASSWORD
+            );
+
+
+        const respuesta =
+            await fetch(
+                url
+            );
+
+
+        const datos =
+            await respuesta.json();
+
+
+        if (
+            datos.authenticated === false
+        ) {
+
+            cerrarSesion();
+
+            return;
+
+        }
+
+
+        if (!datos.success) {
+
+            throw new Error(
+                datos.message ||
+                "No se pudo realizar el control."
+            );
+
+        }
+
+
+        mostrarToast(
+            "✅ Control realizado correctamente."
+        );
+
+
+        await cargarControles();
+
+
+    } catch (error) {
+
+        console.error(
+            error
+        );
+
+
+        mostrarToast(
+            "❌ " +
+            (
+                error.message ||
+                "No se pudo realizar el control."
+            )
+        );
+
+    } finally {
+
+        mostrarLoading(
+            false
+        );
+
+    }
+
+}
+
+
+/* ============================================================
+   CANCELAR
+============================================================ */
+
+async function cancelarControl(
+    hoja,
+    fila
+) {
+
+    const confirmado =
+        confirm(
+            "¿Está seguro de cancelar la realización de este control?\n\nEl control volverá a quedar PENDIENTE."
+        );
+
+
+    if (!confirmado) {
+
+        return;
+
+    }
+
+
+    const operador =
+        document
+            .getElementById(
+                "operador"
+            )
+            .value
+            .trim();
+
+
+    try {
+
+        mostrarLoading(
+            true
+        );
+
+
+        const url =
+            API_URL +
+            "?action=cancelarControl" +
+            "&hoja=" +
+            encodeURIComponent(
+                hoja
+            ) +
+            "&fila=" +
+            encodeURIComponent(
+                fila
+            ) +
+            "&operador=" +
+            encodeURIComponent(
+                operador ||
+                "SIN IDENTIFICAR"
+            ) +
+            "&password=" +
+            encodeURIComponent(
+                PASSWORD
+            );
+
+
+        const respuesta =
+            await fetch(
+                url
+            );
+
+
+        const datos =
+            await respuesta.json();
+
+
+        if (
+            datos.authenticated === false
+        ) {
+
+            cerrarSesion();
+
+            return;
+
+        }
+
+
+        if (!datos.success) {
+
+            throw new Error(
+                datos.message ||
+                "No se pudo cancelar."
+            );
+
+        }
+
+
+        mostrarToast(
+            "↩ El control volvió a quedar pendiente."
+        );
+
+
+        await cargarControles();
+
+
+    } catch (error) {
+
+        console.error(
+            error
+        );
+
+
+        mostrarToast(
+            "❌ " +
+            (
+                error.message ||
+                "No se pudo cancelar."
+            )
+        );
+
+    } finally {
+
+        mostrarLoading(
+            false
+        );
+
+    }
+
+}
+
+
+/* ============================================================
+   ESTADISTICAS
+============================================================ */
+
+function actualizarEstadisticas(
+    controles
+) {
+
+    const pendientes =
+        controles.filter(
+            function(c) {
+
+                return (
+                    String(
+                        c.estadoWeb ||
+                        "PENDIENTE"
+                    )
+                    .toUpperCase() !==
+                    "REALIZADO"
+                );
+
+            }
+        ).length;
+
+
+    const realizados =
+        controles.filter(
+            function(c) {
+
+                return (
+                    String(
+                        c.estadoWeb ||
+                        ""
+                    )
+                    .toUpperCase() ===
+                    "REALIZADO"
+                );
+
+            }
+        ).length;
+
+
+    document
+        .getElementById(
+            "pendientes"
+        )
+        .textContent =
+        pendientes;
+
+
+    document
+        .getElementById(
+            "realizados"
+        )
+        .textContent =
+        realizados;
+
+}
+
+
+/* ============================================================
+   ESTADISTICA SEMANAL
+============================================================ */
+
+async function cargarEstadisticaSemana(
+    fechaBase
+) {
+
+    try {
+
+        const fecha =
+            new Date(
+                fechaBase +
+                "T00:00:00"
+            );
+
+
+        const diaSemana =
+            fecha.getDay();
+
+
+        /*
+         * Lunes = 1
+         *
+         * Si es domingo,
+         * retrocedemos 6 días.
+         */
+
+        const diferencia =
+            diaSemana === 0
+                ? -6
+                : 1 - diaSemana;
+
+
+        const lunes =
+            new Date(
+                fecha
+            );
+
+
+        lunes.setDate(
+            fecha.getDate() +
+            diferencia
+        );
+
+
+        let total =
+            0;
+
+
+        const peticiones = [];
+
+
+        for (
+            let i = 0;
+            i < 7;
+            i++
+        ) {
+
+            const dia =
+                new Date(
+                    lunes
+                );
+
+
+            dia.setDate(
+                lunes.getDate() +
+                i
+            );
+
+
+            const fechaString =
+                convertirDateAISO(
+                    dia
+                );
+
+
+            peticiones.push(
+
+                fetch(
+                    API_URL +
+                    "?action=obtenerControles" +
+                    "&fecha=" +
+                    encodeURIComponent(
+                        fechaString
+                    ) +
+                    "&password=" +
+                    encodeURIComponent(
+                        PASSWORD
+                    )
+                )
+                .then(
+                    function(r) {
+
+                        return r.json();
+
+                    }
+                )
+                .then(
+                    function(data) {
+
+                        if (
+                            Array.isArray(
+                                data
+                            )
+                        ) {
+
+                            return data.length;
+
+                        }
+
+                        return 0;
+
+                    }
+                )
+
+            );
+
+        }
+
+
+        const resultados =
+            await Promise.all(
+                peticiones
+            );
+
+
+        resultados.forEach(
+            function(numero) {
+
+                total +=
+                    numero;
+
+            }
+        );
+
+
+        document
+            .getElementById(
+                "semana"
+            )
+            .textContent =
+            total;
+
+
+    } catch (error) {
+
+        console.error(
+            error
+        );
+
+
+        document
+            .getElementById(
+                "semana"
+            )
+            .textContent =
+            "—";
+
+    }
+
+}
+
+
+/* ============================================================
+   HISTORICO
+============================================================ */
+
+async function mostrarHistorico() {
+
+    const lista =
+        document
+            .getElementById(
+                "historyList"
+            );
 
 
     if (
-        estado === "REALIZADO"
-        &&
-        item.operador
+        lista.style.display ===
+        "block"
     ) {
 
-        infoRealizado = `
+        lista.style.display =
+            "none";
 
-            <div class="completed-info">
+        return;
 
-                🟢 Realizado por:
+    }
 
-                <strong>
-                    ${escapeHTML(item.operador)}
-                </strong>
 
-                ${
-                    item.fechaHora
-                    ? " · " + escapeHTML(item.fechaHora)
-                    : ""
-                }
+    lista.style.display =
+        "block";
+
+
+    lista.innerHTML = `
+
+        <div class="message">
+
+            Cargando histórico...
+
+        </div>
+
+    `;
+
+
+    try {
+
+        const url =
+            API_URL +
+            "?action=historico" +
+            "&limite=500" +
+            "&password=" +
+            encodeURIComponent(
+                PASSWORD
+            );
+
+
+        const respuesta =
+            await fetch(
+                url
+            );
+
+
+        const datos =
+            await respuesta.json();
+
+
+        if (
+            datos.authenticated === false
+        ) {
+
+            cerrarSesion();
+
+            return;
+
+        }
+
+
+        if (!Array.isArray(datos)) {
+
+            throw new Error(
+                datos.message ||
+                "No se pudo cargar el histórico."
+            );
+
+        }
+
+
+        if (!datos.length) {
+
+            lista.innerHTML = `
+
+                <div class="message">
+
+                    No hay acciones registradas todavía.
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        let html = "";
+
+
+        datos.forEach(
+            function(item) {
+
+                const accion =
+                    String(
+                        item.accion ||
+                        ""
+                    ).toUpperCase();
+
+
+                const clase =
+                    accion ===
+                    "REALIZADO"
+
+                        ? "history-realizado"
+
+                        : "history-cancelado";
+
+
+                html += `
+
+                    <div class="history-item">
+
+                        <div>
+                            ${escapeHtml(
+                                item.fechaHora ||
+                                "-"
+                            )}
+                        </div>
+
+
+                        <div
+                            class="history-action ${clase}"
+                        >
+                            ${escapeHtml(
+                                accion
+                            )}
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                ${escapeHtml(
+                                    item.objetivo ||
+                                    "Sin objetivo"
+                                )}
+                            </strong>
+
+                            <br>
+
+                            <small>
+                                ${escapeHtml(
+                                    item.hoja ||
+                                    ""
+                                )}
+                                · Fila
+                                ${escapeHtml(
+                                    String(
+                                        item.fila ||
+                                        ""
+                                    )
+                                )}
+                            </small>
+
+                        </div>
+
+
+                        <div>
+
+                            👤
+                            ${escapeHtml(
+                                item.operador ||
+                                "SIN IDENTIFICAR"
+                            )}
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+        );
+
+
+        lista.innerHTML =
+            html;
+
+
+    } catch (error) {
+
+        lista.innerHTML = `
+
+            <div class="message error">
+
+                ❌ No se pudo cargar el histórico.
+
+                <br><br>
+
+                ${escapeHtml(
+                    error.message
+                )}
 
             </div>
 
@@ -1192,309 +3387,53 @@ function crearTarjeta(item) {
 
     }
 
-
-    let botones = "";
-
-
-    if (estado === "REALIZADO") {
-
-        botones = `
-
-            <button
-                class="button button-danger"
-                onclick="cancelarControl('${item.fila}')">
-
-                ↩️ CANCELAR REALIZACIÓN
-
-            </button>
-
-        `;
-
-    } else {
-
-        botones = `
-
-            <button
-                class="button button-success"
-                onclick="realizarControl('${item.fila}')">
-
-                ✓ MARCAR COMO REALIZADO
-
-            </button>
-
-        `;
-
-    }
+}
 
 
-    card.innerHTML = `
+/* ============================================================
+   FECHA VISIBLE
+============================================================ */
 
-        <div class="control-header">
+function actualizarFechaVisible(
+    fecha
+) {
 
-            <h4>
-                ${escapeHTML(
-                    item.objetivo ||
-                    item.dispositivo ||
-                    "CONTROL"
-                )}
-            </h4>
-
-            <span
-                class="badge ${claseEstado}">
-
-                ${estado}
-
-            </span>
-
-        </div>
-
-
-        ${infoRealizado}
-
-
-        <ul class="control-list">
-
-            ${lista}
-
-        </ul>
-
-
-        <div class="buttons">
-
-            ${botones}
-
-        </div>
-
-    `;
-
-
-    return card;
+    document
+        .getElementById(
+            "fechaControl"
+        )
+        .textContent =
+        formatearFechaVisible(
+            fecha
+        );
 
 }
 
 
-/* =====================================================
-   MARCAR REALIZADO
-===================================================== */
+/* ============================================================
+   FORMATEAR FECHA
+============================================================ */
 
-async function realizarControl(fila) {
+function formatearFechaVisible(
+    fecha
+) {
 
-    const operador =
-        localStorage.getItem(
-            "segrup_operador"
-        );
-
-
-    if (!operador) {
-
-        alert(
-            "No se encontró el operador."
-        );
-
-        return;
-
+    if (!fecha) {
+        return "";
     }
 
-
-    const confirmar =
-        confirm(
-            "¿Confirmar que este control fue realizado?"
-        );
-
-
-    if (!confirmar) return;
-
-
-    try {
-
-        const url =
-            API_URL +
-            "?action=realizarControl" +
-            "&fila=" +
-            encodeURIComponent(fila) +
-            "&operador=" +
-            encodeURIComponent(operador);
-
-
-        const respuesta =
-            await fetch(url);
-
-
-        const resultado =
-            await respuesta.json();
-
-
-        if (
-            resultado.success
-            ||
-            resultado.ok
-        ) {
-
-            alert(
-                "Control marcado como REALIZADO."
-            );
-
-            buscarFecha();
-
-        } else {
-
-            alert(
-                resultado.message ||
-                "No se pudo actualizar."
-            );
-
-        }
-
-
-    } catch (error) {
-
-        console.error(error);
-
-        alert(
-            "Error al actualizar el control."
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   CANCELAR
-===================================================== */
-
-async function cancelarControl(fila) {
-
-    const confirmar =
-        confirm(
-            "¿Cancelar la realización de este control?"
-        );
-
-
-    if (!confirmar) return;
-
-
-    try {
-
-        const url =
-            API_URL +
-            "?action=cancelarControl" +
-            "&fila=" +
-            encodeURIComponent(fila);
-
-
-        const respuesta =
-            await fetch(url);
-
-
-        const resultado =
-            await respuesta.json();
-
-
-        if (
-            resultado.success
-            ||
-            resultado.ok
-        ) {
-
-            alert(
-                "La realización fue cancelada."
-            );
-
-            buscarFecha();
-
-        } else {
-
-            alert(
-                resultado.message ||
-                "No se pudo cancelar."
-            );
-
-        }
-
-
-    } catch (error) {
-
-        console.error(error);
-
-        alert(
-            "Error al cancelar el control."
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   ESTADISTICAS
-===================================================== */
-
-function actualizarEstadisticas(datos) {
-
-    let pendientes = 0;
-
-    let realizados = 0;
-
-
-    datos.forEach(
-        function(item) {
-
-            const estado =
-                String(
-                    item.estadoWeb ||
-                    "PENDIENTE"
-                ).toUpperCase();
-
-
-            if (
-                estado === "REALIZADO"
-            ) {
-
-                realizados++;
-
-            } else {
-
-                pendientes++;
-
-            }
-
-        }
-    );
-
-
-    document.getElementById(
-        "pendientes"
-    ).textContent =
-        pendientes;
-
-
-    document.getElementById(
-        "realizados"
-    ).textContent =
-        realizados;
-
-
-    document.getElementById(
-        "semana"
-    ).textContent =
-        datos.length;
-
-}
-
-
-/* =====================================================
-   FORMATO FECHA
-===================================================== */
-
-function formatearFecha(fecha) {
 
     const partes =
         fecha.split("-");
 
 
-    if (partes.length !== 3)
+    if (
+        partes.length !== 3
+    ) {
+
         return fecha;
+
+    }
 
 
     return (
@@ -1508,44 +3447,139 @@ function formatearFecha(fecha) {
 }
 
 
-/* =====================================================
-   SEGURIDAD HTML
-===================================================== */
+/* ============================================================
+   DATE → ISO
+============================================================ */
 
-function escapeHTML(texto) {
+function convertirDateAISO(
+    fecha
+) {
 
-    if (
-        texto === null ||
-        texto === undefined
-    ) {
-
-        return "";
-
-    }
+    const yyyy =
+        fecha.getFullYear();
 
 
-    return String(texto)
+    const mm =
+        String(
+            fecha.getMonth() + 1
+        ).padStart(
+            2,
+            "0"
+        );
 
+
+    const dd =
+        String(
+            fecha.getDate()
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    return (
+        yyyy +
+        "-" +
+        mm +
+        "-" +
+        dd
+    );
+
+}
+
+
+/* ============================================================
+   LOADING
+============================================================ */
+
+function mostrarLoading(
+    mostrar
+) {
+
+    document
+        .getElementById(
+            "loading"
+        )
+        .style.display =
+        mostrar
+            ? "block"
+            : "none";
+
+}
+
+
+/* ============================================================
+   TOAST
+============================================================ */
+
+let toastTimer;
+
+
+function mostrarToast(
+    mensaje
+) {
+
+    const toast =
+        document
+            .getElementById(
+                "toast"
+            );
+
+
+    toast.textContent =
+        mensaje;
+
+
+    toast.style.display =
+        "block";
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            function() {
+
+                toast.style.display =
+                    "none";
+
+            },
+            3500
+        );
+
+}
+
+
+/* ============================================================
+   ESCAPE HTML
+============================================================ */
+
+function escapeHtml(
+    texto
+) {
+
+    return String(
+        texto ?? ""
+    )
         .replace(
             /&/g,
             "&amp;"
         )
-
         .replace(
             /</g,
             "&lt;"
         )
-
         .replace(
             />/g,
             "&gt;"
         )
-
         .replace(
             /"/g,
             "&quot;"
         )
-
         .replace(
             /'/g,
             "&#039;"
@@ -1554,28 +3588,79 @@ function escapeHTML(texto) {
 }
 
 
-/* =====================================================
-   INICIO
-===================================================== */
+/* ============================================================
+   ESCAPE JAVASCRIPT
+============================================================ */
 
-window.addEventListener(
-    "DOMContentLoaded",
-    function() {
+function escapeJs(
+    texto
+) {
 
-        const login =
-            localStorage.getItem(
-                "segrup_login"
+    return String(
+        texto ?? ""
+    )
+        .replace(
+            /\\/g,
+            "\\\\"
+        )
+        .replace(
+            /'/g,
+            "\\'"
+        )
+        .replace(
+            /"/g,
+            '\\"'
+        );
+
+}
+
+
+/* ============================================================
+   CAMBIO DE FECHA
+============================================================ */
+
+document
+    .getElementById(
+        "fechaSeleccionada"
+    )
+    .addEventListener(
+        "change",
+        function() {
+
+            actualizarFechaVisible(
+                this.value
             );
 
-
-        if (login === "true") {
-
-            mostrarSistema();
+            cargarControles();
 
         }
+    );
 
-    }
-);
+
+/* ============================================================
+   ENTER EN OPERADOR
+============================================================ */
+
+document
+    .getElementById(
+        "operador"
+    )
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key ===
+                "Enter"
+            ) {
+
+                cargarControles();
+
+            }
+
+        }
+    );
+
 
 </script>
 
