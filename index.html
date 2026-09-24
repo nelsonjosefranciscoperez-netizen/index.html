@@ -14,6 +14,8 @@
         Control de Servicios - SEGRUP
     </title>
 
+    <link rel="icon" type="image/png" href="favicon-segrup.png">
+
 
     <style>
 
@@ -314,6 +316,283 @@
 
             gap:
                 18px;
+
+        }
+
+
+        .header-left {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                18px;
+
+            min-width:
+                0;
+
+        }
+
+
+        .operator-badge {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            align-items:
+                flex-start;
+
+            justify-content:
+                center;
+
+            background:
+                #f4f7fb;
+
+            border:
+                1px solid #d8e1ec;
+
+            border-radius:
+                9px;
+
+            padding:
+                7px 12px;
+
+            min-width:
+                120px;
+
+        }
+
+
+        .operator-badge-label {
+
+            font-size:
+                10px;
+
+            color:
+                #6b7280;
+
+            font-weight:
+                bold;
+
+            letter-spacing:
+                .4px;
+
+        }
+
+
+        .operator-badge-name {
+
+            font-size:
+                14px;
+
+            color:
+                #064b91;
+
+            font-weight:
+                bold;
+
+            margin-top:
+                2px;
+
+            white-space:
+                nowrap;
+
+        }
+
+
+        /* =====================================================
+           SELECTOR DE OPERADOR
+        ===================================================== */
+
+        #operatorModal {
+
+            position:
+                fixed;
+
+            inset:
+                0;
+
+            background:
+                rgba(0, 39, 76, 0.72);
+
+            display:
+                none;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            z-index:
+                10001;
+
+            padding:
+                20px;
+
+        }
+
+
+        .operator-modal-box {
+
+            width:
+                100%;
+
+            max-width:
+                430px;
+
+            background:
+                white;
+
+            border-radius:
+                16px;
+
+            padding:
+                30px;
+
+            box-shadow:
+                0 20px 60px rgba(0,0,0,0.30);
+
+        }
+
+
+        .operator-modal-box h2 {
+
+            color:
+                #064b91;
+
+            margin-bottom:
+                7px;
+
+        }
+
+
+        .operator-modal-box p {
+
+            color:
+                #6b7280;
+
+            font-size:
+                14px;
+
+            margin-bottom:
+                22px;
+
+        }
+
+
+        .operator-select,
+        .operator-custom {
+
+            width:
+                100%;
+
+            padding:
+                13px 14px;
+
+            border:
+                1px solid #d1d5db;
+
+            border-radius:
+                8px;
+
+            font-size:
+                15px;
+
+            outline:
+                none;
+
+            background:
+                white;
+
+        }
+
+
+        .operator-select:focus,
+        .operator-custom:focus {
+
+            border-color:
+                #064b91;
+
+            box-shadow:
+                0 0 0 3px rgba(6,75,145,0.12);
+
+        }
+
+
+        .operator-custom {
+
+            display:
+                none;
+
+            margin-top:
+                10px;
+
+        }
+
+
+        .operator-confirm-button {
+
+            width:
+                100%;
+
+            border:
+                none;
+
+            background:
+                #064b91;
+
+            color:
+                white;
+
+            padding:
+                13px;
+
+            border-radius:
+                8px;
+
+            cursor:
+                pointer;
+
+            font-size:
+                15px;
+
+            font-weight:
+                bold;
+
+            margin-top:
+                18px;
+
+        }
+
+
+        .operator-confirm-button:hover {
+
+            background:
+                #04386d;
+
+        }
+
+
+        .operator-modal-error {
+
+            color:
+                #dc2626;
+
+            font-size:
+                13px;
+
+            margin-top:
+                10px;
+
+            display:
+                none;
 
         }
 
@@ -1383,6 +1662,25 @@
             }
 
 
+            .header-left {
+
+                gap:
+                    8px;
+
+            }
+
+
+            .operator-badge {
+
+                min-width:
+                    95px;
+
+                padding:
+                    6px 8px;
+
+            }
+
+
             .logo {
 
                 height:
@@ -1563,6 +1861,57 @@
 
 
 <!-- =========================================================
+     SELECTOR DE OPERADOR
+========================================================= -->
+
+<div id="operatorModal">
+
+    <div class="operator-modal-box">
+
+        <h2>Seleccionar operador</h2>
+
+        <p>
+            Seleccione quién está ingresando al sistema.
+            Este operador quedará registrado en los controles realizados.
+        </p>
+
+        <select id="operatorSelect" class="operator-select" onchange="cambioOperador()">
+            <option value="">Seleccione un operador...</option>
+            <option value="PEREZ">PEREZ</option>
+            <option value="BO">BO</option>
+            <option value="ALVAREZ">ALVAREZ</option>
+            <option value="ORTIZ">ORTIZ</option>
+            <option value="TOSCANO">TOSCANO</option>
+            <option value="OTRO">OTRO...</option>
+        </select>
+
+        <input
+            type="text"
+            id="operatorCustom"
+            class="operator-custom"
+            placeholder="Escriba el operador"
+            autocomplete="off"
+            onkeydown="if(event.key === 'Enter') confirmarOperador()"
+        >
+
+        <div id="operatorModalError" class="operator-modal-error">
+            Seleccione un operador.
+        </div>
+
+        <button
+            type="button"
+            class="operator-confirm-button"
+            onclick="confirmarOperador()"
+        >
+            CONTINUAR
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
      APLICACIÓN
 ========================================================= -->
 
@@ -1571,11 +1920,20 @@
 
 <header>
 
-    <img
-        src="logo-segrup.png"
-        alt="SEGRUP Seguridad"
-        class="logo"
-    >
+    <div class="header-left">
+
+        <img
+            src="logo-segrup.png"
+            alt="SEGRUP Seguridad"
+            class="logo"
+        >
+
+        <div class="operator-badge">
+            <span class="operator-badge-label">OPERADOR</span>
+            <span class="operator-badge-name" id="operadorActual">—</span>
+        </div>
+
+    </div>
 
 
     <div class="header-right">
@@ -1590,6 +1948,13 @@
 
         </div>
 
+
+        <button
+            class="logout-button"
+            onclick="cambiarOperador()"
+        >
+            CAMBIAR OPERADOR
+        </button>
 
         <button
             class="logout-button"
@@ -1648,23 +2013,10 @@
 
 
 
-        <div class="operator-field">
-
-            <label for="operador">
-
-                OPERADOR
-
-            </label>
-
-            <input
-                type="text"
-                id="operador"
-                class="operator-input"
-                placeholder="Ej: PEREZ"
-                autocomplete="off"
-            >
-
-        </div>
+        <input
+            type="hidden"
+            id="operador"
+        >
 
 
 
@@ -2032,7 +2384,7 @@ async function iniciarSesion() {
                 .getElementById("passwordInput")
                 .value = "";
 
-            cargarControles();
+            prepararOperadorTrasLogin();
 
         } else {
 
@@ -2092,7 +2444,7 @@ async function comprobarSesion() {
                 .getElementById("app")
                 .style.display = "block";
 
-            cargarControles();
+            prepararOperadorTrasLogin();
 
         } else {
 
@@ -2147,27 +2499,30 @@ function cerrarSesion() {
         "segrup_password"
     );
 
+    sessionStorage.removeItem(
+        "segrup_operador"
+    );
+
+    const operadorInput = document.getElementById("operador");
+    if (operadorInput) operadorInput.value = "";
+
+    const operadorActual = document.getElementById("operadorActual");
+    if (operadorActual) operadorActual.textContent = "—";
 
     document
-        .getElementById(
-            "app"
-        )
-        .style.display =
-        "none";
-
+        .getElementById("app")
+        .style.display = "none";
 
     document
-        .getElementById(
-            "loginScreen"
-        )
-        .style.display =
-        "flex";
-
+        .getElementById("operatorModal")
+        .style.display = "none";
 
     document
-        .getElementById(
-            "passwordInput"
-        )
+        .getElementById("loginScreen")
+        .style.display = "flex";
+
+    document
+        .getElementById("passwordInput")
         .value = "";
 
 }
@@ -2180,20 +2535,128 @@ function cerrarSesion() {
 function cargarOperadorGuardado() {
 
     const operador =
-        localStorage.getItem(
-            "segrup_operador"
-        );
+        sessionStorage.getItem("segrup_operador") || "";
 
+    const input = document.getElementById("operador");
+
+    if (input) {
+        input.value = operador;
+    }
+
+    actualizarOperadorVisible(operador);
+
+}
+
+
+function prepararOperadorTrasLogin() {
+
+    const operador =
+        sessionStorage.getItem("segrup_operador") || "";
 
     if (operador) {
 
-        document
-            .getElementById(
-                "operador"
-            )
-            .value =
-            operador;
+        const input = document.getElementById("operador");
+        if (input) input.value = operador;
 
+        actualizarOperadorVisible(operador);
+        cargarControles();
+
+    } else {
+
+        mostrarSelectorOperador();
+
+    }
+
+}
+
+
+function mostrarSelectorOperador() {
+
+    const modal = document.getElementById("operatorModal");
+    const select = document.getElementById("operatorSelect");
+    const custom = document.getElementById("operatorCustom");
+    const error = document.getElementById("operatorModalError");
+
+    if (select) select.value = "";
+    if (custom) {
+        custom.value = "";
+        custom.style.display = "none";
+    }
+    if (error) error.style.display = "none";
+
+    if (modal) modal.style.display = "flex";
+
+}
+
+
+function cambioOperador() {
+
+    const select = document.getElementById("operatorSelect");
+    const custom = document.getElementById("operatorCustom");
+
+    if (!select || !custom) return;
+
+    if (select.value === "OTRO") {
+        custom.style.display = "block";
+        setTimeout(function() { custom.focus(); }, 50);
+    } else {
+        custom.style.display = "none";
+        custom.value = "";
+    }
+
+    document.getElementById("operatorModalError").style.display = "none";
+
+}
+
+
+function confirmarOperador() {
+
+    const select = document.getElementById("operatorSelect");
+    const custom = document.getElementById("operatorCustom");
+    const error = document.getElementById("operatorModalError");
+
+    let operador = select ? select.value.trim() : "";
+
+    if (operador === "OTRO") {
+        operador = custom ? custom.value.trim().toUpperCase() : "";
+    }
+
+    if (!operador || operador === "OTRO") {
+        error.textContent = "Seleccione o escriba el operador.";
+        error.style.display = "block";
+        return;
+    }
+
+    sessionStorage.setItem(
+        "segrup_operador",
+        operador
+    );
+
+    const input = document.getElementById("operador");
+    if (input) input.value = operador;
+
+    actualizarOperadorVisible(operador);
+
+    document.getElementById("operatorModal").style.display = "none";
+
+    cargarControles();
+
+}
+
+
+function cambiarOperador() {
+
+    mostrarSelectorOperador();
+
+}
+
+
+function actualizarOperadorVisible(operador) {
+
+    const elemento = document.getElementById("operadorActual");
+
+    if (elemento) {
+        elemento.textContent = operador || "—";
     }
 
 }
@@ -3607,28 +4070,11 @@ document
 
 
 /* ============================================================
-   ENTER EN OPERADOR
+   ENTER EN SELECTOR DE OPERADOR
 ============================================================ */
 
-document
-    .getElementById(
-        "operador"
-    )
-    .addEventListener(
-        "keydown",
-        function(event) {
+// El selector de operador gestiona Enter directamente desde el modal.
 
-            if (
-                event.key ===
-                "Enter"
-            ) {
-
-                cargarControles();
-
-            }
-
-        }
-    );
 
 
 </script>
