@@ -1528,870 +1528,612 @@ footer {
 
 <script>
 
-  /*
-   * =========================================================
-   * DEMO VISUAL
-   * =========================================================
-   *
-   * ESTA VERSIÓN ES PARA GITHUB.
-   *
-   * NO MODIFICA GOOGLE SHEETS.
-   * NO TOCA APPS SCRIPT.
-   *
-   * Más adelante conectamos estas funciones con Apps Script.
-   */
+/* =========================================================
+   CONEXION GITHUB -> WEB APP APPS SCRIPT -> GOOGLE SHEETS
+   ========================================================= */
+
+const API_URL = "https://script.google.com/macros/s/AKfycbxvXX2U_6yLwgD7lkGxKjrFdb2YBrDR2PqgDJT-KIxyozs8p97wjPKTsz_8yVewEIs3LA/exec";
+
+var PASS = sessionStorage.getItem("cctv_session") || "";
+var OPERADOR_ACTUAL = sessionStorage.getItem("cctv_operador") || "";
+var FILTRO_ACTUAL = "fallas";
+var FECHA_SEL = "";
+var CAL_ANIO = new Date().getFullYear();
+var CAL_MES = new Date().getMonth();
+var DATOS_ITEMS = [];
 
 
-  const API_URL = "https://script.google.com/macros/s/AKfycbxvXX2U_6yLwgD7lkGxKjrFdb2YBrDR2PqgDJT-KIxyozs8p97wjPKTsz_8yVewEIs3LA/exec";
+/* =========================================================
+   API
+   ========================================================= */
 
-  var PASS = sessionStorage.getItem("cctv_session") || "";
-  var OPERADOR_ACTUAL = sessionStorage.getItem("cctv_operador") || "";
-  var FILTRO_ACTUAL = "fallas";
-  var FECHA_SEL = "";
-  var CAL_ANIO = new Date().getFullYear();
-  var CAL_MES = new Date().getMonth();
-  var DATOS_ITEMS = [];
+async function llamarAPI(action, parametros) {
+  parametros = parametros || {};
 
-  async function llamarAPI(action, parametros) {
-    parametros = parametros || {};
+  var params = new URLSearchParams();
+  params.set("action", action);
+
+  if (PASS) params.set("pass", PASS);
+
+  Object.keys(parametros).forEach(function(clave) {
+    if (parametros[clave] !== undefined && parametros[clave] !== null) {
+      params.set(clave, String(parametros[clave]));
+    }
+  });
+
+  var respuesta = await fetch(API_URL + "?" + params.toString(), {
+    method: "GET",
+    cache: "no-store"
+  });
+
+  if (!respuesta.ok) {
+    throw new Error("Error HTTP " + respuesta.status);
+  }
+
+  var resultado = await respuesta.json();
+
+  if (!resultado.ok) {
+    throw new Error(resultado.error || "Error desconocido.");
+  }
+
+  return resultado;
+}
+
+
+/* =========================================================
+   LOGIN
+   ========================================================= */
+
+async function autenticar() {
+  var opEl = document.getElementById("inputOperador");
+  var passEl = document.getElementById("inputPass");
+  var error = document.getElementById("errorMsg");
+  var loading = document.getElementById("loginLoading");
+  var btn = document.getElementById("btnLogin");
+
+  var op = opEl ? opEl.value.trim() : "";
+  var pass = passEl ? passEl.value : "";
+
+  /* El nombre es informativo; la única validación real es la contraseña. */
+  if (!pass) {
+    error.innerText = "Por favor ingresá la contraseña.";
+    error.classList.remove("hidden");
+    return;
+  }
+
+  error.classList.add("hidden");
+
+  if (loading) {
+    loading.classList.add("active");
+    loading.setAttribute("aria-hidden", "false");
+  }
+  if (btn) btn.disabled = true;
+
+  try {
     var params = new URLSearchParams();
-    params.append("action", action);
-    if (PASS) params.append("pass", PASS);
-    Object.keys(parametros).forEach(function(k) {
-      if (parametros[k] !== undefined && parametros[k] !== null) params.append(k, String(parametros[k]));
+    params.set("action", "login");
+    params.set("pass", pass);
+
+    var respuesta = await fetch(API_URL + "?" + params.toString(), {
+      method: "GET",
+      cache: "no-store"
     });
-    var r = await fetch(API_URL + "?" + params.toString(), {method:"GET", cache:"no-store"});
-    if (!r.ok) throw new Error("Error HTTP " + r.status);
-    var j = await r.json();
-    if (!j.ok) throw new Error(j.error || "Error desconocido.");
-    return j;
-  }
 
-  async function autenticar() {
-    var op = document.getElementById("inputOperador").value.trim();
-    var pass = document.getElementById("inputPass").value;
-    var error = document.getElementById("errorMsg");
-    if (!op) { error.innerText="Por favor ingresá tu nombre de operador."; error.classList.remove("hidden"); return; }
-    if (!pass) { error.innerText="Por favor ingresá la contraseña."; error.classList.remove("hidden"); return; }
-    error.classList.add("hidden");
-    var loading=document.getElementById("loginLoading");
-    if (loading) { loading.classList.add("active"); loading.setAttribute("aria-hidden","false"); }
-    var btn=document.getElementById("btnLogin");
-    if(btn){btn.disabled=true;btn.innerText="Verificando...";}
-    try {
-      var r=await fetch(API_URL+"?action=login&pass="+encodeURIComponent(pass),{method:"GET",cache:"no-store"});
-      var j=await r.json();
-      if(!j.ok) throw new Error(j.error||"Clave incorrecta.");
-      PASS=pass; OPERADOR_ACTUAL=op;
-      sessionStorage.setItem("cctv_session",PASS);
-      sessionStorage.setItem("cctv_operador",OPERADOR_ACTUAL);
-      document.getElementById("loginModal").classList.add("hidden");
-      document.getElementById("dashboard").classList.remove("hidden");
-      document.getElementById("labelOperador").innerText=OPERADOR_ACTUAL;
-      await cargarDatos();
-    } catch(e) {
-      error.innerText=e.message||"Clave incorrecta.";
-      error.classList.remove("hidden");
-    } finally {
-      if(loading){loading.classList.remove("active");loading.setAttribute("aria-hidden","true");}
-      if(btn){btn.disabled=false;btn.innerText="Acceder";}
-    }
-  }
-
-  function cerrarSesion() {
-    sessionStorage.removeItem("cctv_session");
-    sessionStorage.removeItem("cctv_operador");
-    PASS=""; OPERADOR_ACTUAL="";
-    location.reload();
-  }
-
-  async function cargarDatos() {
-    try {
-      var r=await llamarAPI("dashboard");
-      if(!r.datos) throw new Error("No se recibieron datos del dashboard.");
-      render(r.datos);
-    } catch(e) {
-      console.error(e);
-      alert("Error al cargar los datos: " + e.message);
-    }
-  }
-
-  /*
-   * RENDER
-   */
-
-  function render(d) {
-
-    document.getElementById("labelMes").innerText =
-      d.mes;
-
-    document.getElementById("kpiTotal").innerText =
-      d.resumen.total;
-
-    document.getElementById("kpiOk").innerText =
-      d.resumen.ok;
-
-    document.getElementById("kpiFallas").innerText =
-      d.resumen.fallas;
-
-    document.getElementById("kpiPendientes").innerText =
-      d.resumen.pendientes;
-
-
-    DATOS_ITEMS = d.items || [];
-
-
-    if (!FECHA_SEL) {
-
-      var h = new Date();
-
-      CAL_ANIO = h.getFullYear();
-
-      CAL_MES = h.getMonth();
-
-      var mesStr =
-        String(CAL_MES + 1).padStart(2, "0");
-
-      var diaStr =
-        String(h.getDate()).padStart(2, "0");
-
-      FECHA_SEL =
-        CAL_ANIO + "-" +
-        mesStr + "-" +
-        diaStr;
-
+    if (!respuesta.ok) {
+      throw new Error("No se pudo conectar con el servidor.");
     }
 
+    var resultado = await respuesta.json();
 
-    dibujarCalendario();
+    if (!resultado.ok) {
+      throw new Error(resultado.error || "Clave incorrecta.");
+    }
 
-    aplicarFiltroVista();
+    PASS = pass;
+    OPERADOR_ACTUAL = op || "Sin especificar";
 
+    sessionStorage.setItem("cctv_session", PASS);
+    sessionStorage.setItem("cctv_operador", OPERADOR_ACTUAL);
+
+    document.getElementById("loginModal").classList.add("hidden");
+    document.getElementById("dashboard").classList.remove("hidden");
+    document.getElementById("labelOperador").innerText = OPERADOR_ACTUAL;
+
+    await cargarDatos();
+
+  } catch (e) {
+    console.error(e);
+    error.innerText = e.message || "No se pudo validar el acceso.";
+    error.classList.remove("hidden");
+  } finally {
+    if (loading) {
+      loading.classList.remove("active");
+      loading.setAttribute("aria-hidden", "true");
+    }
+    if (btn) btn.disabled = false;
+  }
+}
+
+
+/* =========================================================
+   CERRAR SESION
+   ========================================================= */
+
+function cerrarSesion() {
+  sessionStorage.removeItem("cctv_session");
+  sessionStorage.removeItem("cctv_operador");
+  PASS = "";
+  OPERADOR_ACTUAL = "";
+  location.reload();
+}
+
+
+/* =========================================================
+   CARGAR DATOS REALES
+   ========================================================= */
+
+async function cargarDatos() {
+  try {
+    var respuesta = await llamarAPI("dashboard");
+    render(respuesta.datos);
+  } catch (e) {
+    console.error("Error al cargar dashboard:", e);
+
+    if (e.message === "Clave incorrecta." || e.message === "Acceso denegado.") {
+      sessionStorage.removeItem("cctv_session");
+      PASS = "";
+      document.getElementById("dashboard").classList.add("hidden");
+      document.getElementById("loginModal").classList.remove("hidden");
+    }
+
+    alert("No se pudieron cargar los datos: " + e.message);
+  }
+}
+
+
+/* =========================================================
+   RENDER DASHBOARD
+   ========================================================= */
+
+function render(d) {
+  if (!d) return;
+
+  document.getElementById("labelMes").innerText = d.mes || "-";
+  document.getElementById("kpiTotal").innerText = d.resumen.total || 0;
+  document.getElementById("kpiOk").innerText = d.resumen.ok || 0;
+  document.getElementById("kpiFallas").innerText = d.resumen.fallas || 0;
+  document.getElementById("kpiPendientes").innerText = d.resumen.pendientes || 0;
+
+  DATOS_ITEMS = d.items || [];
+
+  if (!FECHA_SEL) {
+    var h = new Date();
+    CAL_ANIO = h.getFullYear();
+    CAL_MES = h.getMonth();
   }
 
+  dibujarCalendario();
+  aplicarFiltroVista();
+}
 
-  /*
-   * FILTROS KPI
-   */
 
-  function seleccionarFiltroKpi(tipo) {
+/* =========================================================
+   FILTROS KPI
+   ========================================================= */
 
-    FILTRO_ACTUAL = tipo;
+function seleccionarFiltroKpi(tipo) {
+  FILTRO_ACTUAL = tipo;
+  aplicarFiltroVista();
+}
 
-    aplicarFiltroVista();
 
+function filtrarPorTexto() {
+  var input = document.getElementById("buscadorTexto");
+  var q = (input ? input.value : "").toLowerCase().trim();
+  var items = document.querySelectorAll("#listaControles .item-fila");
+  var visibles = 0;
+
+  items.forEach(function(el) {
+    var texto = el.innerText.toLowerCase();
+    if (!q || texto.indexOf(q) !== -1) {
+      el.style.display = "";
+      visibles++;
+    } else {
+      el.style.display = "none";
+    }
+  });
+
+  document.getElementById("contadorItems").innerText = visibles + " registro(s)";
+}
+
+
+function aplicarFiltroVista() {
+  document.querySelectorAll(".card-kpi").forEach(function(c) {
+    c.classList.remove("active-kpi");
+  });
+
+  var mapa = {
+    todos: "kpiCardTotal",
+    ok: "kpiCardOk",
+    fallas: "kpiCardFallas",
+    faltantes: "kpiCardFaltantes"
+  };
+
+  if (mapa[FILTRO_ACTUAL]) {
+    var card = document.getElementById(mapa[FILTRO_ACTUAL]);
+    if (card) card.classList.add("active-kpi");
   }
 
+  var cont = document.getElementById("listaControles");
+  var titulo = document.getElementById("panelTitulo");
+  var contador = document.getElementById("contadorItems");
 
-  /*
-   * BUSCADOR
-   */
+  cont.innerHTML = "";
 
-  function filtrarPorTexto() {
+  var filtrados = [];
 
-    var q =
-      (
-        document
-          .getElementById("buscadorTexto")
-          .value || ""
-      )
-      .toLowerCase()
-      .trim();
+  if (FILTRO_ACTUAL === "fallas") {
+    titulo.innerText = "🔴 Dispositivos con Novedad / Fallas del mes";
+    filtrados = DATOS_ITEMS.filter(function(it) {
+      return !it.esOk && !it.esVacio;
+    });
+  } else if (FILTRO_ACTUAL === "ok") {
+    titulo.innerText = "🟢 Dispositivos en Estado OK / Normalizados";
+    filtrados = DATOS_ITEMS.filter(function(it) {
+      return it.esOk;
+    });
+  } else if (FILTRO_ACTUAL === "faltantes") {
+    titulo.innerText = "🟡 Dispositivos Faltantes (Sin Control en Columna F)";
+    filtrados = DATOS_ITEMS.filter(function(it) {
+      return it.esVacio && !it.esNormalizado;
+    });
+  } else if (FILTRO_ACTUAL === "todos") {
+    titulo.innerText = "📋 Todos los Dispositivos de la Planilla";
+    filtrados = DATOS_ITEMS;
+  } else if (FILTRO_ACTUAL === "dia") {
+    var partes = FECHA_SEL.split("-");
+    titulo.innerText = "Actividad del " + partes[2] + "/" + partes[1] + "/" + partes[0];
+    filtrados = DATOS_ITEMS.filter(function(it) {
+      return it.fechaControlIso === FECHA_SEL || it.fechaRecontrolIso === FECHA_SEL;
+    });
+  }
+
+  contador.innerText = filtrados.length + " registro(s)";
+
+  if (!filtrados.length) {
+    cont.innerHTML = "<p style='color:#9ca3af;font-size:13px;text-align:center;padding:25px;'>No hay registros para este filtro.</p>";
+    return;
+  }
+
+  renderizarTarjetas(filtrados, cont);
+  filtrarPorTexto();
+}
 
 
-    var items =
-      document.querySelectorAll(
-        "#listaControles .item-fila"
-      );
+/* =========================================================
+   TARJETAS
+   ========================================================= */
 
+function renderizarTarjetas(lista, cont) {
+  lista.forEach(function(it) {
+    var el = document.createElement("div");
+    el.className = "item-fila";
 
-    var visibles = 0;
+    var tagEstado = "";
 
+    if (it.esNormalizado) {
+      tagEstado = "<span class='tag tag-norm'>NORMALIZADO</span>";
+    } else if (it.esOk) {
+      tagEstado = "<span class='tag tag-ok'>OK</span>";
+    } else if (it.esVacio) {
+      tagEstado = "<span class='tag tag-pending'>SIN CONTROL</span>";
+    } else {
+      tagEstado = "<span class='tag tag-fail'>" + escapeHtml(it.estadoF || "NOVEDAD") + "</span>";
+    }
 
-    items.forEach(function(el) {
+    var btnNormHtml = "";
+    if (!it.esOk && !it.esVacio) {
+      btnNormHtml = "<button data-fila='" + it.fila + "' class='btn-green btn-marcar-norm' style='margin-left:8px;'>Marcar Normalizado (OK)</button>";
+    }
 
-      var texto =
-        el.innerText.toLowerCase();
-
-
-      if (!q || texto.indexOf(q) !== -1) {
-
-        el.style.display = "";
-
-        visibles++;
-
+    var avisoTipo = "";
+    if (FILTRO_ACTUAL === "dia" && FECHA_SEL) {
+      if (it.fechaRecontrolIso === FECHA_SEL) {
+        avisoTipo = "<span style='color:#ef4444;font-weight:bold;font-size:11px;'>[RECONTROL 15 DÍAS]</span> ";
       } else {
-
-        el.style.display = "none";
-
+        avisoTipo = "<span style='color:#60a5fa;font-weight:bold;font-size:11px;'>[CONTROL REGULAR]</span> ";
       }
+    }
 
-    });
+    el.innerHTML =
+      "<div class='item-top'>" +
+        "<span>" + avisoTipo + escapeHtml(it.dispositivo) + " (Fila " + it.fila + ")</span>" +
+        "<div>" + tagEstado + btnNormHtml + "</div>" +
+      "</div>" +
+      "<div class='info-op'>" +
+        "👤 Operador (Col I): <b>" + escapeHtml(it.operador || "-") + "</b> | Control: " +
+        escapeHtml(it.fechaControlTxt || "S/D") +
+        (it.fechaRecontrolIso ? " | Recontrol: " + escapeHtml(it.fechaRecontrolIso) : "") +
+      "</div>";
+
+    cont.appendChild(el);
+  });
+
+  cont.querySelectorAll(".btn-marcar-norm").forEach(function(btn) {
+    btn.onclick = function() {
+      var fila = parseInt(this.getAttribute("data-fila"), 10);
+      ejecutarNormalizar(fila);
+    };
+  });
+}
 
 
-    document
-      .getElementById("contadorItems")
-      .innerText =
-      visibles + " registro(s)";
+function escapeHtml(valor) {
+  return String(valor == null ? "" : valor)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
 
+
+/* =========================================================
+   NORMALIZAR -> SHEETS REAL
+   ========================================================= */
+
+async function ejecutarNormalizar(fila) {
+  var item = DATOS_ITEMS.find(function(x) {
+    return Number(x.fila) === Number(fila);
+  });
+
+  if (!item) return;
+
+  if (!confirm("¿Confirmás marcar NORMALIZADO en la columna J para " + item.dispositivo + "?")) {
+    return;
   }
 
+  try {
+    var respuesta = await llamarAPI("normalizar", {
+      fila: fila,
+      operador: OPERADOR_ACTUAL || "Sin especificar"
+    });
 
-  /*
-   * APLICAR FILTROS
-   */
+    if (!respuesta.ok) {
+      throw new Error(respuesta.error || "No se pudo normalizar.");
+    }
 
-  function aplicarFiltroVista() {
+    await cargarDatos();
+    mostrarToast("Novedad normalizada correctamente.");
 
-    document
-      .querySelectorAll(".card-kpi")
-      .forEach(function(c) {
-
-        c.classList.remove("active-kpi");
-
-      });
-
-
-    if (FILTRO_ACTUAL === "todos")
-      document
-        .getElementById("kpiCardTotal")
-        .classList.add("active-kpi");
+  } catch (e) {
+    console.error(e);
+    alert("No se pudo normalizar: " + e.message);
+  }
+}
 
 
-    if (FILTRO_ACTUAL === "ok")
-      document
-        .getElementById("kpiCardOk")
-        .classList.add("active-kpi");
+/* =========================================================
+   CAMBIO DE MES -> SHEETS REAL
+   ========================================================= */
+
+async function cambioDeMesBoton() {
+  if (!confirm("¿Estás seguro de ejecutar el CAMBIO DE MES?
+
+Se creará la nueva pestaña y se conservarán las fallas activas.")) {
+    return;
+  }
+
+  try {
+    var respuesta = await llamarAPI("cambiomes", {
+      operador: OPERADOR_ACTUAL || "Sin especificar"
+    });
+
+    if (!respuesta.ok) {
+      throw new Error(respuesta.error || "No se pudo ejecutar el cambio de mes.");
+    }
+
+    var nuevoMes = respuesta.resultado && respuesta.resultado.nuevoMes
+      ? respuesta.resultado.nuevoMes
+      : "nuevo mes";
+
+    alert("Cambio de mes realizado correctamente.
+Nueva pestaña: " + nuevoMes);
+
+    FILTRO_ACTUAL = "fallas";
+    FECHA_SEL = "";
+    CAL_ANIO = new Date().getFullYear();
+    CAL_MES = new Date().getMonth();
+
+    await cargarDatos();
+
+  } catch (e) {
+    console.error(e);
+    alert("No se pudo ejecutar el cambio de mes: " + e.message);
+  }
+}
 
 
-    if (FILTRO_ACTUAL === "fallas")
-      document
-        .getElementById("kpiCardFallas")
-        .classList.add("active-kpi");
+/* =========================================================
+   CALENDARIO
+   ========================================================= */
+
+function cambiarMes(delta) {
+  CAL_MES += delta;
+
+  if (CAL_MES < 0) {
+    CAL_MES = 11;
+    CAL_ANIO--;
+  } else if (CAL_MES > 11) {
+    CAL_MES = 0;
+    CAL_ANIO++;
+  }
+
+  dibujarCalendario();
+}
 
 
-    if (FILTRO_ACTUAL === "faltantes")
-      document
-        .getElementById("kpiCardFaltantes")
-        .classList.add("active-kpi");
+function dibujarCalendario() {
+  var mNombres = [
+    "enero", "febrero", "marzo", "abril", "mayo", "junio",
+    "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
+  ];
+
+  document.getElementById("calTitulo").innerText = mNombres[CAL_MES] + " de " + CAL_ANIO;
+
+  var hGrid = document.getElementById("calGridHeader");
+  hGrid.innerHTML = "";
+
+  ["DO", "LU", "MA", "MI", "JU", "VI", "SA"].forEach(function(nom) {
+    var el = document.createElement("div");
+    el.className = "cal-day-header";
+    el.innerText = nom;
+    hGrid.appendChild(el);
+  });
+
+  var dGrid = document.getElementById("calGridDays");
+  dGrid.innerHTML = "";
+
+  var primerDiaSemana = new Date(CAL_ANIO, CAL_MES, 1).getDay();
+  var totalDiasMes = new Date(CAL_ANIO, CAL_MES + 1, 0).getDate();
+  var diasMesAnterior = new Date(CAL_ANIO, CAL_MES, 0).getDate();
+
+  var hoy = new Date();
+  var hoyStr = hoy.getFullYear() + "-" + String(hoy.getMonth() + 1).padStart(2, "0") + "-" + String(hoy.getDate()).padStart(2, "0");
+
+  for (var p = primerDiaSemana - 1; p >= 0; p--) {
+    var num = diasMesAnterior - p;
+    var elPrev = document.createElement("div");
+    elPrev.className = "cal-day other-month";
+    elPrev.innerText = num;
+    dGrid.appendChild(elPrev);
+  }
+
+  for (var d = 1; d <= totalDiasMes; d++) {
+    var iso = CAL_ANIO + "-" + String(CAL_MES + 1).padStart(2, "0") + "-" + String(d).padStart(2, "0");
+    var elDia = document.createElement("div");
+    elDia.className = "cal-day";
+    elDia.innerText = d;
+
+    if (iso === hoyStr) elDia.classList.add("today");
+    if (iso === FECHA_SEL && FILTRO_ACTUAL === "dia") elDia.classList.add("selected");
+
+    var tieneControl = DATOS_ITEMS.some(function(it) {
+      return it.fechaControlIso === iso;
+    });
+
+    var tieneRecontrol = DATOS_ITEMS.some(function(it) {
+      return it.fechaRecontrolIso === iso && !it.esOk;
+    });
+
+    if (tieneRecontrol) {
+      elDia.classList.add("has-recontrol");
+    } else if (tieneControl) {
+      elDia.classList.add("has-control");
+    }
+
+    elDia.onclick = function(fechaClave) {
+      return function() {
+        FECHA_SEL = fechaClave;
+        FILTRO_ACTUAL = "dia";
+        dibujarCalendario();
+        aplicarFiltroVista();
+      };
+    }(iso);
+
+    dGrid.appendChild(elDia);
+  }
+}
 
 
-    var cont =
-      document.getElementById("listaControles");
+/* =========================================================
+   LOG REAL
+   ========================================================= */
 
-    var titulo =
-      document.getElementById("panelTitulo");
+async function abrirModalLog() {
+  document.getElementById("logModal").classList.remove("hidden");
 
-    var contador =
-      document.getElementById("contadorItems");
+  var cont = document.getElementById("contenedorLogs");
+  cont.innerHTML = "<div class='log-item'>Cargando trazabilidad...</div>";
 
+  try {
+    var respuesta = await llamarAPI("logs");
+    var logs = respuesta.logs || [];
+
+    if (!logs.length) {
+      cont.innerHTML = "<div class='log-item'>No hay movimientos registrados todavía.</div>";
+      return;
+    }
 
     cont.innerHTML = "";
 
-
-    var filtrados = [];
-
-
-    if (FILTRO_ACTUAL === "fallas") {
-
-      titulo.innerText =
-        "🔴 Dispositivos con Novedad / Fallas del mes";
-
-      filtrados =
-        DATOS_ITEMS.filter(function(it) {
-
-          return !it.esOk && !it.esVacio;
-
-        });
-
-    }
-
-
-    else if (FILTRO_ACTUAL === "ok") {
-
-      titulo.innerText =
-        "🟢 Dispositivos en Estado OK / Normalizados";
-
-      filtrados =
-        DATOS_ITEMS.filter(function(it) {
-
-          return it.esOk;
-
-        });
-
-    }
-
-
-    else if (FILTRO_ACTUAL === "faltantes") {
-
-      titulo.innerText =
-        "🟡 Dispositivos Faltantes (Sin Control en Columna F)";
-
-      filtrados =
-        DATOS_ITEMS.filter(function(it) {
-
-          return it.esVacio && !it.esNormalizado;
-
-        });
-
-    }
-
-
-    else if (FILTRO_ACTUAL === "todos") {
-
-      titulo.innerText =
-        "📋 Todos los Dispositivos de la Planilla";
-
-      filtrados = DATOS_ITEMS;
-
-    }
-
-
-    else if (FILTRO_ACTUAL === "dia") {
-
-      var partes =
-        FECHA_SEL.split("-");
-
-      titulo.innerText =
-        "Actividad del " +
-        partes[2] + "/" +
-        partes[1] + "/" +
-        partes[0];
-
-
-      filtrados =
-        DATOS_ITEMS.filter(function(it) {
-
-          return (
-            it.fechaControlIso === FECHA_SEL ||
-            it.fechaRecontrolIso === FECHA_SEL
-          );
-
-        });
-
-    }
-
-
-    contador.innerText =
-      filtrados.length + " registro(s)";
-
-
-    if (filtrados.length === 0) {
-
-      cont.innerHTML =
-        "<p style='color:#9ca3af;font-size:13px;text-align:center;padding:25px;'>No hay registros para este filtro.</p>";
-
-      return;
-
-    }
-
-
-    renderizarTarjetas(
-      filtrados,
-      cont
-    );
-
-  }
-
-
-  /*
-   * TARJETAS
-   */
-
-  function renderizarTarjetas(
-    lista,
-    cont
-  ) {
-
-    lista.forEach(function(it) {
-
-      var el =
-        document.createElement("div");
-
-      el.className =
-        "item-fila";
-
-
-      var tagEstado = "";
-
-
-      if (it.esNormalizado) {
-
-        tagEstado =
-          "<span class='tag tag-norm'>NORMALIZADO</span>";
-
-      }
-
-      else if (it.esOk) {
-
-        tagEstado =
-          "<span class='tag tag-ok'>OK</span>";
-
-      }
-
-      else if (it.esVacio) {
-
-        tagEstado =
-          "<span class='tag tag-pending'>SIN CONTROL</span>";
-
-      }
-
-      else {
-
-        tagEstado =
-          "<span class='tag tag-fail'>" +
-          it.estadoF +
-          "</span>";
-
-      }
-
-
-      var btnNormHtml = "";
-
-
-      if (!it.esOk && !it.esVacio) {
-
-        btnNormHtml =
-          "<button data-fila='" +
-          it.fila +
-          "' class='btn-green btn-marcar-norm' style='margin-left:8px;'>Marcar Normalizado (OK)</button>";
-
-      }
-
-
-      var avisoTipo = "";
-
-
-      if (
-        FILTRO_ACTUAL === "dia" &&
-        FECHA_SEL
-      ) {
-
-        if (
-          it.fechaRecontrolIso ===
-          FECHA_SEL
-        ) {
-
-          avisoTipo =
-            "<span style='color:#ef4444;font-weight:bold;font-size:11px;'>[RECONTROL 15 DÍAS]</span> ";
-
-        }
-
-        else {
-
-          avisoTipo =
-            "<span style='color:#60a5fa;font-weight:bold;font-size:11px;'>[CONTROL REGULAR]</span> ";
-
-        }
-
-      }
-
-
+    logs.forEach(function(log) {
+      var el = document.createElement("div");
+      el.className = "log-item";
       el.innerHTML =
-
-        "<div class='item-top'>" +
-
-          "<span>" +
-            avisoTipo +
-            it.dispositivo +
-            " (Fila " +
-            it.fila +
-            ")" +
-          "</span>" +
-
-          "<div>" +
-            tagEstado +
-            btnNormHtml +
-          "</div>" +
-
-        "</div>" +
-
-        "<div class='info-op'>" +
-          "👤 Operador (Col I): <b>" +
-          it.operador +
-          "</b> | Control: " +
-          (it.fechaControlTxt || "S/D") +
-
-          (
-            it.fechaRecontrolIso
-              ? " | Recontrol: " +
-                it.fechaRecontrolIso
-              : ""
-          ) +
-
-        "</div>";
-
-
+        "<b>" + escapeHtml(log.dispositivo || "-") + "</b> " +
+        "(Fila " + escapeHtml(log.fila || "-") + ")<br>" +
+        escapeHtml(log.accion || "") + "<br>" +
+        "<small>" + escapeHtml(log.fechaHora || "") + " | Operador: " +
+        escapeHtml(log.operador || "-") + "</small>";
       cont.appendChild(el);
-
     });
 
+  } catch (e) {
+    console.error(e);
+    cont.innerHTML = "<div class='log-item'>Error al cargar el log: " + escapeHtml(e.message) + "</div>";
+  }
+}
 
-    cont
-      .querySelectorAll(".btn-marcar-norm")
-      .forEach(function(btn) {
 
-        btn.onclick = function() {
+function cerrarModalLog() {
+  document.getElementById("logModal").classList.add("hidden");
+}
 
-          var fila =
-            parseInt(
-              this.getAttribute("data-fila"),
-              10
-            );
 
-          ejecutarNormalizar(fila);
+/* =========================================================
+   TOAST
+   ========================================================= */
 
-        };
+function mostrarToast(mensaje) {
+  var toast = document.getElementById("toast");
 
-      });
-
+  if (!toast) {
+    alert(mensaje);
+    return;
   }
 
+  toast.innerText = mensaje;
+  toast.classList.remove("hidden");
 
-  /*
-   * NORMALIZAR
-   */
-  async function ejecutarNormalizar(fila) {
-    var item=DATOS_ITEMS.find(function(x){return Number(x.fila)===Number(fila);});
-    if(!item) return;
-    if(!confirm("¿Confirmás marcar NORMALIZADO en la columna J para " + item.dispositivo + "?")) return;
-    try {
-      await llamarAPI("normalizar",{fila:fila,operador:OPERADOR_ACTUAL});
-      await cargarDatos();
-    } catch(e) { alert("Error al normalizar: " + e.message); }
-  }
-
-  /*
-   * CAMBIO DE MES
-   */
-  async function cambioDeMesBoton() {
-    if(!confirm("¿Estás seguro de ejecutar el CAMBIO DE MES?\n\nSe creará una pestaña nueva a la izquierda y se conservarán las fallas pendientes.")) return;
-    try {
-      var r=await llamarAPI("cambiomes",{operador:OPERADOR_ACTUAL});
-      alert("¡Cambio de mes exitoso!\n\nNueva pestaña activa: " + ((r.resultado&&r.resultado.nuevoMes)||""));
-      await cargarDatos();
-    } catch(e) { alert("Ocurrió un error al cambiar de mes: " + e.message); }
-  }
-
-  /*
-   * CALENDARIO
-   */
-
-  function cambiarMes(delta) {
-
-    CAL_MES += delta;
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(function() {
+    toast.classList.add("hidden");
+  }, 2500);
+}
 
 
-    if (CAL_MES < 0) {
+/* =========================================================
+   INICIO
+   ========================================================= */
 
-      CAL_MES = 11;
+window.addEventListener("DOMContentLoaded", function() {
+  var form = document.querySelector("#loginModal form");
 
-      CAL_ANIO--;
-
-    }
-
-    else if (CAL_MES > 11) {
-
-      CAL_MES = 0;
-
-      CAL_ANIO++;
-
-    }
-
-
-    dibujarCalendario();
-
-  }
-
-
-  function dibujarCalendario() {
-
-    var mNombres = [
-      "enero",
-      "febrero",
-      "marzo",
-      "abril",
-      "mayo",
-      "junio",
-      "julio",
-      "agosto",
-      "septiembre",
-      "octubre",
-      "noviembre",
-      "diciembre"
-    ];
-
-
-    document
-      .getElementById("calTitulo")
-      .innerText =
-      mNombres[CAL_MES] +
-      " de " +
-      CAL_ANIO;
-
-
-    var hGrid =
-      document.getElementById(
-        "calGridHeader"
-      );
-
-    hGrid.innerHTML = "";
-
-
-    [
-      "DO",
-      "LU",
-      "MA",
-      "MI",
-      "JU",
-      "VI",
-      "SA"
-    ].forEach(function(nom) {
-
-      var el =
-        document.createElement("div");
-
-      el.className =
-        "cal-day-header";
-
-      el.innerText =
-        nom;
-
-      hGrid.appendChild(el);
-
+  if (form) {
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      autenticar();
     });
-
-
-    var dGrid =
-      document.getElementById(
-        "calGridDays"
-      );
-
-    dGrid.innerHTML = "";
-
-
-    var primerDiaSemana =
-      new Date(
-        CAL_ANIO,
-        CAL_MES,
-        1
-      ).getDay();
-
-
-    var totalDiasMes =
-      new Date(
-        CAL_ANIO,
-        CAL_MES + 1,
-        0
-      ).getDate();
-
-
-    var diasMesAnterior =
-      new Date(
-        CAL_ANIO,
-        CAL_MES,
-        0
-      ).getDate();
-
-
-    var hoy = new Date();
-
-
-    var hoyStr =
-      hoy.getFullYear() +
-      "-" +
-      String(
-        hoy.getMonth() + 1
-      ).padStart(2,"0") +
-      "-" +
-      String(
-        hoy.getDate()
-      ).padStart(2,"0");
-
-
-    for (
-      var p = primerDiaSemana - 1;
-      p >= 0;
-      p--
-    ) {
-
-      var num =
-        diasMesAnterior - p;
-
-      var elPrev =
-        document.createElement("div");
-
-      elPrev.className =
-        "cal-day other-month";
-
-      elPrev.innerText =
-        num;
-
-      dGrid.appendChild(
-        elPrev
-      );
-
-    }
-
-
-    for (
-      var d = 1;
-      d <= totalDiasMes;
-      d++
-    ) {
-
-      var mStr =
-        String(CAL_MES + 1)
-        .padStart(2,"0");
-
-      var dStr =
-        String(d)
-        .padStart(2,"0");
-
-
-      var iso =
-        CAL_ANIO +
-        "-" +
-        mStr +
-        "-" +
-        dStr;
-
-
-      var elDia =
-        document.createElement("div");
-
-      elDia.className =
-        "cal-day";
-
-      elDia.innerText =
-        d;
-
-
-      if (iso === hoyStr)
-        elDia.classList.add("today");
-
-
-      if (
-        iso === FECHA_SEL &&
-        FILTRO_ACTUAL === "dia"
-      )
-        elDia.classList.add("selected");
-
-
-      var tieneControl =
-        DATOS_ITEMS.some(
-          function(it) {
-            return (
-              it.fechaControlIso ===
-              iso
-            );
-          }
-        );
-
-
-      var tieneRecontrol =
-        DATOS_ITEMS.some(
-          function(it) {
-            return (
-              it.fechaRecontrolIso ===
-              iso &&
-              !it.esOk
-            );
-          }
-        );
-
-
-      if (tieneRecontrol)
-        elDia.classList.add(
-          "has-recontrol"
-        );
-
-      else if (tieneControl)
-        elDia.classList.add(
-          "has-control"
-        );
-
-
-      elDia.onclick =
-        function(fechaClave) {
-
-          return function() {
-
-            FECHA_SEL =
-              fechaClave;
-
-            FILTRO_ACTUAL =
-              "dia";
-
-            dibujarCalendario();
-
-            aplicarFiltroVista();
-
-          };
-
-        }(iso);
-
-
-      dGrid.appendChild(
-        elDia
-      );
-
-    }
-
   }
 
-
-  /*
-   * LOG REAL
-   */
-  async function abrirModalLog() {
-    document.getElementById("logModal").classList.remove("hidden");
-    var cont=document.getElementById("contenedorLogs");
-    cont.innerHTML="<p style='color:#94a3b8;font-size:12px;'>Cargando historial...</p>";
-    try {
-      var r=await llamarAPI("logs");
-      var logs=r.logs||[];
-      if(!logs.length){cont.innerHTML="<p style='color:#94a3b8;font-size:13px;text-align:center;padding:20px;'>Aún no hay cambios registrados.</p>";return;}
-      cont.innerHTML="";
-      logs.forEach(function(l){
-        var d=document.createElement("div"); d.className="log-item";
-        d.innerHTML="<b>"+l.dispositivo+"</b> (Fila "+l.fila+") se pasó a <b>"+l.accion+"</b> el <i>"+l.fechaHora+"</i> por el operador: <span style='color:#34d399;font-weight:bold;'>"+l.operador+"</span>";
-        cont.appendChild(d);
-      });
-    } catch(e) { cont.innerHTML="<p style='color:#ef4444;'>Error al obtener logs: "+e.message+"</p>"; }
+  if (OPERADOR_ACTUAL && PASS) {
+    document.getElementById("loginModal").classList.add("hidden");
+    document.getElementById("dashboard").classList.remove("hidden");
+    document.getElementById("labelOperador").innerText = OPERADOR_ACTUAL;
+    cargarDatos();
   }
-
-  function cerrarModalLog() { document.getElementById("logModal").classList.add("hidden"); }
-
-  /*
-   * INICIO
-   */
-
-  window.addEventListener(
-    "DOMContentLoaded",
-    function() {
-
-      if (PASS && OPERADOR_ACTUAL) {
-
-        document
-          .getElementById("loginModal")
-          .classList.add("hidden");
-
-        document
-          .getElementById("dashboard")
-          .classList.remove("hidden");
-
-        document
-          .getElementById("labelOperador")
-          .innerText =
-          OPERADOR_ACTUAL;
-
-        cargarDatos();
-
-      }
-
-    }
-  );
+});
 
 </script>
 
