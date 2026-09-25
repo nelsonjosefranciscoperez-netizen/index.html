@@ -1542,47 +1542,68 @@ var CAL_ANIO = new Date().getFullYear();
 var CAL_MES = new Date().getMonth();
 var DATOS_ITEMS = [];
 
-
-/* =========================================================
-   API
-   ========================================================= */
-
-async function llamarAPI(action, parametros) {
+/*
+ * Apps Script no permite CORS de forma fiable para fetch() desde GitHub.
+ * Por eso usamos JSONP. El WebApp devuelve callback({...}) cuando recibe
+ * ?callback=....
+ */
+function llamarAPI(action, parametros) {
   parametros = parametros || {};
 
-  var params = new URLSearchParams();
-  params.set("action", action);
+  return new Promise(function(resolve, reject) {
+    var callbackName = "cctvJsonp_" + Date.now() + "_" + Math.floor(Math.random() * 100000);
+    var script = document.createElement("script");
+    var terminado = false;
 
-  if (PASS) params.set("pass", PASS);
+    var params = new URLSearchParams();
+    params.set("action", action);
+    params.set("callback", callbackName);
 
-  Object.keys(parametros).forEach(function(clave) {
-    if (parametros[clave] !== undefined && parametros[clave] !== null) {
-      params.set(clave, String(parametros[clave]));
+    if (PASS) params.set("pass", PASS);
+
+    Object.keys(parametros).forEach(function(clave) {
+      if (parametros[clave] !== undefined && parametros[clave] !== null) {
+        params.set(clave, String(parametros[clave]));
+      }
+    });
+
+    function limpiar() {
+      if (script.parentNode) script.parentNode.removeChild(script);
+      try { delete window[callbackName]; } catch (_) { window[callbackName] = undefined; }
     }
+
+    window[callbackName] = function(resultado) {
+      if (terminado) return;
+      terminado = true;
+      limpiar();
+
+      if (!resultado || !resultado.ok) {
+        reject(new Error((resultado && resultado.error) || "Error desconocido."));
+        return;
+      }
+
+      resolve(resultado);
+    };
+
+    script.onerror = function() {
+      if (terminado) return;
+      terminado = true;
+      limpiar();
+      reject(new Error("No se pudo conectar con el WebApp de Apps Script."));
+    };
+
+    script.src = API_URL + "?" + params.toString();
+    document.head.appendChild(script);
+
+    setTimeout(function() {
+      if (terminado) return;
+      terminado = true;
+      limpiar();
+      reject(new Error("Tiempo de espera agotado al conectar con el WebApp."));
+    }, 15000);
   });
-
-  var respuesta = await fetch(API_URL + "?" + params.toString(), {
-    method: "GET",
-    cache: "no-store"
-  });
-
-  if (!respuesta.ok) {
-    throw new Error("Error HTTP " + respuesta.status);
-  }
-
-  var resultado = await respuesta.json();
-
-  if (!resultado.ok) {
-    throw new Error(resultado.error || "Error desconocido.");
-  }
-
-  return resultado;
 }
 
-
-/* =========================================================
-   LOGIN
-   ========================================================= */
 
 async function autenticar() {
   var opEl = document.getElementById("inputOperador");
@@ -1607,23 +1628,14 @@ async function autenticar() {
     loading.classList.add("active");
     loading.setAttribute("aria-hidden", "false");
   }
-  if (btn) btn.disabled = true;
+  if (btn) {
+    btn.disabled = true;
+    btn.innerText = "Verificando...";
+  }
 
   try {
-    var params = new URLSearchParams();
-    params.set("action", "login");
-    params.set("pass", pass);
-
-    var respuesta = await fetch(API_URL + "?" + params.toString(), {
-      method: "GET",
-      cache: "no-store"
-    });
-
-    if (!respuesta.ok) {
-      throw new Error("No se pudo conectar con el servidor.");
-    }
-
-    var resultado = await respuesta.json();
+    /* Validación REAL contra WebApp.gs */
+    var resultado = await llamarAPI("login", { pass: pass });
 
     if (!resultado.ok) {
       throw new Error(resultado.error || "Clave incorrecta.");
@@ -1650,7 +1662,10 @@ async function autenticar() {
       loading.classList.remove("active");
       loading.setAttribute("aria-hidden", "true");
     }
-    if (btn) btn.disabled = false;
+    if (btn) {
+      btn.disabled = false;
+      btn.innerText = "Acceder";
+    }
   }
 }
 
@@ -1918,9 +1933,7 @@ async function ejecutarNormalizar(fila) {
    ========================================================= */
 
 async function cambioDeMesBoton() {
-  if (!confirm("¿Estás seguro de ejecutar el CAMBIO DE MES?
-
-Se creará la nueva pestaña y se conservarán las fallas activas.")) {
+  if (!confirm("¿Estás seguro de ejecutar el CAMBIO DE MES?\n\nSe creará la nueva pestaña y se conservarán las fallas activas.")) {
     return;
   }
 
@@ -1937,8 +1950,7 @@ Se creará la nueva pestaña y se conservarán las fallas activas.")) {
       ? respuesta.resultado.nuevoMes
       : "nuevo mes";
 
-    alert("Cambio de mes realizado correctamente.
-Nueva pestaña: " + nuevoMes);
+    alert("Cambio de mes realizado correctamente.\nNueva pestaña: " + nuevoMes);
 
     FILTRO_ACTUAL = "fallas";
     FECHA_SEL = "";
