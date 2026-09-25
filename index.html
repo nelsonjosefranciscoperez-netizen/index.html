@@ -1557,7 +1557,16 @@ function llamarAPI(action, parametros) {
 
     var params = new URLSearchParams();
     params.set("action", action);
+
+    /*
+     * Enviamos ambos nombres para mantener compatibilidad con
+     * distintas versiones del WebApp de Apps Script:
+     * - callback: versión actual
+     * - prefix: formato JSONP documentado por Google
+     */
     params.set("callback", callbackName);
+    params.set("prefix", callbackName);
+    params.set("_ts", String(Date.now()));
 
     if (PASS) params.set("pass", PASS);
 
@@ -1589,7 +1598,7 @@ function llamarAPI(action, parametros) {
       if (terminado) return;
       terminado = true;
       limpiar();
-      reject(new Error("No se pudo conectar con el WebApp de Apps Script."));
+      reject(new Error("No se pudo conectar con el WebApp de Apps Script. Verificá que el WebApp esté implementado como versión activa y con acceso para cualquier usuario."));
     };
 
     script.src = API_URL + "?" + params.toString();
