@@ -1,4349 +1,1877 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>Base Operativa - CCTV</title>
 
-<meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="favicon-segrup.png">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
-
-<title>
-    Control de Servicios - SEGRUP
-</title>
-
-<link rel="icon" type="image/png" href="favicon-segrup.png">
-
-
-<style>
-
+  <style>
     * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
+      box-sizing: border-box;
     }
-
 
     body {
-
-        font-family:
-            Arial,
-            Helvetica,
-            sans-serif;
-
-        background:
-            #f4f6f9;
-
-        color:
-            #1f2937;
-
-        min-height:
-            100vh;
-
-    }
-
-
-    /* =====================================================
-       LOGIN
-    ===================================================== */
-
-    #loginScreen {
-
-        position:
-            fixed;
-
-        inset:
-            0;
-
-        background:
-            linear-gradient(
-                135deg,
-                #003b73,
-                #064b91
-            );
-
-        display:
-            flex;
-
-        justify-content:
-            center;
-
-        align-items:
-            center;
-
-        z-index:
-            9999;
-
-        padding:
-            20px;
-
-    }
-
-
-    .login-box {
-
-        background:
-            white;
-
-        width:
-            100%;
-
-        max-width:
-            420px;
-
-        border-radius:
-            18px;
-
-        padding:
-            35px;
-
-        box-shadow:
-            0 20px 60px
-            rgba(0,0,0,0.25);
-
-        text-align:
-            center;
-
-    }
-
-
-    .login-logo {
-
-        max-width:
-            270px;
-
-        max-height:
-            110px;
-
-        object-fit:
-            contain;
-
-        margin-bottom:
-            25px;
-
-    }
-
-
-    .login-box h2 {
-
-        color:
-            #064b91;
-
-        margin-bottom:
-            8px;
-
-    }
-
-
-    .login-box p {
-
-        color:
-            #6b7280;
-
-        margin-bottom:
-            25px;
-
-        font-size:
-            14px;
-
-    }
-
-
-    .login-input {
-
-        width:
-            100%;
-
-        padding:
-            13px 15px;
-
-        border:
-            1px solid #d1d5db;
-
-        border-radius:
-            8px;
-
-        font-size:
-            15px;
-
-        outline:
-            none;
-
-        margin-bottom:
-            12px;
-
-    }
-
-
-    .login-input:focus {
-
-        border-color:
-            #064b91;
-
-        box-shadow:
-            0 0 0 3px
-            rgba(6,75,145,0.12);
-
-    }
-
-
-    .login-button {
-
-        width:
-            100%;
-
-        border:
-            none;
-
-        background:
-            #064b91;
-
-        color:
-            white;
-
-        padding:
-            13px;
-
-        border-radius:
-            8px;
-
-        cursor:
-            pointer;
-
-        font-size:
-            15px;
-
-        font-weight:
-            bold;
-
-    }
-
-
-    .login-button:hover {
-
-        background:
-            #04386d;
-
-    }
-
-
-    .login-error {
-
-        color:
-            #dc2626;
-
-        font-size:
-            13px;
-
-        margin-top:
-            12px;
-
-        display:
-            none;
-
-    }
-
-
-    /* =====================================================
-       APP
-    ===================================================== */
-
-    #app {
-
-        display:
-            none;
-
-    }
-
-
-    /* =====================================================
-       HEADER
-    ===================================================== */
-
-    header {
-
-        height:
-            90px;
-
-        background:
-            #ffffff;
-
-        display:
-            flex;
-
-        align-items:
-            center;
-
-        justify-content:
-            space-between;
-
-        padding:
-            0 40px;
-
-        border-bottom:
-            4px solid #064b91;
-
-        box-shadow:
-            0 2px 8px
-            rgba(0,0,0,0.08);
-
-    }
-
-
-    .logo {
-
-        height:
-            65px;
-
-        width:
-            auto;
-
-        object-fit:
-            contain;
-
-    }
-
-
-    .header-right {
-
-        display:
-            flex;
-
-        align-items:
-            center;
-
-        gap:
-            18px;
-
-    }
-
-
-    .header-left {
-
-        display:
-            flex;
-
-        align-items:
-            center;
-
-        gap:
-            18px;
-
-        min-width:
-            0;
-
-    }
-
-
-    .operator-badge {
-
-        display:
-            flex;
-
-        flex-direction:
-            column;
-
-        align-items:
-            flex-start;
-
-        justify-content:
-            center;
-
-        background:
-            #f4f7fb;
-
-        border:
-            1px solid #d8e1ec;
-
-        border-radius:
-            9px;
-
-        padding:
-            7px 12px;
-
-        min-width:
-            120px;
-
-    }
-
-
-    .operator-badge-label {
-
-        font-size:
-            10px;
-
-        color:
-            #6b7280;
-
-        font-weight:
-            bold;
-
-        letter-spacing:
-            .4px;
-
-    }
-
-
-    .operator-badge-name {
-
-        font-size:
-            14px;
-
-        color:
-            #064b91;
-
-        font-weight:
-            bold;
-
-        margin-top:
-            2px;
-
-        white-space:
-            nowrap;
-
-    }
-
-
-    /* =====================================================
-       SELECTOR DE OPERADOR
-    ===================================================== */
-
-    #operatorModal {
-
-        position:
-            fixed;
-
-        inset:
-            0;
-
-        background:
-            rgba(0, 39, 76, 0.72);
-
-        display:
-            none;
-
-        align-items:
-            center;
-
-        justify-content:
-            center;
-
-        z-index:
-            10001;
-
-        padding:
-            20px;
-
-    }
-
-
-    .operator-modal-box {
-
-        width:
-            100%;
-
-        max-width:
-            430px;
-
-        background:
-            white;
-
-        border-radius:
-            16px;
-
-        padding:
-            30px;
-
-        box-shadow:
-            0 20px 60px rgba(0,0,0,0.30);
-
-    }
-
-
-    .operator-modal-box h2 {
-
-        color:
-            #064b91;
-
-        margin-bottom:
-            7px;
-
-    }
-
-
-    .operator-modal-box p {
-
-        color:
-            #6b7280;
-
-        font-size:
-            14px;
-
-        margin-bottom:
-            22px;
-
-    }
-
-
-    .operator-select,
-    .operator-custom {
-
-        width:
-            100%;
-
-        padding:
-            13px 14px;
-
-        border:
-            1px solid #d1d5db;
-
-        border-radius:
-            8px;
-
-        font-size:
-            15px;
-
-        outline:
-            none;
-
-        background:
-            white;
-
-    }
-
-
-    .operator-select:focus,
-    .operator-custom:focus {
-
-        border-color:
-            #064b91;
-
-        box-shadow:
-            0 0 0 3px rgba(6,75,145,0.12);
-
-    }
-
-
-    .operator-custom {
-
-        display:
-            none;
-
-        margin-top:
-            10px;
-
-    }
-
-
-    .operator-confirm-button {
-
-        width:
-            100%;
-
-        border:
-            none;
-
-        background:
-            #064b91;
-
-        color:
-            white;
-
-        padding:
-            13px;
-
-        border-radius:
-            8px;
-
-        cursor:
-            pointer;
-
-        font-size:
-            15px;
-
-        font-weight:
-            bold;
-
-        margin-top:
-            18px;
-
-    }
-
-
-    .operator-confirm-button:hover {
-
-        background:
-            #04386d;
-
-    }
-
-
-    .operator-modal-error {
-
-        color:
-            #dc2626;
-
-        font-size:
-            13px;
-
-        margin-top:
-            10px;
-
-        display:
-            none;
-
-    }
-
-
-    .header-info {
-
-        text-align:
-            right;
-
-    }
-
-
-    .header-info h1 {
-
-        font-size:
-            20px;
-
-        color:
-            #064b91;
-
-        margin-bottom:
-            5px;
-
-    }
-
-
-    .header-info p {
-
-        font-size:
-            14px;
-
-        color:
-            #6b7280;
-
-    }
-
-
-    .logout-button {
-
-        border:
-            1px solid #d1d5db;
-
-        background:
-            white;
-
-        color:
-            #374151;
-
-        padding:
-            9px 13px;
-
-        border-radius:
-            7px;
-
-        cursor:
-            pointer;
-
-        font-size:
-            12px;
-
-    }
-
-
-    .logout-button:hover {
-
-        background:
-            #f3f4f6;
-
-    }
-
-
-    /* =====================================================
-       CONTENEDOR
-    ===================================================== */
-
-    .container {
-
-        max-width:
-            1200px;
-
-        margin:
-            35px auto;
-
-        padding:
-            0 20px;
-
-    }
-
-
-    /* =====================================================
-       TITULO
-    ===================================================== */
-
-    .title {
-
-        margin-bottom:
-            25px;
-
-    }
-
-
-    .title h2 {
-
-        font-size:
-            28px;
-
-        color:
-            #064b91;
-
-    }
-
-
-    .title p {
-
-        margin-top:
-            5px;
-
-        color:
-            #6b7280;
-
-    }
-
-
-    /* =====================================================
-       BARRA DE FECHA
-    ===================================================== */
-
-    .date-panel {
-
-        background:
-            white;
-
-        border-radius:
-            12px;
-
-        padding:
-            20px;
-
-        margin-bottom:
-            25px;
-
-        box-shadow:
-            0 3px 12px
-            rgba(0,0,0,0.06);
-
-        display:
-            flex;
-
-        justify-content:
-            space-between;
-
-        align-items:
-            end;
-
-        gap:
-            20px;
-
-        flex-wrap:
-            wrap;
-
-    }
-
-
-    .date-field {
-
-        flex:
-            1;
-
-        min-width:
-            230px;
-
-    }
-
-
-    .date-field label {
-
-        display:
-            block;
-
-        font-size:
-            13px;
-
-        font-weight:
-            bold;
-
-        color:
-            #374151;
-
-        margin-bottom:
-            7px;
-
-    }
-
-
-    .date-input {
-
-        width:
-            100%;
-
-        padding:
-            11px 12px;
-
-        border:
-            1px solid #d1d5db;
-
-        border-radius:
-            7px;
-
-        font-size:
-            15px;
-
-    }
-
-
-    .operator-field {
-
-        flex:
-            1;
-
-        min-width:
-            230px;
-
-    }
-
-
-    .operator-field label {
-
-        display:
-            block;
-
-        font-size:
-            13px;
-
-        font-weight:
-            bold;
-
-        color:
-            #374151;
-
-        margin-bottom:
-            7px;
-
-    }
-
-
-    .operator-input {
-
-        width:
-            100%;
-
-        padding:
-            11px 12px;
-
-        border:
-            1px solid #d1d5db;
-
-        border-radius:
-            7px;
-
-        font-size:
-            15px;
-
-    }
-
-
-    .search-button {
-
-        border:
-            none;
-
-        background:
-            #064b91;
-
-        color:
-            white;
-
-        padding:
-            12px 22px;
-
-        border-radius:
-            7px;
-
-        cursor:
-            pointer;
-
-        font-weight:
-            bold;
-
-        white-space:
-            nowrap;
-
-    }
-
-
-    .search-button:hover {
-
-        background:
-            #04386d;
-
-    }
-
-
-    /* =====================================================
-       ESTADISTICAS
-    ===================================================== */
-
-    .stats {
-
-        display:
-            grid;
-
-        grid-template-columns:
-            repeat(3, 1fr);
-
-        gap:
-            20px;
-
-        margin-bottom:
-            35px;
-
-    }
-
-
-    .stat {
-
-        background:
-            white;
-
-        border-radius:
-            12px;
-
-        padding:
-            22px;
-
-        box-shadow:
-            0 3px 12px
-            rgba(0,0,0,0.06);
-
-        display:
-            flex;
-
-        align-items:
-            center;
-
-        gap:
-            18px;
-
-    }
-
-
-    .stat-icon {
-
-        font-size:
-            30px;
-
-    }
-
-
-    .stat-number {
-
-        font-size:
-            28px;
-
-        font-weight:
-            bold;
-
-    }
-
-
-    .stat-label {
-
-        color:
-            #6b7280;
-
-        font-size:
-            14px;
-
-        margin-top:
-            3px;
-
-    }
-
-
-    .pending {
-
-        color:
-            #dc2626;
-
-    }
-
-
-    .completed {
-
-        color:
-            #16a34a;
-
-    }
-
-
-    .week {
-
-        color:
-            #064b91;
-
-    }
-
-
-    /* =====================================================
-       TITULO SECCION
-    ===================================================== */
-
-    .section-title {
-
-        display:
-            flex;
-
-        justify-content:
-            space-between;
-
-        align-items:
-            center;
-
-        margin-bottom:
-            15px;
-
-    }
-
-
-    .section-title h3 {
-
-        color:
-            #1f2937;
-
-    }
-
-
-    .date {
-
-        color:
-            #6b7280;
-
-        font-size:
-            14px;
-
+      background-color: #0f141c;
+      color: #e0e1dd;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
     }
-
-
-    /* =====================================================
-       MENSAJES
-    ===================================================== */
-
-    .message {
-
-        background:
-            white;
-
-        border-radius:
-            12px;
 
-        padding:
-            35px;
-
-        text-align:
-            center;
-
-        color:
-            #6b7280;
-
-        box-shadow:
-            0 3px 12px
-            rgba(0,0,0,0.06);
-
-        margin-bottom:
-            18px;
-
+    .card {
+      background-color: #171f2c;
+      border: 1px solid #283548;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
     }
-
-
-    .message.error {
-
-        color:
-            #dc2626;
 
+    .card-kpi {
+      background-color: #171f2c;
+      border: 1px solid #283548;
+      border-radius: 8px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
     }
 
-
-    /* =====================================================
-       TARJETAS
-    ===================================================== */
-
-    .control-card {
-
-        background:
-            white;
-
-        border-radius:
-            12px;
-
-        padding:
-            25px;
-
-        margin-bottom:
-            18px;
-
-        box-shadow:
-            0 3px 12px
-            rgba(0,0,0,0.06);
-
-        border-left:
-            5px solid #064b91;
-
+    .card-kpi:hover {
+      transform: translateY(-3px);
+      background-color: #1f2a3a;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
-
-
-    .control-card.realizado {
-
-        border-left-color:
-            #16a34a;
 
+    .card-kpi:active {
+      transform: translateY(0);
     }
 
-
-    .control-card.cancelado {
-
-        border-left-color:
-            #dc2626;
-
+    .card-kpi.active-kpi {
+      outline: 2px solid #3b82f6;
+      background-color: #1e293b;
+      box-shadow: 0 0 15px rgba(59,130,246,0.25);
     }
-
 
-    .control-header {
-
-        display:
-            flex;
-
-        justify-content:
-            space-between;
-
-        align-items:
-            center;
-
-        margin-bottom:
-            18px;
-
-        gap:
-            15px;
-
+    .btn {
+      background-color: #2563eb;
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 14px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 13px;
     }
-
-
-    .control-header h4 {
 
-        font-size:
-            19px;
-
-        color:
-            #064b91;
-
+    .btn:hover {
+      background-color: #1d4ed8;
     }
-
-
-    .badge {
-
-        padding:
-            6px 12px;
-
-        border-radius:
-            20px;
-
-        font-size:
-            11px;
-
-        font-weight:
-            bold;
 
-        white-space:
-            nowrap;
-
+    .btn-green {
+      background-color: #059669;
+      color: #ffffff;
+      padding: 5px 10px;
+      font-size: 11px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
     }
-
-
-    .badge-pendiente {
-
-        background:
-            #fff3cd;
 
-        color:
-            #856404;
-
+    .btn-green:hover {
+      background-color: #047857;
     }
-
-
-    .badge-realizado {
-
-        background:
-            #dcfce7;
 
-        color:
-            #166534;
-
+    .btn-amber {
+      background-color: #d97706;
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 14px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 13px;
     }
-
-
-    .badge-cancelado {
-
-        background:
-            #fee2e2;
 
-        color:
-            #991b1b;
-
+    .btn-amber:hover {
+      background-color: #b45309;
     }
-
-
-    .control-list {
-
-        list-style:
-            none;
 
-        margin-bottom:
-            20px;
-
+    .btn-nav {
+      background: transparent;
+      border: 1px solid #374151;
+      color: #fff;
+      border-radius: 4px;
+      padding: 4px 10px;
+      cursor: pointer;
+      font-size: 14px;
     }
-
-
-    .control-list li {
-
-        padding:
-            9px 0;
 
-        border-bottom:
-            1px solid #eeeeee;
-
-        font-size:
-            15px;
-
+    .btn-nav:hover {
+      background: #1f2937;
     }
-
-
-    .control-list li:last-child {
 
-        border-bottom:
-            none;
-
+    .input-text {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px;
+      background-color: #111827;
+      border: 1px solid #374151;
+      color: #fff;
+      border-radius: 4px;
+      margin-bottom: 12px;
     }
-
-
-    .control-list li::before {
-
-        content:
-            "🔍";
 
-        margin-right:
-            10px;
-
+    .input-search {
+      width: 100%;
+      padding: 8px 12px;
+      background-color: #0f141c;
+      border: 1px solid #283548;
+      border-radius: 6px;
+      color: #fff;
+      font-size: 13px;
+      margin-bottom: 12px;
+      outline: none;
     }
-
-
-    .control-info {
-
-        display:
-            grid;
 
-        grid-template-columns:
-            repeat(3, 1fr);
-
-        gap:
-            10px;
-
-        margin-bottom:
-            20px;
-
+    .input-search:focus {
+      border-color: #3b82f6;
     }
-
-
-    .info-box {
-
-        background:
-            #f8fafc;
-
-        border-radius:
-            7px;
-
-        padding:
-            10px;
 
+    .grid-kpi {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
     }
 
-
-    .info-box strong {
-
-        display:
-            block;
-
-        font-size:
-            11px;
-
-        color:
-            #6b7280;
-
-        text-transform:
-            uppercase;
-
-        margin-bottom:
-            4px;
-
+    .kpi-num {
+      font-size: 32px;
+      font-weight: bold;
+      margin-top: 4px;
     }
-
 
-    .info-box span {
-
-        font-size:
-            13px;
-
-        color:
-            #1f2937;
-
+    .text-green {
+      color: #10b981;
     }
-
-
-    .control-actions {
-
-        display:
-            flex;
-
-        gap:
-            10px;
-
-        flex-wrap:
-            wrap;
 
+    .text-red {
+      color: #ef4444;
     }
-
-
-    .button {
-
-        border:
-            none;
-
-        color:
-            white;
-
-        padding:
-            11px 20px;
-
-        border-radius:
-            7px;
-
-        cursor:
-            pointer;
-
-        font-weight:
-            bold;
 
+    .text-yellow {
+      color: #f59e0b;
     }
 
-
-    .button-realizar {
-
-        background:
-            #16a34a;
-
+    .hidden {
+      display: none !important;
     }
-
 
-    .button-realizar:hover {
-
-        background:
-            #15803d;
-
+    .grid-layout {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 20px;
     }
-
-
-    .button-cancelar {
 
-        background:
-            #dc2626;
-
+    @media (max-width: 900px) {
+      .grid-layout {
+        grid-template-columns: 1fr;
+      }
     }
-
-
-    .button-cancelar:hover {
-
-        background:
-            #b91c1c;
 
+    .cal-container {
+      background: #181d24;
+      border: 1px solid #2b3544;
+      border-radius: 8px;
+      padding: 14px;
     }
-
-
-    .button:disabled {
-
-        opacity:
-            0.6;
-
-        cursor:
-            not-allowed;
 
+    .cal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
     }
 
-
-    /* =====================================================
-       HISTORICO
-    ===================================================== */
-
-    .history-section {
-
-        margin-top:
-            45px;
-
+    .cal-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #f3f4f6;
+      text-transform: lowercase;
     }
-
-
-    .history-button {
-
-        border:
-            none;
-
-        background:
-            #374151;
 
-        color:
-            white;
-
-        padding:
-            10px 16px;
-
-        border-radius:
-            7px;
-
-        cursor:
-            pointer;
-
-        font-weight:
-            bold;
-
+    .cal-nav-btns {
+      display: flex;
+      gap: 6px;
     }
-
-
-    .history-list {
-
-        display:
-            none;
 
-        background:
-            white;
-
-        border-radius:
-            12px;
-
-        box-shadow:
-            0 3px 12px
-            rgba(0,0,0,0.06);
-
-        overflow:
-            hidden;
-
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      text-align: center;
     }
-
-
-    .history-item {
-
-        padding:
-            15px 18px;
-
-        border-bottom:
-            1px solid #eeeeee;
 
-        display:
-            grid;
-
-        grid-template-columns:
-            160px 100px 1fr 150px;
-
-        gap:
-            15px;
-
-        align-items:
-            center;
-
-        font-size:
-            13px;
-
+    .cal-day-header {
+      font-size: 11px;
+      font-weight: 600;
+      color: #9ca3af;
+      padding: 6px 0;
     }
-
-
-    .history-item:last-child {
-
-        border-bottom:
-            none;
 
+    .cal-day {
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      font-size: 13px;
+      cursor: pointer;
+      position: relative;
+      user-select: none;
+      border: 2px solid transparent;
+      color: #e5e7eb;
     }
 
-
-    .history-action {
-
-        font-weight:
-            bold;
-
+    .cal-day:hover {
+      background-color: #263345;
     }
-
 
-    .history-realizado {
-
-        color:
-            #16a34a;
-
+    .cal-day.other-month {
+      color: #4b5563;
     }
-
-
-    .history-cancelado {
 
-        color:
-            #dc2626;
-
+    .cal-day.today {
+      border: 2px solid #0078d4;
+      font-weight: bold;
     }
-
-
-    /* =====================================================
-       LOADING
-    ===================================================== */
-
-    .loading {
-
-        display:
-            none;
-
-        text-align:
-            center;
-
-        padding:
-            30px;
-
-        color:
-            #6b7280;
 
+    .cal-day.selected {
+      background-color: #0078d4 !important;
+      color: #ffffff !important;
+      font-weight: bold;
+      border-color: #60a5fa !important;
     }
 
-
-    .spinner {
-
-        width:
-            30px;
-
-        height:
-            30px;
-
-        border:
-            4px solid #e5e7eb;
-
-        border-top:
-            4px solid #064b91;
-
-        border-radius:
-            50%;
-
-        animation:
-            spin 0.8s linear infinite;
-
-        margin:
-            0 auto 10px;
-
+    .cal-day.has-control::after {
+      content: "";
+      position: absolute;
+      bottom: 3px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: #60a5fa;
     }
-
-
-    @keyframes spin {
-
-        to {
-            transform:
-                rotate(360deg);
-        }
 
+    .cal-day.has-recontrol::after {
+      content: "";
+      position: absolute;
+      bottom: 3px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: #ef4444;
     }
-
-
-    /* =====================================================
-       FOOTER
-    ===================================================== */
-
-    footer {
-
-        text-align:
-            center;
 
-        color:
-            #9ca3af;
-
-        font-size:
-            13px;
-
-        padding:
-            30px;
-
+    .item-fila {
+      background-color: #171f2c;
+      border: 1px solid #283548;
+      border-radius: 6px;
+      padding: 12px;
+      margin-bottom: 10px;
+      font-size: 13px;
     }
-
-
-    /* =====================================================
-       TOAST
-    ===================================================== */
-
-    #toast {
-
-        position:
-            fixed;
-
-        right:
-            25px;
-
-        bottom:
-            25px;
-
-        background:
-            #1f2937;
-
-        color:
-            white;
-
-        padding:
-            14px 18px;
-
-        border-radius:
-            8px;
-
-        box-shadow:
-            0 8px 25px
-            rgba(0,0,0,0.2);
-
-        display:
-            none;
-
-        z-index:
-            10000;
 
-        max-width:
-            350px;
-
-        font-size:
-            14px;
-
+    .item-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+      font-weight: 600;
+      gap: 10px;
     }
-
-
-    /* =====================================================
-       RESPONSIVE
-    ===================================================== */
-
-    @media (max-width: 800px) {
-
-        header {
-
-            height:
-                auto;
-
-            min-height:
-                90px;
-
-            padding:
-                15px;
-
-        }
-
-
-        .header-right {
-
-            gap:
-                8px;
-
-        }
-
-
-        .header-left {
 
-            gap:
-                8px;
-
-        }
-
-
-        .operator-badge {
-
-            min-width:
-                95px;
-
-            padding:
-                6px 8px;
-
-        }
-
-
-        .logo {
-
-            height:
-                50px;
-
-        }
-
-
-        .header-info h1 {
-
-            font-size:
-                15px;
-
-        }
-
-
-        .header-info p {
-
-            font-size:
-                12px;
-
-        }
-
-
-        .stats {
-
-            grid-template-columns:
-                1fr;
+    .tag {
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: #374151;
+      font-weight: normal;
+    }
 
-        }
+    .tag-ok {
+      background: #064e3b;
+      color: #6ee7b7;
+      font-weight: bold;
+    }
 
+    .tag-fail {
+      background: #7f1d1d;
+      color: #fca5a5;
+    }
 
-        .control-info {
+    .tag-norm {
+      background: #10b981;
+      color: #ffffff;
+      font-weight: bold;
+    }
 
-            grid-template-columns:
-                1fr;
+    .tag-pending {
+      background: #78350f;
+      color: #fde68a;
+      font-weight: bold;
+    }
 
-        }
+    .info-op {
+      color: #93c5fd;
+      font-size: 12px;
+      margin-top: 4px;
+    }
 
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+    }
 
-        .history-item {
+    .modal-box {
+      background: #171f2c;
+      border: 1px solid #374151;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 750px;
+      max-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+    }
 
-            grid-template-columns:
-                1fr;
+    .log-item {
+      background: #0f141c;
+      border-left: 3px solid #10b981;
+      padding: 8px 12px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+      font-size: 12px;
+    }
 
-            gap:
-                5px;
+    #listaControles::-webkit-scrollbar {
+      width: 6px;
+    }
 
-        }
+    #listaControles::-webkit-scrollbar-track {
+      background: #111827;
+      border-radius: 4px;
+    }
 
+    #listaControles::-webkit-scrollbar-thumb {
+      background: #374151;
+      border-radius: 4px;
     }
 
+    #listaControles::-webkit-scrollbar-thumb:hover {
+      background: #4b5563;
+    }
 
     @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
 
-        .header-info {
-
-            display:
-                none;
-
-        }
-
-
-        .header-right {
-
-            margin-left:
-                auto;
-
-        }
-
-
-        .date-panel {
-
-            flex-direction:
-                column;
-
-            align-items:
-                stretch;
-
-        }
-
-
-        .search-button {
-
-            width:
-                100%;
-
-        }
-
-
-        .control-header {
-
-            align-items:
-                flex-start;
-
-            flex-direction:
-                column;
-
-        }
-
-
-        .control-actions {
-
-            flex-direction:
-                column;
-
-        }
-
-
-        .button {
-
-            width:
-                100%;
-
-        }
-
-    }
-
-
-
-/* =====================================================
-   RESULTADO DEL CONTROL
-===================================================== */
-
-#resultadoModal {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 39, 76, 0.72);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 10002;
-    padding: 20px;
-}
-
-.resultado-modal-box {
-    width: 100%;
-    max-width: 520px;
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 30px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.30);
-}
-
-.resultado-modal-box h2 {
-    color: #064b91;
-    margin-bottom: 8px;
-}
-
-.resultado-modal-box p {
-    color: #6b7280;
-    font-size: 14px;
-    margin-bottom: 20px;
-}
-
-.resultado-options {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 18px;
-}
-
-.resultado-option {
-    border: 2px solid #d1d5db;
-    background: #ffffff;
-    border-radius: 10px;
-    padding: 14px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 15px;
-}
-
-.resultado-option:hover {
-    border-color: #064b91;
-}
-
-.resultado-option.ok.active {
-    border-color: #16a34a;
-    background: #f0fdf4;
-    color: #15803d;
-}
-
-.resultado-option.novedad.active {
-    border-color: #dc2626;
-    background: #fef2f2;
-    color: #b91c1c;
-}
-
-#motivoNovedad {
-    display: none;
-    width: 100%;
-    min-height: 120px;
-    resize: vertical;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    padding: 12px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
-    margin-bottom: 15px;
-    outline: none;
-}
-
-#motivoNovedad:focus {
-    border-color: #064b91;
-    box-shadow: 0 0 0 3px rgba(6,75,145,0.12);
-}
-
-.resultado-modal-actions {
-    display: flex;
-    gap: 10px;
-}
-
-.resultado-modal-actions button {
-    flex: 1;
-}
-
-.button-secondary {
-    border: 1px solid #d1d5db;
-    background: #ffffff;
-    color: #374151;
-    padding: 11px 20px;
-    border-radius: 7px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.button-secondary:hover {
-    background: #f3f4f6;
-}
-
-.novedad-info {
-    display: none;
-    background: #fff7ed;
-    color: #9a3412;
-    border: 1px solid #fed7aa;
-    border-radius: 8px;
-    padding: 10px 12px;
-    font-size: 13px;
-    margin-bottom: 12px;
-}
-
-@media (max-width: 600px) {
-    .resultado-options {
-        grid-template-columns: 1fr;
-    }
-
-    .resultado-modal-actions {
+      .item-top {
         flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .header-buttons {
+        flex-wrap: wrap;
+      }
+
+      .grid-kpi {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .kpi-num {
+        font-size: 26px;
+      }
     }
-}
-
-</style>
-
-
+  </style>
 </head>
+
 <body>
-<!-- =========================================================
-     LOGIN
-========================================================= -->
-<div id="loginScreen">
 
+  <!-- LOGIN -->
+  <div id="loginModal" class="modal-overlay">
+    <div class="card" style="width:330px; text-align:center;">
+      <img src="logo-segrup.png"
+           style="width:90px; max-height:90px; object-fit:contain; margin-bottom:10px;"
+           alt="Segrup">
 
-<div class="login-box">
+      <h2 style="margin:0 0 8px;color:#fff;">
+        Base Operativa Segrup
+      </h2>
 
-    <img
-        src="logo-segrup.png"
-        alt="SEGRUP Seguridad"
-        class="login-logo"
-    >
+      <p style="font-size:12px;color:#9ca3af;margin-bottom:16px;">
+        Ingresá tus credenciales de monitoreo
+      </p>
 
-    <h2>
-        Control de Servicios
-    </h2>
-
-    <p>
-        Sistema interno de control operativo
-    </p>
-
-
-    <input
-        type="password"
-        id="passwordInput"
-        class="login-input"
-        placeholder="Ingrese la clave"
-        autocomplete="current-password"
-        onkeydown="if(event.key === 'Enter') iniciarSesion()"
-    >
-
-
-    <button
-        class="login-button"
-        onclick="iniciarSesion()"
-    >
-        INGRESAR
-    </button>
-
-
-    <div
-        id="loginError"
-        class="login-error"
-    >
-        Clave incorrecta.
-    </div>
-
-</div>
-
-
-</div>
-<!-- =========================================================
-     SELECTOR DE OPERADOR
-========================================================= -->
-<div id="operatorModal">
-
-
-<div class="operator-modal-box">
-
-    <h2>Seleccionar operador</h2>
-
-    <p>
-        Seleccione quién está ingresando al sistema.
-        Este operador quedará registrado en los controles realizados.
-    </p>
-
-    <select id="operatorSelect" class="operator-select" onchange="cambioOperador()">
-        <option value="">Seleccione un operador...</option>
-        <option value="PEREZ">PEREZ</option>
-        <option value="BO">BO</option>
-        <option value="ALVAREZ">ALVAREZ</option>
-        <option value="ORTIZ">ORTIZ</option>
-        <option value="TOSCANO">TOSCANO</option>
-        <option value="OTRO">OTRO...</option>
-    </select>
-
-    <input
-        type="text"
-        id="operatorCustom"
-        class="operator-custom"
-        placeholder="Escriba el operador"
-        autocomplete="off"
-        onkeydown="if(event.key === 'Enter') confirmarOperador()"
-    >
-
-    <div id="operatorModalError" class="operator-modal-error">
-        Seleccione un operador.
-    </div>
-
-    <button
-        type="button"
-        class="operator-confirm-button"
-        onclick="confirmarOperador()"
-    >
-        CONTINUAR
-    </button>
-
-</div>
-
-
-</div>
-<!-- =========================================================
-     APLICACIÓN
-========================================================= -->
-<div id="app">
-<header>
-
-
-<div class="header-left">
-
-    <img
-        src="logo-segrup.png"
-        alt="SEGRUP Seguridad"
-        class="logo"
-    >
-
-    <div class="operator-badge">
-        <span class="operator-badge-label">OPERADOR</span>
-        <span class="operator-badge-name" id="operadorActual">—</span>
-    </div>
-
-</div>
-
-
-<div class="header-right">
-
-    <div class="header-info">
-
-        <h1>
-            CONTROL DE SERVICIOS
-        </h1>
-
-        <p id="fechaActual"></p>
-
-    </div>
-
-
-    <button
-        class="logout-button"
-        onclick="cambiarOperador()"
-    >
-        CAMBIAR OPERADOR
-    </button>
-
-    <button
-        class="logout-button"
-        onclick="cerrarSesion()"
-    >
-        SALIR
-    </button>
-
-</div>
-
-
-</header>
-
-<main class="container">
-
-
-<!-- =====================================================
-     TITULO
-====================================================== -->
-
-<div class="title">
-
-    <h2>
-        Controles programados
-    </h2>
-
-    <p>
-        Seleccione una fecha para consultar los controles.
-    </p>
-
-</div>
-
-
-
-<!-- =====================================================
-     SELECTOR
-====================================================== -->
-
-<section class="date-panel">
-
-
-    <div class="date-field">
-
-        <label for="fechaSeleccionada">
-            FECHA DE CONSULTA
-        </label>
+      <form onsubmit="event.preventDefault(); autenticar();">
 
         <input
-            type="date"
-            id="fechaSeleccionada"
-            class="date-input"
+          type="text"
+          id="inputOperador"
+          placeholder="Nombre y Apellido del operador..."
+          class="input-text"
+          autocomplete="name"
+          required
         >
 
-    </div>
-
-
-
-    <input
-        type="hidden"
-        id="operador"
-    >
-
-
-
-    <button
-        class="search-button"
-        onclick="cargarControles()"
-    >
-
-        🔎 BUSCAR CONTROLES
-
-    </button>
-
-
-</section>
-
-
-
-<!-- =====================================================
-     ESTADISTICAS
-====================================================== -->
-
-<section class="stats">
-
-
-    <div class="stat">
-
-        <div class="stat-icon">
-            🔴
-        </div>
-
-        <div>
-
-            <div
-                class="stat-number pending"
-                id="pendientes"
-            >
-                0
-            </div>
-
-            <div class="stat-label">
-                Pendientes
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-    <div class="stat">
-
-        <div class="stat-icon">
-            🟢
-        </div>
-
-        <div>
-
-            <div
-                class="stat-number completed"
-                id="realizados"
-            >
-                0
-            </div>
-
-            <div class="stat-label">
-                Realizados
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-    <div class="stat">
-
-        <div class="stat-icon">
-            📅
-        </div>
-
-        <div>
-
-            <div
-                class="stat-number week"
-                id="semana"
-            >
-                0
-            </div>
-
-            <div class="stat-label">
-                Controles esta semana
-            </div>
-
-        </div>
-
-    </div>
-
-
-</section>
-
-
-
-<!-- =====================================================
-     CONTROLES
-====================================================== -->
-
-<div class="section-title">
-
-    <h3>
-        Controles
-    </h3>
-
-    <span
-        class="date"
-        id="fechaControl"
-    ></span>
-
-</div>
-
-
-
-<div
-    id="loading"
-    class="loading"
->
-
-    <div class="spinner"></div>
-
-    <div>
-        Cargando controles...
-    </div>
-
-</div>
-
-
-
-<div id="controlesContainer"></div>
-
-
-
-<!-- =====================================================
-     HISTORICO
-====================================================== -->
-
-<section class="history-section">
-
-
-    <div class="section-title">
-
-        <h3>
-            Histórico de acciones
-        </h3>
-
+        <input
+          type="password"
+          id="inputPass"
+          placeholder="Contraseña..."
+          class="input-text"
+          autocomplete="current-password"
+          required
+        >
 
         <button
-            class="history-button"
-            onclick="mostrarHistorico()"
-        >
-
-            📜 VER HISTÓRICO
-
+          type="submit"
+          id="btnLogin"
+          class="btn"
+          style="width:100%;margin-top:4px;">
+          Acceder
         </button>
 
+      </form>
+
+      <p
+        id="errorMsg"
+        class="hidden text-red"
+        style="font-size:12px;margin-top:10px;">
+        Clave incorrecta o falta nombre.
+      </p>
+    </div>
+  </div>
+
+
+  <!-- LOG -->
+  <div id="logModal" class="modal-overlay hidden">
+
+    <div class="modal-box">
+
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        border-bottom:1px solid #374151;
+        padding-bottom:10px;
+        margin-bottom:12px;">
+
+        <h3 style="margin:0;color:#fff;font-size:16px;">
+          Historial y Log de Modificaciones
+        </h3>
+
+        <button
+          onclick="cerrarModalLog()"
+          class="btn"
+          style="background:#374151;padding:4px 10px;font-size:12px;">
+          Cerrar
+        </button>
+
+      </div>
+
+      <div
+        id="contenedorLogs"
+        style="overflow-y:auto;flex:1;">
+      </div>
+
     </div>
 
-
-    <div
-        id="historyList"
-        class="history-list"
-    ></div>
+  </div>
 
 
-</section>
+  <!-- DASHBOARD -->
+  <div
+    id="dashboard"
+    class="hidden"
+    style="max-width:1280px;margin:auto;">
 
+    <!-- HEADER -->
+    <div style="
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      border-bottom:1px solid #283548;
+      padding-bottom:12px;
+      margin-bottom:16px;
+      gap:15px;
+      flex-wrap:wrap;">
 
-</main>
+      <div>
 
-<footer>
+        <h1 style="
+          margin:0;
+          font-size:18px;
+          color:#fff;">
 
+          MONITOREO DE DISPOSITIVOS Y ACCESOS
 
-SEGRUP SEGURIDAD · Sistema interno de control
+          <span style="
+            font-size:11px;
+            background:#2563eb;
+            padding:2px 6px;
+            border-radius:3px;
+            vertical-align:middle;">
+            v4.0
+          </span>
 
+        </h1>
 
-</footer>
-</div>
+        <p style="
+          margin:4px 0 0;
+          font-size:12px;
+          color:#9ca3af;">
 
+          Pestaña:
+          <span
+            id="labelMes"
+            style="color:#60a5fa;font-weight:bold;">
+            SEPTIEMBRE
+          </span>
 
+          |
 
-<!-- =========================================================
-     RESULTADO DEL CONTROL
-========================================================= -->
-<div id="resultadoModal">
+          Operador activo:
+          <b
+            id="labelOperador"
+            style="color:#34d399;">
+            -
+          </b>
 
-    <div class="resultado-modal-box">
-
-        <h2>Registrar resultado</h2>
-
-        <p id="resultadoObjetivo">
-            Seleccione cómo finalizó el control.
         </p>
 
-        <div class="resultado-options">
+      </div>
 
-            <button
-                type="button"
-                id="resultadoOkBtn"
-                class="resultado-option ok"
-                onclick="seleccionarResultado('OK')"
-            >
-                🟢 OK / SIN NOVEDAD
-            </button>
 
-            <button
-                type="button"
-                id="resultadoNovedadBtn"
-                class="resultado-option novedad"
-                onclick="seleccionarResultado('CON NOVEDAD')"
-            >
-                🔴 CON NOVEDAD
-            </button>
+      <div
+        class="header-buttons"
+        style="display:flex;gap:8px;">
 
-        </div>
+        <button
+          onclick="cambioDeMesBoton()"
+          class="btn-amber">
+          📅 Cambio de Mes
+        </button>
 
-        <div id="novedadInfo" class="novedad-info">
-            Al registrar una novedad se generará automáticamente un nuevo control a 15 días.
-        </div>
+        <button
+          onclick="cargarDatos()"
+          class="btn">
+          Actualizar
+        </button>
 
-        <textarea
-            id="motivoNovedad"
-            placeholder="Describa qué se encontró, qué se realizó o por qué queda pendiente..."
-        ></textarea>
+        <button
+          onclick="cerrarSesion()"
+          class="btn"
+          style="background-color:#4b5563;">
+          Bloquear
+        </button>
 
-        <div class="resultado-modal-actions">
-
-            <button
-                type="button"
-                class="button-secondary"
-                onclick="cerrarResultadoModal()"
-            >
-                CANCELAR
-            </button>
-
-            <button
-                type="button"
-                class="button"
-                id="guardarResultadoBtn"
-                onclick="guardarResultadoControl()"
-                disabled
-            >
-                GUARDAR CONTROL
-            </button>
-
-        </div>
+      </div>
 
     </div>
 
-</div>
+
+    <!-- KPI -->
+    <div class="grid-kpi">
+
+      <div
+        id="kpiCardTotal"
+        class="card-kpi"
+        onclick="seleccionarFiltroKpi('todos')">
+
+        <span style="
+          font-size:11px;
+          color:#9ca3af;
+          text-transform:uppercase;">
+          Total Planilla 🔍
+        </span>
+
+        <div
+          id="kpiTotal"
+          class="kpi-num">
+          24
+        </div>
+
+      </div>
 
 
-<div id="toast"></div>
+      <div
+        id="kpiCardOk"
+        class="card-kpi"
+        style="border-left:4px solid #10b981;"
+        onclick="seleccionarFiltroKpi('ok')">
+
+        <span style="
+          font-size:11px;
+          color:#10b981;
+          text-transform:uppercase;">
+          En Estado OK / Normalizados 🔍
+        </span>
+
+        <div
+          id="kpiOk"
+          class="kpi-num text-green">
+          15
+        </div>
+
+      </div>
+
+
+      <div
+        id="kpiCardFallas"
+        class="card-kpi"
+        style="border-left:4px solid #ef4444;"
+        onclick="seleccionarFiltroKpi('fallas')">
+
+        <span style="
+          font-size:11px;
+          color:#ef4444;
+          text-transform:uppercase;">
+          Con Novedad / Fallas 🔍
+        </span>
+
+        <div
+          id="kpiFallas"
+          class="kpi-num text-red">
+          6
+        </div>
+
+      </div>
+
+
+      <div
+        id="kpiCardFaltantes"
+        class="card-kpi"
+        style="border-left:4px solid #f59e0b;"
+        onclick="seleccionarFiltroKpi('faltantes')">
+
+        <span style="
+          font-size:11px;
+          color:#f59e0b;
+          text-transform:uppercase;">
+          Faltantes (Sin Control) 🔍
+        </span>
+
+        <div
+          id="kpiPendientes"
+          class="kpi-num text-yellow">
+          3
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- CONTENIDO -->
+    <div class="grid-layout">
+
+      <!-- CALENDARIO -->
+      <div>
+
+        <div class="cal-container">
+
+          <div class="cal-header">
+
+            <span
+              id="calTitulo"
+              class="cal-title">
+              septiembre de 2026
+            </span>
+
+            <div class="cal-nav-btns">
+
+              <button
+                onclick="cambiarMes(-1)"
+                class="btn-nav">
+                ∧
+              </button>
+
+              <button
+                onclick="cambiarMes(1)"
+                class="btn-nav">
+                ∨
+              </button>
+
+            </div>
+
+          </div>
+
+          <div
+            class="cal-grid"
+            id="calGridHeader">
+          </div>
+
+          <div
+            class="cal-grid"
+            id="calGridDays">
+          </div>
+
+        </div>
+
+
+        <div style="
+          margin-top:12px;
+          font-size:11px;
+          color:#9ca3af;
+          display:flex;
+          gap:14px;
+          justify-content:center;">
+
+          <span>
+            <span style="color:#60a5fa;">●</span>
+            Controlado ese día
+          </span>
+
+          <span>
+            <span style="color:#ef4444;">●</span>
+            Recontrol pendiente
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- LISTADO -->
+      <div class="card">
+
+        <div style="
+          display:flex;
+          justify-content:space-between;
+          align-items:center;
+          margin-bottom:12px;
+          border-bottom:1px solid #283548;
+          padding-bottom:8px;">
+
+          <h3
+            id="panelTitulo"
+            style="
+              margin:0;
+              color:#fff;
+              font-size:16px;">
+            Controles
+          </h3>
+
+          <span
+            id="contadorItems"
+            style="
+              font-size:12px;
+              color:#9ca3af;
+              background:#111827;
+              padding:3px 8px;
+              border-radius:4px;">
+            0 registros
+          </span>
+
+        </div>
+
+
+        <div style="margin-bottom:10px;">
+
+          <input
+            type="text"
+            id="buscadorTexto"
+            placeholder="🔍 Buscar por nombre de dispositivo..."
+            class="input-search"
+            oninput="filtrarPorTexto()">
+
+        </div>
+
+
+        <div
+          id="listaControles"
+          style="
+            overflow-y:auto;
+            max-height:500px;">
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- LOG -->
+    <div style="
+      margin-top:24px;
+      text-align:center;
+      border-top:1px solid #283548;
+      padding-top:16px;">
+
+      <button
+        onclick="abrirModalLog()"
+        class="btn"
+        style="
+          background-color:#1e293b;
+          border:1px solid #3b82f6;
+          color:#60a5fa;">
+        📋 Ver Log de Cambios (Trazabilidad)
+      </button>
+
+    </div>
+
+  </div>
+
 
 <script>
 
-
-/* ============================================================
-   CONFIGURACIÓN
-============================================================ */
-
-const API_URL =
-    "https://script.google.com/macros/s/AKfycbwFYngA2QjtzXHorzvjpAO1OUvw3Je3WEspgUG_tVpjBkDTs0U7zgqu8SGAZGoTH5ZVoA/exec";
-
-
-let PASSWORD =
-    sessionStorage.getItem(
-        "segrup_password"
-    ) || "";
-
-
-let controlesActuales = [];
+  /*
+   * =========================================================
+   * DEMO VISUAL
+   * =========================================================
+   *
+   * ESTA VERSIÓN ES PARA GITHUB.
+   *
+   * NO MODIFICA GOOGLE SHEETS.
+   * NO TOCA APPS SCRIPT.
+   *
+   * Más adelante conectamos estas funciones con Apps Script.
+   */
 
 
-/* ============================================================
-   INICIO
-============================================================ */
+  var OPERADOR_ACTUAL = sessionStorage.getItem("cctv_operador") || "";
 
-document.addEventListener(
+  var FILTRO_ACTUAL = "fallas";
+
+  var FECHA_SEL = "";
+
+  var CAL_ANIO = 2026;
+
+  var CAL_MES = 8;
+
+
+  /*
+   * DATOS DEMO
+   */
+
+  var DATOS_ITEMS = [
+
+    {
+      fila: 2,
+      dispositivo: "BRAYCO",
+      estadoF: "CAMARAS OFFLINE",
+      esVacio: false,
+      esOk: false,
+      esNormalizado: false,
+      operador: "Operador Demo",
+      fechaControlTxt: "09/09/2026",
+      fechaControlIso: "2026-09-09",
+      fechaRecontrolIso: "2026-09-24"
+    },
+
+    {
+      fila: 3,
+      dispositivo: "CLUB UNIVERSITARIO SEDE",
+      estadoF: "CAMARA 1 SIN IMAGEN",
+      esVacio: false,
+      esOk: false,
+      esNormalizado: false,
+      operador: "Operador Demo",
+      fechaControlTxt: "10/09/2026",
+      fechaControlIso: "2026-09-10",
+      fechaRecontrolIso: "2026-09-25"
+    },
+
+    {
+      fila: 4,
+      dispositivo: "OFICINA CENTRAL",
+      estadoF: "OK",
+      esVacio: false,
+      esOk: true,
+      esNormalizado: false,
+      operador: "Operador Demo",
+      fechaControlTxt: "12/09/2026",
+      fechaControlIso: "2026-09-12",
+      fechaRecontrolIso: "2026-09-27"
+    },
+
+    {
+      fila: 5,
+      dispositivo: "PLANTA INDUSTRIAL",
+      estadoF: "OK",
+      esVacio: false,
+      esOk: true,
+      esNormalizado: true,
+      operador: "Operador Demo",
+      fechaControlTxt: "15/09/2026",
+      fechaControlIso: "2026-09-15",
+      fechaRecontrolIso: "2026-09-30"
+    },
+
+    {
+      fila: 6,
+      dispositivo: "DEPÓSITO NORTE",
+      estadoF: "",
+      esVacio: true,
+      esOk: false,
+      esNormalizado: false,
+      operador: "-",
+      fechaControlTxt: "",
+      fechaControlIso: null,
+      fechaRecontrolIso: null
+    }
+
+  ];
+
+
+  /*
+   * LOGIN
+   */
+
+  function autenticar() {
+
+    var op = document
+      .getElementById("inputOperador")
+      .value
+      .trim();
+
+    var pass = document
+      .getElementById("inputPass")
+      .value;
+
+    var error = document.getElementById("errorMsg");
+
+    if (!op) {
+
+      error.innerText =
+        "Por favor ingresá tu nombre de operador.";
+
+      error.classList.remove("hidden");
+
+      return;
+    }
+
+    if (!pass) {
+
+      error.innerText =
+        "Por favor ingresá la contraseña.";
+
+      error.classList.remove("hidden");
+
+      return;
+    }
+
+
+    /*
+     * POR AHORA EL LOGIN VISUAL ACEPTA CUALQUIER CLAVE.
+     *
+     * La validación real la vamos a conectar después
+     * con Apps Script.
+     */
+
+    OPERADOR_ACTUAL = op;
+
+    sessionStorage.setItem(
+      "cctv_operador",
+      OPERADOR_ACTUAL
+    );
+
+    document
+      .getElementById("loginModal")
+      .classList.add("hidden");
+
+    document
+      .getElementById("dashboard")
+      .classList.remove("hidden");
+
+    document
+      .getElementById("labelOperador")
+      .innerText = OPERADOR_ACTUAL;
+
+    cargarDatos();
+
+  }
+
+
+  /*
+   * CERRAR SESIÓN
+   */
+
+  function cerrarSesion() {
+
+    sessionStorage.removeItem(
+      "cctv_operador"
+    );
+
+    location.reload();
+
+  }
+
+
+  /*
+   * CARGAR DATOS DEMO
+   */
+
+  function cargarDatos() {
+
+    render({
+      mes: "SEPTIEMBRE",
+      resumen: {
+        total: DATOS_ITEMS.length,
+        ok: DATOS_ITEMS.filter(x => x.esOk).length,
+        fallas: DATOS_ITEMS.filter(x => !x.esOk && !x.esVacio).length,
+        pendientes: DATOS_ITEMS.filter(x => x.esVacio).length
+      },
+      items: DATOS_ITEMS
+    });
+
+  }
+
+
+  /*
+   * RENDER
+   */
+
+  function render(d) {
+
+    document.getElementById("labelMes").innerText =
+      d.mes;
+
+    document.getElementById("kpiTotal").innerText =
+      d.resumen.total;
+
+    document.getElementById("kpiOk").innerText =
+      d.resumen.ok;
+
+    document.getElementById("kpiFallas").innerText =
+      d.resumen.fallas;
+
+    document.getElementById("kpiPendientes").innerText =
+      d.resumen.pendientes;
+
+
+    DATOS_ITEMS = d.items || [];
+
+
+    if (!FECHA_SEL) {
+
+      var h = new Date();
+
+      CAL_ANIO = h.getFullYear();
+
+      CAL_MES = h.getMonth();
+
+      var mesStr =
+        String(CAL_MES + 1).padStart(2, "0");
+
+      var diaStr =
+        String(h.getDate()).padStart(2, "0");
+
+      FECHA_SEL =
+        CAL_ANIO + "-" +
+        mesStr + "-" +
+        diaStr;
+
+    }
+
+
+    dibujarCalendario();
+
+    aplicarFiltroVista();
+
+  }
+
+
+  /*
+   * FILTROS KPI
+   */
+
+  function seleccionarFiltroKpi(tipo) {
+
+    FILTRO_ACTUAL = tipo;
+
+    aplicarFiltroVista();
+
+  }
+
+
+  /*
+   * BUSCADOR
+   */
+
+  function filtrarPorTexto() {
+
+    var q =
+      (
+        document
+          .getElementById("buscadorTexto")
+          .value || ""
+      )
+      .toLowerCase()
+      .trim();
+
+
+    var items =
+      document.querySelectorAll(
+        "#listaControles .item-fila"
+      );
+
+
+    var visibles = 0;
+
+
+    items.forEach(function(el) {
+
+      var texto =
+        el.innerText.toLowerCase();
+
+
+      if (!q || texto.indexOf(q) !== -1) {
+
+        el.style.display = "";
+
+        visibles++;
+
+      } else {
+
+        el.style.display = "none";
+
+      }
+
+    });
+
+
+    document
+      .getElementById("contadorItems")
+      .innerText =
+      visibles + " registro(s)";
+
+  }
+
+
+  /*
+   * APLICAR FILTROS
+   */
+
+  function aplicarFiltroVista() {
+
+    document
+      .querySelectorAll(".card-kpi")
+      .forEach(function(c) {
+
+        c.classList.remove("active-kpi");
+
+      });
+
+
+    if (FILTRO_ACTUAL === "todos")
+      document
+        .getElementById("kpiCardTotal")
+        .classList.add("active-kpi");
+
+
+    if (FILTRO_ACTUAL === "ok")
+      document
+        .getElementById("kpiCardOk")
+        .classList.add("active-kpi");
+
+
+    if (FILTRO_ACTUAL === "fallas")
+      document
+        .getElementById("kpiCardFallas")
+        .classList.add("active-kpi");
+
+
+    if (FILTRO_ACTUAL === "faltantes")
+      document
+        .getElementById("kpiCardFaltantes")
+        .classList.add("active-kpi");
+
+
+    var cont =
+      document.getElementById("listaControles");
+
+    var titulo =
+      document.getElementById("panelTitulo");
+
+    var contador =
+      document.getElementById("contadorItems");
+
+
+    cont.innerHTML = "";
+
+
+    var filtrados = [];
+
+
+    if (FILTRO_ACTUAL === "fallas") {
+
+      titulo.innerText =
+        "🔴 Dispositivos con Novedad / Fallas del mes";
+
+      filtrados =
+        DATOS_ITEMS.filter(function(it) {
+
+          return !it.esOk && !it.esVacio;
+
+        });
+
+    }
+
+
+    else if (FILTRO_ACTUAL === "ok") {
+
+      titulo.innerText =
+        "🟢 Dispositivos en Estado OK / Normalizados";
+
+      filtrados =
+        DATOS_ITEMS.filter(function(it) {
+
+          return it.esOk;
+
+        });
+
+    }
+
+
+    else if (FILTRO_ACTUAL === "faltantes") {
+
+      titulo.innerText =
+        "🟡 Dispositivos Faltantes (Sin Control en Columna F)";
+
+      filtrados =
+        DATOS_ITEMS.filter(function(it) {
+
+          return it.esVacio && !it.esNormalizado;
+
+        });
+
+    }
+
+
+    else if (FILTRO_ACTUAL === "todos") {
+
+      titulo.innerText =
+        "📋 Todos los Dispositivos de la Planilla";
+
+      filtrados = DATOS_ITEMS;
+
+    }
+
+
+    else if (FILTRO_ACTUAL === "dia") {
+
+      var partes =
+        FECHA_SEL.split("-");
+
+      titulo.innerText =
+        "Actividad del " +
+        partes[2] + "/" +
+        partes[1] + "/" +
+        partes[0];
+
+
+      filtrados =
+        DATOS_ITEMS.filter(function(it) {
+
+          return (
+            it.fechaControlIso === FECHA_SEL ||
+            it.fechaRecontrolIso === FECHA_SEL
+          );
+
+        });
+
+    }
+
+
+    contador.innerText =
+      filtrados.length + " registro(s)";
+
+
+    if (filtrados.length === 0) {
+
+      cont.innerHTML =
+        "<p style='color:#9ca3af;font-size:13px;text-align:center;padding:25px;'>No hay registros para este filtro.</p>";
+
+      return;
+
+    }
+
+
+    renderizarTarjetas(
+      filtrados,
+      cont
+    );
+
+  }
+
+
+  /*
+   * TARJETAS
+   */
+
+  function renderizarTarjetas(
+    lista,
+    cont
+  ) {
+
+    lista.forEach(function(it) {
+
+      var el =
+        document.createElement("div");
+
+      el.className =
+        "item-fila";
+
+
+      var tagEstado = "";
+
+
+      if (it.esNormalizado) {
+
+        tagEstado =
+          "<span class='tag tag-norm'>NORMALIZADO</span>";
+
+      }
+
+      else if (it.esOk) {
+
+        tagEstado =
+          "<span class='tag tag-ok'>OK</span>";
+
+      }
+
+      else if (it.esVacio) {
+
+        tagEstado =
+          "<span class='tag tag-pending'>SIN CONTROL</span>";
+
+      }
+
+      else {
+
+        tagEstado =
+          "<span class='tag tag-fail'>" +
+          it.estadoF +
+          "</span>";
+
+      }
+
+
+      var btnNormHtml = "";
+
+
+      if (!it.esOk && !it.esVacio) {
+
+        btnNormHtml =
+          "<button data-fila='" +
+          it.fila +
+          "' class='btn-green btn-marcar-norm' style='margin-left:8px;'>Marcar Normalizado (OK)</button>";
+
+      }
+
+
+      var avisoTipo = "";
+
+
+      if (
+        FILTRO_ACTUAL === "dia" &&
+        FECHA_SEL
+      ) {
+
+        if (
+          it.fechaRecontrolIso ===
+          FECHA_SEL
+        ) {
+
+          avisoTipo =
+            "<span style='color:#ef4444;font-weight:bold;font-size:11px;'>[RECONTROL 15 DÍAS]</span> ";
+
+        }
+
+        else {
+
+          avisoTipo =
+            "<span style='color:#60a5fa;font-weight:bold;font-size:11px;'>[CONTROL REGULAR]</span> ";
+
+        }
+
+      }
+
+
+      el.innerHTML =
+
+        "<div class='item-top'>" +
+
+          "<span>" +
+            avisoTipo +
+            it.dispositivo +
+            " (Fila " +
+            it.fila +
+            ")" +
+          "</span>" +
+
+          "<div>" +
+            tagEstado +
+            btnNormHtml +
+          "</div>" +
+
+        "</div>" +
+
+        "<div class='info-op'>" +
+          "👤 Operador (Col I): <b>" +
+          it.operador +
+          "</b> | Control: " +
+          (it.fechaControlTxt || "S/D") +
+
+          (
+            it.fechaRecontrolIso
+              ? " | Recontrol: " +
+                it.fechaRecontrolIso
+              : ""
+          ) +
+
+        "</div>";
+
+
+      cont.appendChild(el);
+
+    });
+
+
+    cont
+      .querySelectorAll(".btn-marcar-norm")
+      .forEach(function(btn) {
+
+        btn.onclick = function() {
+
+          var fila =
+            parseInt(
+              this.getAttribute("data-fila"),
+              10
+            );
+
+          ejecutarNormalizar(fila);
+
+        };
+
+      });
+
+  }
+
+
+  /*
+   * NORMALIZAR - SOLO DEMO
+   */
+
+  function ejecutarNormalizar(fila) {
+
+    var item =
+      DATOS_ITEMS.find(function(x) {
+
+        return x.fila === fila;
+
+      });
+
+
+    if (!item) return;
+
+
+    if (
+      !confirm(
+        "¿Confirmás marcar NORMALIZADO en la columna J para " +
+        item.dispositivo +
+        "?"
+      )
+    ) return;
+
+
+    item.esNormalizado = true;
+
+    item.esOk = true;
+
+    item.estadoF = "NORMALIZADO";
+
+    item.operador =
+      OPERADOR_ACTUAL || "Operador Demo";
+
+
+    cargarDatos();
+
+  }
+
+
+  /*
+   * CAMBIO DE MES - VISUAL
+   */
+
+  function cambioDeMesBoton() {
+
+    if (
+      !confirm(
+        "¿Estás seguro de ejecutar el CAMBIO DE MES?"
+      )
+    ) return;
+
+
+    alert(
+      "Esta función se conectará con Apps Script en el siguiente paso."
+    );
+
+  }
+
+
+  /*
+   * CALENDARIO
+   */
+
+  function cambiarMes(delta) {
+
+    CAL_MES += delta;
+
+
+    if (CAL_MES < 0) {
+
+      CAL_MES = 11;
+
+      CAL_ANIO--;
+
+    }
+
+    else if (CAL_MES > 11) {
+
+      CAL_MES = 0;
+
+      CAL_ANIO++;
+
+    }
+
+
+    dibujarCalendario();
+
+  }
+
+
+  function dibujarCalendario() {
+
+    var mNombres = [
+      "enero",
+      "febrero",
+      "marzo",
+      "abril",
+      "mayo",
+      "junio",
+      "julio",
+      "agosto",
+      "septiembre",
+      "octubre",
+      "noviembre",
+      "diciembre"
+    ];
+
+
+    document
+      .getElementById("calTitulo")
+      .innerText =
+      mNombres[CAL_MES] +
+      " de " +
+      CAL_ANIO;
+
+
+    var hGrid =
+      document.getElementById(
+        "calGridHeader"
+      );
+
+    hGrid.innerHTML = "";
+
+
+    [
+      "DO",
+      "LU",
+      "MA",
+      "MI",
+      "JU",
+      "VI",
+      "SA"
+    ].forEach(function(nom) {
+
+      var el =
+        document.createElement("div");
+
+      el.className =
+        "cal-day-header";
+
+      el.innerText =
+        nom;
+
+      hGrid.appendChild(el);
+
+    });
+
+
+    var dGrid =
+      document.getElementById(
+        "calGridDays"
+      );
+
+    dGrid.innerHTML = "";
+
+
+    var primerDiaSemana =
+      new Date(
+        CAL_ANIO,
+        CAL_MES,
+        1
+      ).getDay();
+
+
+    var totalDiasMes =
+      new Date(
+        CAL_ANIO,
+        CAL_MES + 1,
+        0
+      ).getDate();
+
+
+    var diasMesAnterior =
+      new Date(
+        CAL_ANIO,
+        CAL_MES,
+        0
+      ).getDate();
+
+
+    var hoy = new Date();
+
+
+    var hoyStr =
+      hoy.getFullYear() +
+      "-" +
+      String(
+        hoy.getMonth() + 1
+      ).padStart(2,"0") +
+      "-" +
+      String(
+        hoy.getDate()
+      ).padStart(2,"0");
+
+
+    for (
+      var p = primerDiaSemana - 1;
+      p >= 0;
+      p--
+    ) {
+
+      var num =
+        diasMesAnterior - p;
+
+      var elPrev =
+        document.createElement("div");
+
+      elPrev.className =
+        "cal-day other-month";
+
+      elPrev.innerText =
+        num;
+
+      dGrid.appendChild(
+        elPrev
+      );
+
+    }
+
+
+    for (
+      var d = 1;
+      d <= totalDiasMes;
+      d++
+    ) {
+
+      var mStr =
+        String(CAL_MES + 1)
+        .padStart(2,"0");
+
+      var dStr =
+        String(d)
+        .padStart(2,"0");
+
+
+      var iso =
+        CAL_ANIO +
+        "-" +
+        mStr +
+        "-" +
+        dStr;
+
+
+      var elDia =
+        document.createElement("div");
+
+      elDia.className =
+        "cal-day";
+
+      elDia.innerText =
+        d;
+
+
+      if (iso === hoyStr)
+        elDia.classList.add("today");
+
+
+      if (
+        iso === FECHA_SEL &&
+        FILTRO_ACTUAL === "dia"
+      )
+        elDia.classList.add("selected");
+
+
+      var tieneControl =
+        DATOS_ITEMS.some(
+          function(it) {
+            return (
+              it.fechaControlIso ===
+              iso
+            );
+          }
+        );
+
+
+      var tieneRecontrol =
+        DATOS_ITEMS.some(
+          function(it) {
+            return (
+              it.fechaRecontrolIso ===
+              iso &&
+              !it.esOk
+            );
+          }
+        );
+
+
+      if (tieneRecontrol)
+        elDia.classList.add(
+          "has-recontrol"
+        );
+
+      else if (tieneControl)
+        elDia.classList.add(
+          "has-control"
+        );
+
+
+      elDia.onclick =
+        function(fechaClave) {
+
+          return function() {
+
+            FECHA_SEL =
+              fechaClave;
+
+            FILTRO_ACTUAL =
+              "dia";
+
+            dibujarCalendario();
+
+            aplicarFiltroVista();
+
+          };
+
+        }(iso);
+
+
+      dGrid.appendChild(
+        elDia
+      );
+
+    }
+
+  }
+
+
+  /*
+   * LOG VISUAL
+   */
+
+  function abrirModalLog() {
+
+    document
+      .getElementById("logModal")
+      .classList.remove("hidden");
+
+
+    var cont =
+      document.getElementById(
+        "contenedorLogs"
+      );
+
+
+    cont.innerHTML =
+
+      "<div class='log-item'>" +
+        "<b>BRAYCO</b> (Fila 2) " +
+        "se pasó a <b>REVISIÓN</b> " +
+        "por el operador: Operador Demo" +
+      "</div>" +
+
+      "<div class='log-item'>" +
+        "<b>PLANTA INDUSTRIAL</b> (Fila 5) " +
+        "se pasó a <b>NORMALIZADO (OK)</b> " +
+        "por el operador: Operador Demo" +
+      "</div>";
+
+  }
+
+
+  function cerrarModalLog() {
+
+    document
+      .getElementById("logModal")
+      .classList.add("hidden");
+
+  }
+
+
+  /*
+   * INICIO
+   */
+
+  window.addEventListener(
     "DOMContentLoaded",
     function() {
 
-        establecerFechaHoy();
-
-        cargarOperadorGuardado();
-
-
-        if (PASSWORD) {
-
-            comprobarSesion();
-
-        }
-
-    }
-);
-
-
-/* ============================================================
-   FECHA HOY
-============================================================ */
-
-function establecerFechaHoy() {
-
-    const ahora =
-        new Date();
-
-
-    const yyyy =
-        ahora.getFullYear();
-
-
-    const mm =
-        String(
-            ahora.getMonth() + 1
-        ).padStart(
-            2,
-            "0"
-        );
-
-
-    const dd =
-        String(
-            ahora.getDate()
-        ).padStart(
-            2,
-            "0"
-        );
-
-
-    const fecha =
-        yyyy +
-        "-" +
-        mm +
-        "-" +
-        dd;
-
-
-    document
-        .getElementById(
-            "fechaSeleccionada"
-        )
-        .value = fecha;
-
-
-    actualizarFechaVisible(
-        fecha
-    );
-
-
-    document
-        .getElementById(
-            "fechaActual"
-        )
-        .textContent =
-        formatearFechaVisible(
-            fecha
-        );
-
-}
-
-
-/* ============================================================
-   LOGIN
-============================================================ */
-
-async function iniciarSesion() {
-
-    const password =
-        document
-            .getElementById(
-                "passwordInput"
-            )
-            .value
-            .trim();
-
-    if (!password) {
-        mostrarLoginError("Ingrese la clave.");
-        return;
-    }
-
-    try {
-        /*
-         * El Apps Script actual valida la contraseña en las
-         * acciones de la API. No usamos una acción "login"
-         * separada: hacemos una consulta real para comprobarla.
-         */
-        const hoy = new Date();
-        const yyyy = hoy.getFullYear();
-        const mm = String(hoy.getMonth() + 1).padStart(2, "0");
-        const dd = String(hoy.getDate()).padStart(2, "0");
-        const fechaHoy = yyyy + "-" + mm + "-" + dd;
-
-        const url =
-            API_URL +
-            "?action=obtenerControles" +
-            "&fecha=" + encodeURIComponent(fechaHoy) +
-            "&password=" + encodeURIComponent(password);
-
-        const respuesta = await fetch(url, {
-            method: "GET",
-            cache: "no-store"
-        });
-
-        const datos = await respuesta.json();
-
-        if (datos && datos.success && datos.authenticated) {
-
-            PASSWORD = password;
-
-            sessionStorage.setItem(
-                "segrup_password",
-                password
-            );
-
-            document
-                .getElementById("loginScreen")
-                .style.display = "none";
-
-            document
-                .getElementById("app")
-                .style.display = "block";
-
-            document
-                .getElementById("passwordInput")
-                .value = "";
-
-            prepararOperadorTrasLogin();
-
-        } else {
-
-            mostrarLoginError(
-                datos.message || "Clave incorrecta."
-            );
-
-        }
-
-    } catch (error) {
-
-        console.error(error);
-
-        mostrarLoginError(
-            "No se pudo conectar con el sistema. Verifique la implementación de Apps Script."
-        );
-
-    }
-
-}
-
-
-/* ============================================================
-   COMPROBAR SESION
-============================================================ */
-
-async function comprobarSesion() {
-
-    try {
-
-        const hoy = new Date();
-        const yyyy = hoy.getFullYear();
-        const mm = String(hoy.getMonth() + 1).padStart(2, "0");
-        const dd = String(hoy.getDate()).padStart(2, "0");
-        const fechaHoy = yyyy + "-" + mm + "-" + dd;
-
-        const url =
-            API_URL +
-            "?action=obtenerControles" +
-            "&fecha=" + encodeURIComponent(fechaHoy) +
-            "&password=" + encodeURIComponent(PASSWORD);
-
-        const respuesta = await fetch(url, {
-            method: "GET",
-            cache: "no-store"
-        });
-
-        const datos = await respuesta.json();
-
-        if (datos && datos.success && datos.authenticated) {
-
-            document
-                .getElementById("loginScreen")
-                .style.display = "none";
-
-            document
-                .getElementById("app")
-                .style.display = "block";
-
-            prepararOperadorTrasLogin();
-
-        } else {
-
-            cerrarSesion();
-
-        }
-
-    } catch (error) {
-
-        console.error(error);
-        cerrarSesion();
-
-    }
-
-}
-
-
-/* ============================================================
-   ERROR LOGIN
-============================================================ */
-
-function mostrarLoginError(
-    mensaje
-) {
-
-    const error =
-        document
-            .getElementById(
-                "loginError"
-            );
-
-
-    error.textContent =
-        mensaje;
-
-
-    error.style.display =
-        "block";
-
-}
-
-
-/* ============================================================
-   CERRAR SESION
-============================================================ */
-
-function cerrarSesion() {
-
-    PASSWORD = "";
-
-    sessionStorage.removeItem(
-        "segrup_password"
-    );
-
-    sessionStorage.removeItem(
-        "segrup_operador"
-    );
-
-    const operadorInput = document.getElementById("operador");
-    if (operadorInput) operadorInput.value = "";
-
-    const operadorActual = document.getElementById("operadorActual");
-    if (operadorActual) operadorActual.textContent = "—";
-
-    document
-        .getElementById("app")
-        .style.display = "none";
-
-    document
-        .getElementById("operatorModal")
-        .style.display = "none";
-
-    document
-        .getElementById("loginScreen")
-        .style.display = "flex";
-
-    document
-        .getElementById("passwordInput")
-        .value = "";
-
-}
-
-
-/* ============================================================
-   OPERADOR
-============================================================ */
-
-function cargarOperadorGuardado() {
-
-    const operador =
-        sessionStorage.getItem("segrup_operador") || "";
-
-    const input = document.getElementById("operador");
-
-    if (input) {
-        input.value = operador;
-    }
-
-    actualizarOperadorVisible(operador);
-
-}
-
-
-function prepararOperadorTrasLogin() {
-
-    const operador =
-        sessionStorage.getItem("segrup_operador") || "";
-
-    if (operador) {
-
-        const input = document.getElementById("operador");
-        if (input) input.value = operador;
-
-        actualizarOperadorVisible(operador);
-        cargarControles();
-
-    } else {
-
-        mostrarSelectorOperador();
-
-    }
-
-}
-
-
-function mostrarSelectorOperador() {
-
-    const modal = document.getElementById("operatorModal");
-    const select = document.getElementById("operatorSelect");
-    const custom = document.getElementById("operatorCustom");
-    const error = document.getElementById("operatorModalError");
-
-    if (select) select.value = "";
-    if (custom) {
-        custom.value = "";
-        custom.style.display = "none";
-    }
-    if (error) error.style.display = "none";
-
-    if (modal) modal.style.display = "flex";
-
-}
-
-
-function cambioOperador() {
-
-    const select = document.getElementById("operatorSelect");
-    const custom = document.getElementById("operatorCustom");
-
-    if (!select || !custom) return;
-
-    if (select.value === "OTRO") {
-        custom.style.display = "block";
-        setTimeout(function() { custom.focus(); }, 50);
-    } else {
-        custom.style.display = "none";
-        custom.value = "";
-    }
-
-    document.getElementById("operatorModalError").style.display = "none";
-
-}
-
-
-function confirmarOperador() {
-
-    const select = document.getElementById("operatorSelect");
-    const custom = document.getElementById("operatorCustom");
-    const error = document.getElementById("operatorModalError");
-
-    let operador = select ? select.value.trim() : "";
-
-    if (operador === "OTRO") {
-        operador = custom ? custom.value.trim().toUpperCase() : "";
-    }
-
-    if (!operador || operador === "OTRO") {
-        error.textContent = "Seleccione o escriba el operador.";
-        error.style.display = "block";
-        return;
-    }
-
-    sessionStorage.setItem(
-        "segrup_operador",
-        operador
-    );
-
-    const input = document.getElementById("operador");
-    if (input) input.value = operador;
-
-    actualizarOperadorVisible(operador);
-
-    document.getElementById("operatorModal").style.display = "none";
-
-    cargarControles();
-
-}
-
-
-function cambiarOperador() {
-
-    mostrarSelectorOperador();
-
-}
-
-
-function actualizarOperadorVisible(operador) {
-
-    const elemento = document.getElementById("operadorActual");
-
-    if (elemento) {
-        elemento.textContent = operador || "—";
-    }
-
-}
-
-
-/* ============================================================
-   CARGAR CONTROLES
-============================================================ */
-
-async function cargarControles() {
-
-    if (!PASSWORD) {
-
-        return;
-
-    }
-
-
-    const fecha =
-        document
-            .getElementById(
-                "fechaSeleccionada"
-            )
-            .value;
-
-
-    const operador =
-        document
-            .getElementById(
-                "operador"
-            )
-            .value
-            .trim();
-
-
-    if (!fecha) {
-
-        mostrarToast(
-            "Seleccione una fecha."
-        );
-
-        return;
-
-    }
-
-
-    if (operador) {
-
-        localStorage.setItem(
-            "segrup_operador",
-            operador
-        );
-
-    }
-
-
-    actualizarFechaVisible(
-        fecha
-    );
-
-
-    mostrarLoading(
-        true
-    );
-
-
-    document
-        .getElementById(
-            "controlesContainer"
-        )
-        .innerHTML = "";
-
-
-    try {
-
-        const url =
-            API_URL +
-            "?action=obtenerControles" +
-            "&fecha=" +
-            encodeURIComponent(
-                fecha
-            ) +
-            "&password=" +
-            encodeURIComponent(
-                PASSWORD
-            );
-
-
-        const respuesta =
-            await fetch(
-                url
-            );
-
-
-        const datos =
-            await respuesta.json();
-
-
-        if (
-            datos.authenticated === false
-        ) {
-
-            cerrarSesion();
-
-            return;
-
-        }
-
-
-        if (
-            !datos ||
-            datos.success === false
-        ) {
-
-            throw new Error(
-                datos && datos.message
-                    ? datos.message
-                    : "No se pudieron cargar los controles."
-            );
-
-        }
-
-
-        controlesActuales =
-            Array.isArray(datos)
-                ? datos
-                : (Array.isArray(datos.controles)
-                    ? datos.controles
-                    : []);
-
-
-        renderizarControles(
-            controlesActuales
-        );
-
-
-        actualizarEstadisticas(
-            controlesActuales
-        );
-
-
-        cargarEstadisticaSemana(
-            fecha
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            error
-        );
-
+      if (OPERADOR_ACTUAL) {
 
         document
-            .getElementById(
-                "controlesContainer"
-            )
-            .innerHTML = `
-
-                <div class="message error">
-
-                    ❌ No se pudieron cargar los controles.
-
-                    <br><br>
-
-                    <small>
-                        ${escapeHtml(
-                            error.message ||
-                            "Verifique la conexión con Google Sheets."
-                        )}
-                    </small>
-
-                </div>
-
-            `;
-
-    } finally {
-
-        mostrarLoading(
-            false
-        );
-
-    }
-
-}
-
-
-/* ============================================================
-   RENDERIZAR CONTROLES
-============================================================ */
-
-function renderizarControles(
-    controles
-) {
-
-    const container =
-        document
-            .getElementById(
-                "controlesContainer"
-            );
-
-
-    if (!controles.length) {
-
-        container.innerHTML = `
-
-            <div class="message">
-
-                📅
-
-                <br><br>
-
-                <strong>
-                    No hay controles programados
-                </strong>
-
-                <br>
-
-                No se encontraron controles
-                para esta fecha.
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    let html = "";
-
-
-    controles.forEach(
-        function(control) {
-
-            const estado =
-                (
-                    control.estadoWeb ||
-                    "PENDIENTE"
-                )
-                .toUpperCase();
-
-
-            let claseCard =
-                "";
-
-
-            let badgeClase =
-                "badge-pendiente";
-
-
-            let badgeTexto =
-                "PENDIENTE";
-
-
-            if (
-                estado === "REALIZADO" ||
-                estado === "OK"
-            ) {
-
-                claseCard =
-                    "realizado";
-
-                badgeClase =
-                    "badge-realizado";
-
-                badgeTexto =
-                    estado === "OK" ? "OK" : "REALIZADO";
-
-            }
-
-
-            if (
-                estado === "CON NOVEDAD"
-            ) {
-
-                claseCard =
-                    "cancelado";
-
-                badgeClase =
-                    "badge-cancelado";
-
-                badgeTexto =
-                    "CON NOVEDAD";
-
-            }
-
-
-            if (
-                estado ===
-                "CANCELADO"
-            ) {
-
-                claseCard =
-                    "cancelado";
-
-                badgeClase =
-                    "badge-cancelado";
-
-                badgeTexto =
-                    "CANCELADO";
-
-            }
-
-
-            const controlesTexto =
-                control.detalle
-                    ? [
-                        control.detalle
-                    ]
-                    : [
-                        "Control programado"
-                    ];
-
-
-            html += `
-
-                <div
-                    class="control-card ${claseCard}"
-                    id="control-${control.fila}"
-                >
-
-                    <div class="control-header">
-
-                        <h4>
-                            ${escapeHtml(
-                                control.objetivo ||
-                                control.dispositivo ||
-                                "OBJETIVO SIN NOMBRE"
-                            )}
-                        </h4>
-
-
-                        <span
-                            class="badge ${badgeClase}"
-                        >
-                            ${badgeTexto}
-                        </span>
-
-                    </div>
-
-
-                    <ul class="control-list">
-
-                        ${controlesTexto
-                            .map(
-                                function(item) {
-
-                                    return `
-                                        <li>
-                                            ${escapeHtml(
-                                                item
-                                            )}
-                                        </li>
-                                    `;
-
-                                }
-                            )
-                            .join("")
-                        }
-
-                    </ul>
-
-
-                    <div class="control-info">
-
-
-                        <div class="info-box">
-
-                            <strong>
-                                Fecha programada
-                            </strong>
-
-                            <span>
-                                ${escapeHtml(
-                                    control.fechaControl ||
-                                    "-"
-                                )}
-                            </span>
-
-                        </div>
-
-
-                        <div class="info-box">
-
-                            <strong>
-                                Operador
-                            </strong>
-
-                            <span>
-                                ${escapeHtml(
-                                    control.operador ||
-                                    "-"
-                                )}
-                            </span>
-
-                        </div>
-
-
-                        <div class="info-box">
-
-                            <strong>
-                                Fecha de cierre
-                            </strong>
-
-                            <span>
-                                ${escapeHtml(
-                                    control.fechaCierre ||
-                                    "-"
-                                )}
-                            </span>
-
-                        </div>
-
-
-                    </div>
-
-
-                    <div class="control-actions">
-
-                        ${
-                            estado !== "REALIZADO"
-
-                            ?
-
-                            `
-                                <button
-                                    class="button button-realizar"
-                                    onclick="realizarControl(
-                                        '${escapeJs(
-                                            control.hoja
-                                        )}',
-                                        ${control.fila}
-                                    )"
-                                >
-                                    ✅ REALIZAR CONTROL
-                                </button>
-                            `
-
-                            :
-
-                            `
-                                <button
-                                    class="button button-cancelar"
-                                    onclick="cancelarControl(
-                                        '${escapeJs(
-                                            control.hoja
-                                        )}',
-                                        ${control.fila}
-                                    )"
-                                >
-                                    ↩ CANCELAR REALIZACIÓN
-                                </button>
-                            `
-                        }
-
-                    </div>
-
-                </div>
-
-            `;
-
-        }
-    );
-
-
-    container.innerHTML =
-        html;
-
-}
-
-
-/* ============================================================
-   REALIZAR
-============================================================ */
-
-let resultadoPendiente = {
-    hoja: "",
-    fila: null,
-    resultado: "",
-    motivo: ""
-};
-
-
-function abrirResultadoModal(hoja, fila, objetivo) {
-
-    resultadoPendiente = {
-        hoja: hoja,
-        fila: fila,
-        resultado: "",
-        motivo: ""
-    };
-
-    const modal = document.getElementById("resultadoModal");
-    const objetivoTexto = document.getElementById("resultadoObjetivo");
-    const motivo = document.getElementById("motivoNovedad");
-    const info = document.getElementById("novedadInfo");
-    const guardar = document.getElementById("guardarResultadoBtn");
-
-    if (objetivoTexto) {
-        objetivoTexto.textContent =
-            "Objetivo: " + (objetivo || "Control seleccionado") +
-            ". Seleccione el resultado.";
-    }
-
-    document.getElementById("resultadoOkBtn").classList.remove("active");
-    document.getElementById("resultadoNovedadBtn").classList.remove("active");
-
-    if (motivo) {
-        motivo.value = "";
-        motivo.style.display = "none";
-    }
-
-    if (info) {
-        info.style.display = "none";
-    }
-
-    if (guardar) {
-        guardar.disabled = true;
-    }
-
-    if (modal) {
-        modal.style.display = "flex";
-    }
-}
-
-
-function seleccionarResultado(resultado) {
-
-    resultadoPendiente.resultado = resultado;
-
-    const okBtn = document.getElementById("resultadoOkBtn");
-    const novedadBtn = document.getElementById("resultadoNovedadBtn");
-    const motivo = document.getElementById("motivoNovedad");
-    const info = document.getElementById("novedadInfo");
-    const guardar = document.getElementById("guardarResultadoBtn");
-
-    if (okBtn) okBtn.classList.toggle("active", resultado === "OK");
-    if (novedadBtn) novedadBtn.classList.toggle("active", resultado === "CON NOVEDAD");
-
-    if (resultado === "CON NOVEDAD") {
-        if (motivo) {
-            motivo.style.display = "block";
-            setTimeout(function() { motivo.focus(); }, 50);
-        }
-        if (info) info.style.display = "block";
-        if (guardar) guardar.disabled = false;
-    } else {
-        if (motivo) {
-            motivo.style.display = "none";
-            motivo.value = "";
-        }
-        if (info) info.style.display = "none";
-        if (guardar) guardar.disabled = false;
-    }
-}
-
-
-function cerrarResultadoModal() {
-
-    const modal = document.getElementById("resultadoModal");
-
-    if (modal) {
-        modal.style.display = "none";
-    }
-
-    resultadoPendiente = {
-        hoja: "",
-        fila: null,
-        resultado: "",
-        motivo: ""
-    };
-}
-
-
-async function guardarResultadoControl() {
-
-    if (!resultadoPendiente.hoja || !resultadoPendiente.fila) {
-        mostrarToast("Seleccione un control válido.");
-        return;
-    }
-
-    const resultado = resultadoPendiente.resultado;
-    const motivoElement = document.getElementById("motivoNovedad");
-    const motivo = motivoElement ? motivoElement.value.trim() : "";
-
-    if (!resultado) {
-        mostrarToast("Seleccione OK o CON NOVEDAD.");
-        return;
-    }
-
-    if (resultado === "CON NOVEDAD" && !motivo) {
-        mostrarToast("Debe indicar el motivo de la novedad.");
-        if (motivoElement) motivoElement.focus();
-        return;
-    }
-
-    try {
-        mostrarLoading(true);
-
-        const url =
-            API_URL +
-            "?action=realizarControl" +
-            "&hoja=" + encodeURIComponent(resultadoPendiente.hoja) +
-            "&fila=" + encodeURIComponent(resultadoPendiente.fila) +
-            "&operador=" + encodeURIComponent(
-                document.getElementById("operador").value.trim()
-            ) +
-            "&resultado=" + encodeURIComponent(resultado) +
-            "&motivo=" + encodeURIComponent(motivo) +
-            "&password=" + encodeURIComponent(PASSWORD);
-
-        const respuesta = await fetch(url, {
-            method: "GET",
-            cache: "no-store"
-        });
-
-        const datos = await respuesta.json();
-
-        if (datos.authenticated === false) {
-            cerrarResultadoModal();
-            cerrarSesion();
-            return;
-        }
-
-        if (!datos.success) {
-            throw new Error(
-                datos.message ||
-                "No se pudo guardar el resultado."
-            );
-        }
-
-        cerrarResultadoModal();
-
-        if (resultado === "OK") {
-            mostrarToast("🟢 Control registrado como OK.");
-        } else {
-            mostrarToast(
-                "🔴 Novedad registrada. Nuevo control: " +
-                (datos.nuevoControl || "15 días")
-            );
-        }
-
-        await cargarControles();
-        await cargarHistorico();
-
-    } catch (error) {
-
-        console.error(error);
-
-        mostrarToast(
-            "❌ " +
-            (error.message || "No se pudo guardar el control.")
-        );
-
-    } finally {
-        mostrarLoading(false);
-    }
-}
-
-
-/* ============================================================
-   CANCELAR
-============================================================ */
-
-async function cancelarControl(
-    hoja,
-    fila
-) {
-
-    const confirmado =
-        confirm(
-            "¿Está seguro de cancelar la realización de este control?\n\nEl control volverá a quedar PENDIENTE."
-        );
-
-
-    if (!confirmado) {
-
-        return;
-
-    }
-
-
-    const operador =
-        document
-            .getElementById(
-                "operador"
-            )
-            .value
-            .trim();
-
-
-    try {
-
-        mostrarLoading(
-            true
-        );
-
-
-        const url =
-            API_URL +
-            "?action=cancelarControl" +
-            "&hoja=" +
-            encodeURIComponent(
-                hoja
-            ) +
-            "&fila=" +
-            encodeURIComponent(
-                fila
-            ) +
-            "&operador=" +
-            encodeURIComponent(
-                operador ||
-                "SIN IDENTIFICAR"
-            ) +
-            "&password=" +
-            encodeURIComponent(
-                PASSWORD
-            );
-
-
-        const respuesta =
-            await fetch(
-                url
-            );
-
-
-        const datos =
-            await respuesta.json();
-
-
-        if (
-            datos.authenticated === false
-        ) {
-
-            cerrarSesion();
-
-            return;
-
-        }
-
-
-        if (!datos.success) {
-
-            throw new Error(
-                datos.message ||
-                "No se pudo cancelar."
-            );
-
-        }
-
-
-        mostrarToast(
-            "↩ El control volvió a quedar pendiente."
-        );
-
-
-        await cargarControles();
-
-
-    } catch (error) {
-
-        console.error(
-            error
-        );
-
-
-        mostrarToast(
-            "❌ " +
-            (
-                error.message ||
-                "No se pudo cancelar."
-            )
-        );
-
-    } finally {
-
-        mostrarLoading(
-            false
-        );
-
-    }
-
-}
-
-
-/* ============================================================
-   ESTADISTICAS
-============================================================ */
-
-function actualizarEstadisticas(
-    controles
-) {
-
-    const pendientes =
-        controles.filter(
-            function(c) {
-
-                return (
-                    String(
-                        c.estadoWeb ||
-                        "PENDIENTE"
-                    )
-                    .toUpperCase() !==
-                    "REALIZADO"
-                );
-
-            }
-        ).length;
-
-
-    const realizados =
-        controles.filter(
-            function(c) {
-
-                return (
-                    String(
-                        c.estadoWeb ||
-                        ""
-                    )
-                    .toUpperCase() ===
-                    "REALIZADO"
-                );
-
-            }
-        ).length;
-
-
-    document
-        .getElementById(
-            "pendientes"
-        )
-        .textContent =
-        pendientes;
-
-
-    document
-        .getElementById(
-            "realizados"
-        )
-        .textContent =
-        realizados;
-
-}
-
-
-/* ============================================================
-   ESTADISTICA SEMANAL
-============================================================ */
-
-async function cargarEstadisticaSemana(
-    fechaBase
-) {
-
-    try {
-
-        const fecha =
-            new Date(
-                fechaBase +
-                "T00:00:00"
-            );
-
-
-        const diaSemana =
-            fecha.getDay();
-
-
-        /*
-         * Lunes = 1
-         *
-         * Si es domingo,
-         * retrocedemos 6 días.
-         */
-
-        const diferencia =
-            diaSemana === 0
-                ? -6
-                : 1 - diaSemana;
-
-
-        const lunes =
-            new Date(
-                fecha
-            );
-
-
-        lunes.setDate(
-            fecha.getDate() +
-            diferencia
-        );
-
-
-        let total =
-            0;
-
-
-        const peticiones = [];
-
-
-        for (
-            let i = 0;
-            i < 7;
-            i++
-        ) {
-
-            const dia =
-                new Date(
-                    lunes
-                );
-
-
-            dia.setDate(
-                lunes.getDate() +
-                i
-            );
-
-
-            const fechaString =
-                convertirDateAISO(
-                    dia
-                );
-
-
-            peticiones.push(
-
-                fetch(
-                    API_URL +
-                    "?action=obtenerControles" +
-                    "&fecha=" +
-                    encodeURIComponent(
-                        fechaString
-                    ) +
-                    "&password=" +
-                    encodeURIComponent(
-                        PASSWORD
-                    )
-                )
-                .then(
-                    function(r) {
-
-                        return r.json();
-
-                    }
-                )
-                .then(
-                    function(data) {
-
-                        if (
-                            Array.isArray(
-                                data
-                            )
-                        ) {
-
-                            return data.length;
-
-                        }
-
-                        return 0;
-
-                    }
-                )
-
-            );
-
-        }
-
-
-        const resultados =
-            await Promise.all(
-                peticiones
-            );
-
-
-        resultados.forEach(
-            function(numero) {
-
-                total +=
-                    numero;
-
-            }
-        );
-
+          .getElementById("loginModal")
+          .classList.add("hidden");
 
         document
-            .getElementById(
-                "semana"
-            )
-            .textContent =
-            total;
-
-
-    } catch (error) {
-
-        console.error(
-            error
-        );
-
+          .getElementById("dashboard")
+          .classList.remove("hidden");
 
         document
-            .getElementById(
-                "semana"
-            )
-            .textContent =
-            "—";
+          .getElementById("labelOperador")
+          .innerText =
+          OPERADOR_ACTUAL;
+
+        cargarDatos();
+
+      }
 
     }
-
-}
-
-
-/* ============================================================
-   HISTORICO
-============================================================ */
-
-async function mostrarHistorico() {
-
-    const lista =
-        document
-            .getElementById(
-                "historyList"
-            );
-
-
-    if (
-        lista.style.display ===
-        "block"
-    ) {
-
-        lista.style.display =
-            "none";
-
-        return;
-
-    }
-
-
-    lista.style.display =
-        "block";
-
-
-    lista.innerHTML = `
-
-        <div class="message">
-
-            Cargando histórico...
-
-        </div>
-
-    `;
-
-
-    try {
-
-        const url =
-            API_URL +
-            "?action=historico" +
-            "&limite=500" +
-            "&password=" +
-            encodeURIComponent(
-                PASSWORD
-            );
-
-
-        const respuesta =
-            await fetch(
-                url
-            );
-
-
-        const datos =
-            await respuesta.json();
-
-
-        if (
-            datos.authenticated === false
-        ) {
-
-            cerrarSesion();
-
-            return;
-
-        }
-
-
-        const historico =
-            Array.isArray(datos)
-                ? datos
-                : (datos && Array.isArray(datos.historico)
-                    ? datos.historico
-                    : []);
-
-        if (datos && datos.success === false) {
-            throw new Error(
-                datos.message ||
-                "No se pudo cargar el histórico."
-            );
-        }
-
-
-        if (!historico.length) {
-
-            lista.innerHTML = `
-
-                <div class="message">
-
-                    No hay acciones registradas todavía.
-
-                </div>
-
-            `;
-
-            return;
-
-        }
-
-
-        let html = "";
-
-
-        historico.forEach(
-            function(item) {
-
-                const accion =
-                    String(
-                        item.accion ||
-                        ""
-                    ).toUpperCase();
-
-
-                const clase =
-                    accion ===
-                    "REALIZADO"
-
-                        ? "history-realizado"
-
-                        : "history-cancelado";
-
-
-                html += `
-
-                    <div class="history-item">
-
-                        <div>
-                            ${escapeHtml(
-                                item.fechaHora ||
-                                "-"
-                            )}
-                        </div>
-
-
-                        <div
-                            class="history-action ${clase}"
-                        >
-                            ${escapeHtml(
-                                accion
-                            )}
-                        </div>
-
-
-                        <div>
-
-                            <strong>
-                                ${escapeHtml(
-                                    item.objetivo ||
-                                    "Sin objetivo"
-                                )}
-                            </strong>
-
-                            <br>
-
-                            <small>
-                                ${escapeHtml(
-                                    item.hoja ||
-                                    ""
-                                )}
-                                · Fila
-                                ${escapeHtml(
-                                    String(
-                                        item.fila ||
-                                        ""
-                                    )
-                                )}
-                            </small>
-
-                        </div>
-
-
-                        <div>
-
-                            👤
-                            ${escapeHtml(
-                                item.operador ||
-                                "SIN IDENTIFICAR"
-                            )}
-
-                            ${item.detalle ? `
-                                <br>📝 ${escapeHtml(item.detalle)}
-                            ` : ""}
-
-                            ${item.nuevoControl ? `
-                                <br>📅 Nuevo control: ${escapeHtml(item.nuevoControl)}
-                            ` : ""}
-
-                        </div>
-
-                    </div>
-
-                `;
-
-            }
-        );
-
-
-        lista.innerHTML =
-            html;
-
-
-    } catch (error) {
-
-        lista.innerHTML = `
-
-            <div class="message error">
-
-                ❌ No se pudo cargar el histórico.
-
-                <br><br>
-
-                ${escapeHtml(
-                    error.message
-                )}
-
-            </div>
-
-        `;
-
-    }
-
-}
-
-
-/* ============================================================
-   FECHA VISIBLE
-============================================================ */
-
-function actualizarFechaVisible(
-    fecha
-) {
-
-    document
-        .getElementById(
-            "fechaControl"
-        )
-        .textContent =
-        formatearFechaVisible(
-            fecha
-        );
-
-}
-
-
-/* ============================================================
-   FORMATEAR FECHA
-============================================================ */
-
-function formatearFechaVisible(
-    fecha
-) {
-
-    if (!fecha) {
-        return "";
-    }
-
-
-    const partes =
-        fecha.split("-");
-
-
-    if (
-        partes.length !== 3
-    ) {
-
-        return fecha;
-
-    }
-
-
-    return (
-        partes[2] +
-        "/" +
-        partes[1] +
-        "/" +
-        partes[0]
-    );
-
-}
-
-
-/* ============================================================
-   DATE → ISO
-============================================================ */
-
-function convertirDateAISO(
-    fecha
-) {
-
-    const yyyy =
-        fecha.getFullYear();
-
-
-    const mm =
-        String(
-            fecha.getMonth() + 1
-        ).padStart(
-            2,
-            "0"
-        );
-
-
-    const dd =
-        String(
-            fecha.getDate()
-        ).padStart(
-            2,
-            "0"
-        );
-
-
-    return (
-        yyyy +
-        "-" +
-        mm +
-        "-" +
-        dd
-    );
-
-}
-
-
-/* ============================================================
-   LOADING
-============================================================ */
-
-function mostrarLoading(
-    mostrar
-) {
-
-    document
-        .getElementById(
-            "loading"
-        )
-        .style.display =
-        mostrar
-            ? "block"
-            : "none";
-
-}
-
-
-/* ============================================================
-   TOAST
-============================================================ */
-
-let toastTimer;
-
-
-function mostrarToast(
-    mensaje
-) {
-
-    const toast =
-        document
-            .getElementById(
-                "toast"
-            );
-
-
-    toast.textContent =
-        mensaje;
-
-
-    toast.style.display =
-        "block";
-
-
-    clearTimeout(
-        toastTimer
-    );
-
-
-    toastTimer =
-        setTimeout(
-            function() {
-
-                toast.style.display =
-                    "none";
-
-            },
-            3500
-        );
-
-}
-
-
-/* ============================================================
-   ESCAPE HTML
-============================================================ */
-
-function escapeHtml(
-    texto
-) {
-
-    return String(
-        texto ?? ""
-    )
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
-}
-
-
-/* ============================================================
-   ESCAPE JAVASCRIPT
-============================================================ */
-
-function escapeJs(
-    texto
-) {
-
-    return String(
-        texto ?? ""
-    )
-        .replace(
-            /\\\\/g,
-            "\\\\\\\\"
-        )
-        .replace(
-            /'/g,
-            "\\\\'"
-        )
-        .replace(
-            /"/g,
-            '\\\\"'
-        );
-
-}
-
-
-/* ============================================================
-   CAMBIO DE FECHA
-============================================================ */
-
-document
-    .getElementById(
-        "fechaSeleccionada"
-    )
-    .addEventListener(
-        "change",
-        function() {
-
-            actualizarFechaVisible(
-                this.value
-            );
-
-            cargarControles();
-
-        }
-    );
-
-
-/* ============================================================
-   ENTER EN SELECTOR DE OPERADOR
-============================================================ */
-
-// El selector de operador gestiona Enter directamente desde el modal.
-
-
+  );
 
 </script>
+
 </body>
 </html>
