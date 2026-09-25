@@ -403,7 +403,122 @@
         font-size: 26px;
       }
     }
-  </style>
+  
+/* =========================================================
+   SEGRUP - AJUSTE VISUAL DE COLORES
+   SOLO COLORES - NO MODIFICA FUNCIONALIDAD NI ESTRUCTURA
+========================================================= */
+
+:root {
+  --segrup-blue: #0B4F8A;
+  --segrup-blue-dark: #063F73;
+  --segrup-blue-light: #EAF3FA;
+  --segrup-border: #D7E2EC;
+  --segrup-bg: #F7F9FC;
+  --segrup-text: #1F2937;
+  --segrup-muted: #6B7280;
+}
+
+body {
+  background: #F7F9FC;
+  color: var(--segrup-text);
+}
+
+#loginScreen {
+  background: linear-gradient(135deg, #063F73, #0B4F8A);
+}
+
+header {
+  background: #FFFFFF;
+  border-bottom-color: var(--segrup-blue);
+}
+
+.login-box h2,
+.operator-modal-box h2,
+.header-info h1,
+.title h2,
+.control-header h4,
+.resultado-modal-box h2 {
+  color: var(--segrup-blue);
+}
+
+.operator-badge {
+  background: var(--segrup-blue-light);
+  border-color: var(--segrup-border);
+}
+
+.operator-badge-name {
+  color: var(--segrup-blue);
+}
+
+.login-button,
+.operator-confirm-button,
+.search-button,
+.history-button {
+  background: var(--segrup-blue);
+}
+
+.login-button:hover,
+.operator-confirm-button:hover,
+.search-button:hover,
+.history-button:hover {
+  background: var(--segrup-blue-dark);
+}
+
+.login-input:focus,
+.operator-select:focus,
+.operator-custom:focus {
+  border-color: var(--segrup-blue);
+  box-shadow: 0 0 0 3px rgba(11, 79, 138, 0.12);
+}
+
+.date-panel,
+.stat,
+.control-card {
+  background: #FFFFFF;
+}
+
+.control-card {
+  border-left-color: var(--segrup-blue);
+}
+
+.info-box {
+  background: var(--segrup-bg);
+}
+
+.spinner {
+  border-top-color: var(--segrup-blue);
+}
+
+.logout-button {
+  background: #FFFFFF;
+  border-color: var(--segrup-border);
+  color: var(--segrup-text);
+}
+
+.logout-button:hover {
+  background: var(--segrup-blue-light);
+  color: var(--segrup-blue);
+}
+
+#resultadoModal,
+#operatorModal {
+  background: rgba(6, 63, 115, 0.72);
+}
+
+#resultadoModal .resultado-option:hover {
+  border-color: var(--segrup-blue);
+}
+
+footer {
+  color: #7B8794;
+}
+
+#toast {
+  background: var(--segrup-blue-dark);
+}
+
+</style>
 </head>
 
 <body>
