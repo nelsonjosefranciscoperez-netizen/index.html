@@ -1542,209 +1542,79 @@ footer {
    */
 
 
+  const API_URL = "https://script.google.com/macros/s/AKfycbxvXX2U_6yLwgD7lkGxKjrFdb2YBrDR2PqgDJT-KIxyozs8p97wjPKTsz_8yVewEIs3LA/exec";
+
+  var PASS = sessionStorage.getItem("cctv_session") || "";
   var OPERADOR_ACTUAL = sessionStorage.getItem("cctv_operador") || "";
-
   var FILTRO_ACTUAL = "fallas";
-
   var FECHA_SEL = "";
+  var CAL_ANIO = new Date().getFullYear();
+  var CAL_MES = new Date().getMonth();
+  var DATOS_ITEMS = [];
 
-  var CAL_ANIO = 2026;
-
-  var CAL_MES = 8;
-
-
-  /*
-   * DATOS DEMO
-   */
-
-  var DATOS_ITEMS = [
-
-    {
-      fila: 2,
-      dispositivo: "BRAYCO",
-      estadoF: "CAMARAS OFFLINE",
-      esVacio: false,
-      esOk: false,
-      esNormalizado: false,
-      operador: "Operador Demo",
-      fechaControlTxt: "09/09/2026",
-      fechaControlIso: "2026-09-09",
-      fechaRecontrolIso: "2026-09-24"
-    },
-
-    {
-      fila: 3,
-      dispositivo: "CLUB UNIVERSITARIO SEDE",
-      estadoF: "CAMARA 1 SIN IMAGEN",
-      esVacio: false,
-      esOk: false,
-      esNormalizado: false,
-      operador: "Operador Demo",
-      fechaControlTxt: "10/09/2026",
-      fechaControlIso: "2026-09-10",
-      fechaRecontrolIso: "2026-09-25"
-    },
-
-    {
-      fila: 4,
-      dispositivo: "OFICINA CENTRAL",
-      estadoF: "OK",
-      esVacio: false,
-      esOk: true,
-      esNormalizado: false,
-      operador: "Operador Demo",
-      fechaControlTxt: "12/09/2026",
-      fechaControlIso: "2026-09-12",
-      fechaRecontrolIso: "2026-09-27"
-    },
-
-    {
-      fila: 5,
-      dispositivo: "PLANTA INDUSTRIAL",
-      estadoF: "OK",
-      esVacio: false,
-      esOk: true,
-      esNormalizado: true,
-      operador: "Operador Demo",
-      fechaControlTxt: "15/09/2026",
-      fechaControlIso: "2026-09-15",
-      fechaRecontrolIso: "2026-09-30"
-    },
-
-    {
-      fila: 6,
-      dispositivo: "DEPÓSITO NORTE",
-      estadoF: "",
-      esVacio: true,
-      esOk: false,
-      esNormalizado: false,
-      operador: "-",
-      fechaControlTxt: "",
-      fechaControlIso: null,
-      fechaRecontrolIso: null
-    }
-
-  ];
-
-
-  /*
-   * LOGIN
-   */
-
-  function autenticar() {
-
-    var op = document
-      .getElementById("inputOperador")
-      .value
-      .trim();
-
-    var pass = document
-      .getElementById("inputPass")
-      .value;
-
-    var error = document.getElementById("errorMsg");
-
-    if (!op) {
-
-      error.innerText =
-        "Por favor ingresá tu nombre de operador.";
-
-      error.classList.remove("hidden");
-
-      return;
-    }
-
-    if (!pass) {
-
-      error.innerText =
-        "Por favor ingresá la contraseña.";
-
-      error.classList.remove("hidden");
-
-      return;
-    }
-
-    error.classList.add("hidden");
-
-    /*
-     * ANIMACION DE INGRESO
-     * La validación visual actual sigue aceptando cualquier clave,
-     * pero mostramos una pantalla de carga antes de abrir el dashboard.
-     */
-    var loading = document.getElementById("loginLoading");
-    loading.classList.add("active");
-    loading.setAttribute("aria-hidden", "false");
-
-    var btn = document.getElementById("btnLogin");
-    if (btn) btn.disabled = true;
-
-    setTimeout(function() {
-
-      OPERADOR_ACTUAL = op;
-
-      sessionStorage.setItem(
-        "cctv_operador",
-        OPERADOR_ACTUAL
-      );
-
-      document
-        .getElementById("loginModal")
-        .classList.add("hidden");
-
-      document
-        .getElementById("dashboard")
-        .classList.remove("hidden");
-
-      document
-        .getElementById("labelOperador")
-        .innerText = OPERADOR_ACTUAL;
-
-      loading.classList.remove("active");
-      loading.setAttribute("aria-hidden", "true");
-
-      if (btn) btn.disabled = false;
-
-      cargarDatos();
-
-    }, 900);
-
+  async function llamarAPI(action, parametros) {
+    parametros = parametros || {};
+    var params = new URLSearchParams();
+    params.append("action", action);
+    if (PASS) params.append("pass", PASS);
+    Object.keys(parametros).forEach(function(k) {
+      if (parametros[k] !== undefined && parametros[k] !== null) params.append(k, String(parametros[k]));
+    });
+    var r = await fetch(API_URL + "?" + params.toString(), {method:"GET", cache:"no-store"});
+    if (!r.ok) throw new Error("Error HTTP " + r.status);
+    var j = await r.json();
+    if (!j.ok) throw new Error(j.error || "Error desconocido.");
+    return j;
   }
 
-
-  /*
-   * CERRAR SESIÓN
-   */
+  async function autenticar() {
+    var op = document.getElementById("inputOperador").value.trim();
+    var pass = document.getElementById("inputPass").value;
+    var error = document.getElementById("errorMsg");
+    if (!op) { error.innerText="Por favor ingresá tu nombre de operador."; error.classList.remove("hidden"); return; }
+    if (!pass) { error.innerText="Por favor ingresá la contraseña."; error.classList.remove("hidden"); return; }
+    error.classList.add("hidden");
+    var loading=document.getElementById("loginLoading");
+    if (loading) { loading.classList.add("active"); loading.setAttribute("aria-hidden","false"); }
+    var btn=document.getElementById("btnLogin");
+    if(btn){btn.disabled=true;btn.innerText="Verificando...";}
+    try {
+      var r=await fetch(API_URL+"?action=login&pass="+encodeURIComponent(pass),{method:"GET",cache:"no-store"});
+      var j=await r.json();
+      if(!j.ok) throw new Error(j.error||"Clave incorrecta.");
+      PASS=pass; OPERADOR_ACTUAL=op;
+      sessionStorage.setItem("cctv_session",PASS);
+      sessionStorage.setItem("cctv_operador",OPERADOR_ACTUAL);
+      document.getElementById("loginModal").classList.add("hidden");
+      document.getElementById("dashboard").classList.remove("hidden");
+      document.getElementById("labelOperador").innerText=OPERADOR_ACTUAL;
+      await cargarDatos();
+    } catch(e) {
+      error.innerText=e.message||"Clave incorrecta.";
+      error.classList.remove("hidden");
+    } finally {
+      if(loading){loading.classList.remove("active");loading.setAttribute("aria-hidden","true");}
+      if(btn){btn.disabled=false;btn.innerText="Acceder";}
+    }
+  }
 
   function cerrarSesion() {
-
-    sessionStorage.removeItem(
-      "cctv_operador"
-    );
-
+    sessionStorage.removeItem("cctv_session");
+    sessionStorage.removeItem("cctv_operador");
+    PASS=""; OPERADOR_ACTUAL="";
     location.reload();
-
   }
 
-
-  /*
-   * CARGAR DATOS DEMO
-   */
-
-  function cargarDatos() {
-
-    render({
-      mes: "SEPTIEMBRE",
-      resumen: {
-        total: DATOS_ITEMS.length,
-        ok: DATOS_ITEMS.filter(x => x.esOk).length,
-        fallas: DATOS_ITEMS.filter(x => !x.esOk && !x.esVacio).length,
-        pendientes: DATOS_ITEMS.filter(x => x.esVacio).length
-      },
-      items: DATOS_ITEMS
-    });
-
+  async function cargarDatos() {
+    try {
+      var r=await llamarAPI("dashboard");
+      if(!r.datos) throw new Error("No se recibieron datos del dashboard.");
+      render(r.datos);
+    } catch(e) {
+      console.error(e);
+      alert("Error al cargar los datos: " + e.message);
+    }
   }
-
 
   /*
    * RENDER
@@ -2179,65 +2049,29 @@ footer {
 
 
   /*
-   * NORMALIZAR - SOLO DEMO
+   * NORMALIZAR
    */
-
-  function ejecutarNormalizar(fila) {
-
-    var item =
-      DATOS_ITEMS.find(function(x) {
-
-        return x.fila === fila;
-
-      });
-
-
-    if (!item) return;
-
-
-    if (
-      !confirm(
-        "¿Confirmás marcar NORMALIZADO en la columna J para " +
-        item.dispositivo +
-        "?"
-      )
-    ) return;
-
-
-    item.esNormalizado = true;
-
-    item.esOk = true;
-
-    item.estadoF = "NORMALIZADO";
-
-    item.operador =
-      OPERADOR_ACTUAL || "Operador Demo";
-
-
-    cargarDatos();
-
+  async function ejecutarNormalizar(fila) {
+    var item=DATOS_ITEMS.find(function(x){return Number(x.fila)===Number(fila);});
+    if(!item) return;
+    if(!confirm("¿Confirmás marcar NORMALIZADO en la columna J para " + item.dispositivo + "?")) return;
+    try {
+      await llamarAPI("normalizar",{fila:fila,operador:OPERADOR_ACTUAL});
+      await cargarDatos();
+    } catch(e) { alert("Error al normalizar: " + e.message); }
   }
-
 
   /*
-   * CAMBIO DE MES - VISUAL
+   * CAMBIO DE MES
    */
-
-  function cambioDeMesBoton() {
-
-    if (
-      !confirm(
-        "¿Estás seguro de ejecutar el CAMBIO DE MES?"
-      )
-    ) return;
-
-
-    alert(
-      "Esta función se conectará con Apps Script en el siguiente paso."
-    );
-
+  async function cambioDeMesBoton() {
+    if(!confirm("¿Estás seguro de ejecutar el CAMBIO DE MES?\n\nSe creará una pestaña nueva a la izquierda y se conservarán las fallas pendientes.")) return;
+    try {
+      var r=await llamarAPI("cambiomes",{operador:OPERADOR_ACTUAL});
+      alert("¡Cambio de mes exitoso!\n\nNueva pestaña activa: " + ((r.resultado&&r.resultado.nuevoMes)||""));
+      await cargarDatos();
+    } catch(e) { alert("Ocurrió un error al cambiar de mes: " + e.message); }
   }
-
 
   /*
    * CALENDARIO
@@ -2508,47 +2342,26 @@ footer {
 
 
   /*
-   * LOG VISUAL
+   * LOG REAL
    */
-
-  function abrirModalLog() {
-
-    document
-      .getElementById("logModal")
-      .classList.remove("hidden");
-
-
-    var cont =
-      document.getElementById(
-        "contenedorLogs"
-      );
-
-
-    cont.innerHTML =
-
-      "<div class='log-item'>" +
-        "<b>BRAYCO</b> (Fila 2) " +
-        "se pasó a <b>REVISIÓN</b> " +
-        "por el operador: Operador Demo" +
-      "</div>" +
-
-      "<div class='log-item'>" +
-        "<b>PLANTA INDUSTRIAL</b> (Fila 5) " +
-        "se pasó a <b>NORMALIZADO (OK)</b> " +
-        "por el operador: Operador Demo" +
-      "</div>";
-
+  async function abrirModalLog() {
+    document.getElementById("logModal").classList.remove("hidden");
+    var cont=document.getElementById("contenedorLogs");
+    cont.innerHTML="<p style='color:#94a3b8;font-size:12px;'>Cargando historial...</p>";
+    try {
+      var r=await llamarAPI("logs");
+      var logs=r.logs||[];
+      if(!logs.length){cont.innerHTML="<p style='color:#94a3b8;font-size:13px;text-align:center;padding:20px;'>Aún no hay cambios registrados.</p>";return;}
+      cont.innerHTML="";
+      logs.forEach(function(l){
+        var d=document.createElement("div"); d.className="log-item";
+        d.innerHTML="<b>"+l.dispositivo+"</b> (Fila "+l.fila+") se pasó a <b>"+l.accion+"</b> el <i>"+l.fechaHora+"</i> por el operador: <span style='color:#34d399;font-weight:bold;'>"+l.operador+"</span>";
+        cont.appendChild(d);
+      });
+    } catch(e) { cont.innerHTML="<p style='color:#ef4444;'>Error al obtener logs: "+e.message+"</p>"; }
   }
 
-
-  function cerrarModalLog() {
-
-    document
-      .getElementById("logModal")
-      .classList.add("hidden");
-
-  }
-
+  function cerrarModalLog() { document.getElementById("logModal").classList.add("hidden"); }
 
   /*
    * INICIO
@@ -2558,7 +2371,7 @@ footer {
     "DOMContentLoaded",
     function() {
 
-      if (OPERADOR_ACTUAL) {
+      if (PASS && OPERADOR_ACTUAL) {
 
         document
           .getElementById("loginModal")
