@@ -404,118 +404,443 @@
       }
     }
   
+
 /* =========================================================
-   SEGRUP - AJUSTE VISUAL DE COLORES
-   SOLO COLORES - NO MODIFICA FUNCIONALIDAD NI ESTRUCTURA
+   SEGRUP - PALETA FINAL
+   SOLO COLORES. NO MODIFICA FUNCIONES NI ESTRUCTURA.
 ========================================================= */
 
 :root {
   --segrup-blue: #0B4F8A;
   --segrup-blue-dark: #063F73;
+  --segrup-blue-mid: #0E5FA8;
   --segrup-blue-light: #EAF3FA;
-  --segrup-border: #D7E2EC;
-  --segrup-bg: #F7F9FC;
+  --segrup-bg: #FFFFFF;
+  --segrup-panel: #FFFFFF;
+  --segrup-soft: #F5F8FB;
+  --segrup-border: #D6E0EA;
   --segrup-text: #1F2937;
   --segrup-muted: #6B7280;
 }
 
+/* BASE */
 body {
-  background: #F7F9FC;
+  background-color: #FFFFFF !important;
+  color: var(--segrup-text) !important;
+}
+
+/* HEADER */
+header {
+  background-color: #FFFFFF !important;
+  color: var(--segrup-text) !important;
+  border-bottom: 1px solid var(--segrup-blue) !important;
+}
+
+.header-info h1,
+.header-info,
+.title,
+.title h2,
+.control-header h4 {
+  color: var(--segrup-blue) !important;
+}
+
+.header-info small,
+.header-info span {
+  color: var(--segrup-muted);
+}
+
+/* TARJETAS Y KPI */
+.card,
+.card-kpi,
+.stat,
+.control-card {
+  background-color: #FFFFFF !important;
+  color: var(--segrup-text) !important;
+  border-color: var(--segrup-border) !important;
+}
+
+.card-kpi:hover {
+  background-color: #F8FBFE !important;
+  box-shadow: 0 4px 12px rgba(11,79,138,.10) !important;
+}
+
+.card-kpi.active-kpi {
+  background-color: var(--segrup-blue-light) !important;
+  outline-color: #2D7DD2 !important;
+  box-shadow: 0 0 12px rgba(11,79,138,.12) !important;
+}
+
+/* KPI COLORES DE ESTADO: se conservan */
+.text-green { color: #10B981 !important; }
+.text-red { color: #EF4444 !important; }
+.text-yellow { color: #F59E0B !important; }
+
+.kpi-num {
   color: var(--segrup-text);
 }
 
+/* CALENDARIO */
+.cal-container {
+  background-color: #FFFFFF !important;
+  color: var(--segrup-text) !important;
+  border-color: var(--segrup-border) !important;
+}
+
+.cal-title {
+  color: var(--segrup-text) !important;
+}
+
+.cal-day-header {
+  color: var(--segrup-muted) !important;
+}
+
+.cal-day {
+  color: var(--segrup-text) !important;
+}
+
+.cal-day:hover {
+  background-color: var(--segrup-blue-light) !important;
+}
+
+.cal-day.other-month {
+  color: #A8B2BD !important;
+}
+
+.cal-day.today {
+  border-color: #2D7DD2 !important;
+}
+
+.cal-day.selected {
+  background-color: var(--segrup-blue) !important;
+  color: #FFFFFF !important;
+  border-color: #2D7DD2 !important;
+}
+
+.cal-day.has-control::after {
+  background-color: #60A5FA !important;
+}
+
+.cal-day.has-recontrol::after {
+  background-color: #EF4444 !important;
+}
+
+/* BOTONES */
+.btn,
+.login-button,
+.operator-confirm-button,
+.search-button,
+.history-button {
+  background-color: var(--segrup-blue) !important;
+  color: #FFFFFF !important;
+}
+
+.btn:hover,
+.login-button:hover,
+.operator-confirm-button:hover,
+.search-button:hover,
+.history-button:hover {
+  background-color: var(--segrup-blue-dark) !important;
+}
+
+.btn-amber {
+  background-color: #D97706 !important;
+}
+
+.btn-green {
+  background-color: #059669 !important;
+}
+
+.btn-nav {
+  background: #FFFFFF !important;
+  border-color: var(--segrup-border) !important;
+  color: var(--segrup-blue) !important;
+}
+
+.btn-nav:hover {
+  background: var(--segrup-blue-light) !important;
+}
+
+/* BUSCADOR / CAMPOS */
+.input-text,
+.input-search {
+  background-color: #FFFFFF !important;
+  color: var(--segrup-text) !important;
+  border-color: var(--segrup-border) !important;
+}
+
+.input-search::placeholder,
+.input-text::placeholder {
+  color: #8A96A3 !important;
+}
+
+.input-search:focus,
+.input-text:focus {
+  border-color: var(--segrup-blue) !important;
+  box-shadow: 0 0 0 3px rgba(11,79,138,.10);
+}
+
+/* LISTA DE NOVEDADES */
+.item-fila {
+  background-color: #FFFFFF !important;
+  color: var(--segrup-text) !important;
+  border-color: var(--segrup-border) !important;
+}
+
+.info-op {
+  color: var(--segrup-blue-mid) !important;
+}
+
+/* ETIQUETAS DE ESTADO: se conservan */
+.tag-fail {
+  background: #FEE2E2 !important;
+  color: #B91C1C !important;
+}
+
+.tag-ok {
+  background: #D1FAE5 !important;
+  color: #047857 !important;
+}
+
+.tag-norm {
+  background: #10B981 !important;
+  color: #FFFFFF !important;
+}
+
+.tag-pending {
+  background: #FEF3C7 !important;
+  color: #B45309 !important;
+}
+
+/* MODALES */
+.modal-overlay {
+  background: rgba(6,63,115,.45) !important;
+}
+
+.modal-box,
+.operator-modal-box,
+.resultado-modal-box {
+  background: #FFFFFF !important;
+  color: var(--segrup-text) !important;
+  border-color: var(--segrup-border) !important;
+}
+
+/* LOG */
+.log-item {
+  background: var(--segrup-soft) !important;
+  color: var(--segrup-text) !important;
+  border-left-color: #10B981 !important;
+}
+
+/* SCROLL */
+#listaControles::-webkit-scrollbar-track {
+  background: #EEF3F7 !important;
+}
+
+#listaControles::-webkit-scrollbar-thumb {
+  background: #B8C7D6 !important;
+}
+
+#listaControles::-webkit-scrollbar-thumb:hover {
+  background: #8EA5BA !important;
+}
+
+/* BADGE OPERADOR */
+.operator-badge {
+  background: var(--segrup-blue-light) !important;
+  border-color: var(--segrup-border) !important;
+}
+
+.operator-badge-name {
+  color: var(--segrup-blue) !important;
+}
+
+.logout-button {
+  background: #FFFFFF !important;
+  border-color: var(--segrup-border) !important;
+  color: var(--segrup-blue) !important;
+}
+
+.logout-button:hover {
+  background: var(--segrup-blue-light) !important;
+}
+
+/* LOGIN: conserva la estética azul + tarjeta blanca */
 #loginScreen {
-  background: linear-gradient(135deg, #063F73, #0B4F8A);
+  background: linear-gradient(135deg, #063F73, #0B4F8A) !important;
 }
 
-header {
-  background: #FFFFFF;
-  border-bottom-color: var(--segrup-blue);
+.login-box {
+  background: #FFFFFF !important;
 }
 
+/* TOAST */
+#toast {
+  background: var(--segrup-blue-dark) !important;
+}
+
+
+/* =========================================================
+   SEGRUP SEGURIDAD - IDENTIDAD VISUAL
+   Azul + rojo corporativos / fondo blanco
+   SOLO ESTILOS: no modifica funcionalidad ni JavaScript
+========================================================= */
+
+:root {
+  --segrup-blue: #00539B;
+  --segrup-blue-dark: #003F73;
+  --segrup-blue-deep: #002F5F;
+  --segrup-blue-light: #EAF3FA;
+  --segrup-red: #ED1C24;
+  --segrup-red-dark: #C8101A;
+  --segrup-red-light: #FDEBEC;
+  --segrup-border: #D5E0EA;
+  --segrup-bg: #F5F8FB;
+  --segrup-text: #183247;
+  --segrup-muted: #6B7B88;
+}
+
+/* Base */
+body {
+  background: #FFFFFF !important;
+  color: var(--segrup-text) !important;
+}
+
+/* Login: azul corporativo, como el logo */
+#loginScreen {
+  background: linear-gradient(135deg, var(--segrup-blue-deep), var(--segrup-blue)) !important;
+}
+
+/* Tarjetas blancas */
+.login-box,
+.date-panel,
+.stat,
+.control-card,
+.operator-modal-box,
+.resultado-modal-box {
+  background: #FFFFFF !important;
+  color: var(--segrup-text);
+}
+
+/* Títulos y encabezados */
 .login-box h2,
 .operator-modal-box h2,
 .header-info h1,
 .title h2,
 .control-header h4,
 .resultado-modal-box h2 {
-  color: var(--segrup-blue);
+  color: var(--segrup-blue) !important;
 }
 
+/* Línea / header */
+header {
+  background: #FFFFFF !important;
+  border-bottom-color: var(--segrup-blue) !important;
+}
+
+/* Badges y detalles azules */
 .operator-badge {
-  background: var(--segrup-blue-light);
-  border-color: var(--segrup-border);
+  background: var(--segrup-blue-light) !important;
+  border-color: var(--segrup-border) !important;
 }
 
 .operator-badge-name {
-  color: var(--segrup-blue);
+  color: var(--segrup-blue) !important;
 }
 
+/* Botones principales */
 .login-button,
 .operator-confirm-button,
 .search-button,
 .history-button {
-  background: var(--segrup-blue);
+  background: var(--segrup-blue) !important;
+  color: #FFFFFF !important;
 }
 
 .login-button:hover,
 .operator-confirm-button:hover,
 .search-button:hover,
 .history-button:hover {
-  background: var(--segrup-blue-dark);
+  background: var(--segrup-blue-dark) !important;
 }
 
+/* Inputs */
 .login-input:focus,
 .operator-select:focus,
 .operator-custom:focus {
-  border-color: var(--segrup-blue);
-  box-shadow: 0 0 0 3px rgba(11, 79, 138, 0.12);
+  border-color: var(--segrup-blue) !important;
+  box-shadow: 0 0 0 3px rgba(0, 83, 155, 0.12) !important;
 }
 
-.date-panel,
-.stat,
-.control-card {
-  background: #FFFFFF;
-}
-
-.control-card {
-  border-left-color: var(--segrup-blue);
-}
-
+/* Paneles */
 .info-box {
-  background: var(--segrup-bg);
+  background: var(--segrup-bg) !important;
+  border-color: var(--segrup-border) !important;
 }
 
-.spinner {
-  border-top-color: var(--segrup-blue);
+.control-card {
+  border-left-color: var(--segrup-blue) !important;
 }
 
+/* Hover de opciones */
+#resultadoModal .resultado-option:hover {
+  border-color: var(--segrup-blue) !important;
+  background: var(--segrup-blue-light) !important;
+}
+
+/* Modales */
+#resultadoModal,
+#operatorModal {
+  background: rgba(0, 47, 95, 0.72) !important;
+}
+
+/* Logout / secundarios */
 .logout-button {
-  background: #FFFFFF;
-  border-color: var(--segrup-border);
-  color: var(--segrup-text);
+  background: #FFFFFF !important;
+  border-color: var(--segrup-border) !important;
+  color: var(--segrup-blue) !important;
 }
 
 .logout-button:hover {
-  background: var(--segrup-blue-light);
-  color: var(--segrup-blue);
+  background: var(--segrup-blue-light) !important;
+  color: var(--segrup-blue-dark) !important;
 }
 
-#resultadoModal,
-#operatorModal {
-  background: rgba(6, 63, 115, 0.72);
+/* Rojo corporativo para acciones de alerta/cierre */
+button.delete,
+button.danger,
+.btn-danger,
+.close-button {
+  background: var(--segrup-red) !important;
+  border-color: var(--segrup-red) !important;
 }
 
-#resultadoModal .resultado-option:hover {
-  border-color: var(--segrup-blue);
+button.delete:hover,
+button.danger:hover,
+.btn-danger:hover,
+.close-button:hover {
+  background: var(--segrup-red-dark) !important;
 }
 
-footer {
-  color: #7B8794;
+/* Elementos de alerta */
+.alert,
+.error,
+.status-error {
+  border-color: var(--segrup-red) !important;
 }
 
+/* Spinner */
+.spinner {
+  border-top-color: var(--segrup-blue) !important;
+}
+
+/* Toast */
 #toast {
-  background: var(--segrup-blue-dark);
+  background: var(--segrup-blue-dark) !important;
+}
+
+/* Footer */
+footer {
+  color: var(--segrup-muted) !important;
 }
 
 </style>
