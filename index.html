@@ -993,6 +993,88 @@ footer {
   }
 }
 
+
+/* =========================================================
+   FONDO "PLATAFORMA EN DESARROLLO"
+   Lluvia diagonal a 45° exclusivamente en el login
+========================================================= */
+
+#loginModal {
+  overflow: hidden !important;
+  position: fixed !important;
+}
+
+/* Capa de lluvia */
+#loginModal::before {
+  content: "";
+  position: absolute;
+  inset: -70%;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(
+      -45deg,
+      transparent 0px,
+      transparent 115px,
+      rgba(255,255,255,0.055) 116px,
+      rgba(255,255,255,0.055) 118px,
+      transparent 119px,
+      transparent 230px
+    );
+  animation: lluviaSegrup 18s linear infinite;
+}
+
+/* Texto repetido en diagonal */
+#loginModal::after {
+  content:
+    "PLATAFORMA EN DESARROLLO     PLATAFORMA EN DESARROLLO     PLATAFORMA EN DESARROLLO     PLATAFORMA EN DESARROLLO     "
+    "PLATAFORMA EN DESARROLLO     PLATAFORMA EN DESARROLLO     PLATAFORMA EN DESARROLLO     PLATAFORMA EN DESARROLLO     "
+    "PLATAFORMA EN DESARROLLO     PLATAFORMA EN DESARROLLO     PLATAFORMA EN DESARROLLO     PLATAFORMA EN DESARROLLO     "
+    "PLATAFORMA EN DESARROLLO     PLATAFORMA EN DESARROLLO     PLATAFORMA EN DESARROLLO     PLATAFORMA EN DESARROLLO     "
+    "PLATAFORMA EN DESARROLLO     PLATAFORMA EN DESARROLLO     PLATAFORMA EN DESARROLLO     PLATAFORMA EN DESARROLLO     "
+    "PLATAFORMA EN DESARROLLO     PLATAFORMA EN DESARROLLO     PLATAFORMA EN DESARROLLO     PLATAFORMA EN DESARROLLO     ";
+  position: absolute;
+  width: 240%;
+  height: 240%;
+  left: -70%;
+  top: -70%;
+  z-index: 0;
+  pointer-events: none;
+  color: rgba(255,255,255,0.075);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  line-height: 7;
+  white-space: pre-wrap;
+  word-spacing: 28px;
+  transform: rotate(-45deg);
+  animation: textoLluviaSegrup 22s linear infinite;
+}
+
+/* Mantener la tarjeta de login por encima de la animación */
+#loginModal > * {
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes lluviaSegrup {
+  from {
+    transform: translate3d(-8%, -8%, 0);
+  }
+  to {
+    transform: translate3d(8%, 8%, 0);
+  }
+}
+
+@keyframes textoLluviaSegrup {
+  from {
+    transform: rotate(-45deg) translate3d(-5%, -5%, 0);
+  }
+  to {
+    transform: rotate(-45deg) translate3d(5%, 5%, 0);
+  }
+}
+
 </style>
 </head>
 
