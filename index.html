@@ -904,10 +904,110 @@ footer {
   font-weight: 700;
 }
 
+
+/* =========================================================
+   LOGO EN ENCABEZADO + ANIMACION DE INGRESO
+========================================================= */
+
+/* Logo corporativo del encabezado */
+.segrup-header-brand {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+}
+
+.segrup-header-brand img {
+  width:105px !important;
+  height:46px !important;
+  object-fit:contain;
+  display:block;
+  flex-shrink:0;
+}
+
+/* Pantalla de carga al ingresar */
+#loginLoading {
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,83,155,.96);
+}
+
+#loginLoading.active {
+  display:flex;
+}
+
+.login-loading-box {
+  width:300px;
+  padding:30px 24px;
+  box-sizing:border-box;
+  text-align:center;
+  background:#fff;
+  border-radius:14px;
+  box-shadow:0 15px 45px rgba(0,0,0,.22);
+}
+
+.login-loading-box img {
+  width:145px;
+  height:auto;
+  max-height:75px;
+  object-fit:contain;
+  margin-bottom:18px;
+}
+
+.login-spinner {
+  width:38px;
+  height:38px;
+  margin:0 auto 15px;
+  border:4px solid #DCEAF5;
+  border-top-color:#ED1C24;
+  border-right-color:#00539B;
+  border-radius:50%;
+  animation:segrupSpin .85s linear infinite;
+}
+
+@keyframes segrupSpin {
+  to { transform:rotate(360deg); }
+}
+
+.login-loading-title {
+  margin:0;
+  color:#00539B;
+  font-size:17px;
+  font-weight:700;
+}
+
+.login-loading-text {
+  margin:6px 0 0;
+  color:#6B7B88;
+  font-size:12px;
+}
+
+@media (max-width:700px) {
+  .segrup-header-brand img {
+    width:85px !important;
+    height:40px !important;
+  }
+}
+
 </style>
 </head>
 
 <body>
+
+  <!-- CARGA DE INGRESO -->
+  <div id="loginLoading" aria-hidden="true">
+    <div class="login-loading-box">
+      <img src="logo-segrup.png" alt="SEGRUP Seguridad">
+      <div class="login-spinner"></div>
+      <p class="login-loading-title">Ingresando al sistema</p>
+      <p class="login-loading-text">Verificando tus credenciales...</p>
+    </div>
+  </div>
+
 
   <!-- LOGIN -->
   <div id="loginModal" class="modal-overlay">
@@ -1017,12 +1117,15 @@ footer {
       gap:15px;
       flex-wrap:wrap;">
 
-      <div>
+      <div class="segrup-header-brand">
 
-        <h1 style="
-          margin:0;
-          font-size:18px;
-          color:#fff;">
+        <img src="logo-segrup.png" alt="SEGRUP Seguridad">
+
+        <div>
+          <h1 style="
+            margin:0;
+            font-size:18px;
+            color:#fff;">
 
           MONITOREO DE DISPOSITIVOS Y ACCESOS
 
@@ -1059,6 +1162,7 @@ footer {
           </b>
 
         </p>
+        </div>
 
       </div>
 
@@ -1478,34 +1582,49 @@ footer {
       return;
     }
 
+    error.classList.add("hidden");
 
     /*
-     * POR AHORA EL LOGIN VISUAL ACEPTA CUALQUIER CLAVE.
-     *
-     * La validación real la vamos a conectar después
-     * con Apps Script.
+     * ANIMACION DE INGRESO
+     * La validación visual actual sigue aceptando cualquier clave,
+     * pero mostramos una pantalla de carga antes de abrir el dashboard.
      */
+    var loading = document.getElementById("loginLoading");
+    loading.classList.add("active");
+    loading.setAttribute("aria-hidden", "false");
 
-    OPERADOR_ACTUAL = op;
+    var btn = document.getElementById("btnLogin");
+    if (btn) btn.disabled = true;
 
-    sessionStorage.setItem(
-      "cctv_operador",
-      OPERADOR_ACTUAL
-    );
+    setTimeout(function() {
 
-    document
-      .getElementById("loginModal")
-      .classList.add("hidden");
+      OPERADOR_ACTUAL = op;
 
-    document
-      .getElementById("dashboard")
-      .classList.remove("hidden");
+      sessionStorage.setItem(
+        "cctv_operador",
+        OPERADOR_ACTUAL
+      );
 
-    document
-      .getElementById("labelOperador")
-      .innerText = OPERADOR_ACTUAL;
+      document
+        .getElementById("loginModal")
+        .classList.add("hidden");
 
-    cargarDatos();
+      document
+        .getElementById("dashboard")
+        .classList.remove("hidden");
+
+      document
+        .getElementById("labelOperador")
+        .innerText = OPERADOR_ACTUAL;
+
+      loading.classList.remove("active");
+      loading.setAttribute("aria-hidden", "true");
+
+      if (btn) btn.disabled = false;
+
+      cargarDatos();
+
+    }, 900);
 
   }
 
